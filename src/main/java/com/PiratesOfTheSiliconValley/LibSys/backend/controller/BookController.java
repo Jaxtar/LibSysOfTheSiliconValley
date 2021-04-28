@@ -2,14 +2,14 @@ package com.PiratesOfTheSiliconValley.LibSys.backend.controller;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.BookRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-@Service
+@Controller
 public class BookController {
     private static final Logger LOGGER = Logger.getLogger(BookController.class.getName());
     private BookRepository bookRepository;
