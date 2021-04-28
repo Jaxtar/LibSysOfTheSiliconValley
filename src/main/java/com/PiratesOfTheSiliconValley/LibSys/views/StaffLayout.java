@@ -17,25 +17,20 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 import java.util.Optional;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
-@PWA(name = "LIBSYS", shortName = "LIBSYS", enableInstallPrompt = false)
 @JsModule("./styles/shared-styles.js")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 @CssImport("./views/main/navbar.css")
-public class Navbar extends AppLayout {
+public class StaffLayout extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
 
-    public Navbar() {
+    public StaffLayout() {
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -83,8 +78,14 @@ public class Navbar extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[]{
-       //createTab("Main View", MainPage.class),
-       //createTab("Book Catalogue", BookCatalogueView.class)
+            createTab("Main", StaffMainView.class),
+            createTab("Books", StaffBookView.class),
+                //createTab("E-Books", classname.class),
+                //createTab("AudioBooks", classname.class),
+                //createTab("Movies", classname.class),
+                //createTab("Categories", classname.class)
+
+                //createTab("Logout", classname.class)
         };
     }
 
@@ -111,4 +112,5 @@ public class Navbar extends AppLayout {
         PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
         return title == null ? "" : title.value();
     }
+
 }
