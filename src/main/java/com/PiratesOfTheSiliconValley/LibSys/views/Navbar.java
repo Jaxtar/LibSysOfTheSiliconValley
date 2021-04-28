@@ -29,7 +29,7 @@ import java.util.Optional;
 @PWA(name = "LIBSYS", shortName = "LIBSYS", enableInstallPrompt = false)
 @JsModule("./styles/shared-styles.js")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
-@CssImport("./views/main/main-view.css")
+@CssImport("./views/main/navbar.css")
 public class MainView extends AppLayout {
 
     private final Tabs menu;
