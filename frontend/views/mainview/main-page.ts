@@ -1,6 +1,6 @@
 import { customElement, html, LitElement } from 'lit-element';
 
-@customElement('main-view-view')
+@customElement('main-page')
 export class MainPage extends LitElement {
   createRenderRoot() {
     // Do not use a shadow root
