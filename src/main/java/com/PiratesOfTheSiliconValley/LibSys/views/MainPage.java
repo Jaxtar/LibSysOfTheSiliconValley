@@ -17,6 +17,6 @@ public class MainPage extends LitTemplate {
     // This is the Java companion file of a design
     // You can find the design file inside /frontend/views/
 
-    public MainViewView() {
+    public MainPage() {
     }
 }
