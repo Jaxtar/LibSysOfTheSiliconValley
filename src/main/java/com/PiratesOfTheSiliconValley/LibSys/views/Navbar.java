@@ -30,12 +30,12 @@ import java.util.Optional;
 @JsModule("./styles/shared-styles.js")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 @CssImport("./views/main/navbar.css")
-public class MainView extends AppLayout {
+public class Navbar extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
 
-    public MainPage() {
+    public Navbar() {
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
