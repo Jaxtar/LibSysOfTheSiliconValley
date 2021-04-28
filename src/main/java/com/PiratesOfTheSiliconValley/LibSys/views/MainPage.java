@@ -7,12 +7,12 @@ import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "", layout = MainView.class)
-@PageTitle("Main View")
-@CssImport("./views/mainview/main-view-view.css")
-@Tag("main-view-view")
-@JsModule("./views/mainview/main-view-view.ts")
-public class MainViewView extends LitTemplate {
+@Route(value = "", layout = Navbar.class)
+@PageTitle("Biblioteket Jisho")
+@CssImport("./views/mainview/main-page.css")
+@Tag("main-page")
+@JsModule("./views/mainview/main-page.ts")
+public class MainPage extends LitTemplate {
 
     // This is the Java companion file of a design
     // You can find the design file inside /frontend/views/
