@@ -105,53 +105,52 @@ public class BookCatalogueView extends LitTemplate {
     }
 
     private void createBookIDColumn() {
-        bookIDColumn = grid.addColumn(Book::getBookID, "bookID").setHeader("ID").setWidth("120px").setFlexGrow(0);
-
+        bookIDColumn = grid.addColumn(Book::getBookID, "bookID").setHeader("ID").setWidth("90px").setFlexGrow(0);
 
     }
 
     private void createTitleColumn() {
-        titleColumn = grid.addColumn(Book::getTitle, "title").setHeader("TITLE").setAutoWidth(true).setFlexGrow(0);
+        titleColumn = grid.addColumn(Book::getTitle, "title").setHeader("TITLE").setWidth("250px").setFlexGrow(0);
     }
 
     private void createAuthorColumn() {
-        authorColumn = grid.addColumn(Book::getAuthor, "author").setHeader("AUTHOR").setAutoWidth(true).setFlexGrow(0);
+        authorColumn = grid.addColumn(Book::getAuthor, "author").setHeader("AUTHOR").setWidth("200px").setFlexGrow(0);
     }
 
     private void createDescriptionColumn() {
-        descriptionColumn = grid.addColumn(Book::getDescription, "description").setHeader("DESCRIPTION").setAutoWidth(true).setFlexGrow(0);
+        descriptionColumn = grid.addColumn(Book::getDescription, "description").setHeader("DESCRIPTION").setWidth("300px").setFlexGrow(0);
     }
 
     private void createLanguageColumn() {
-        languageColumn = grid.addColumn(Book::getLanguage, "language").setHeader("LANGUAGE").setAutoWidth(true).setFlexGrow(0);
+        languageColumn = grid.addColumn(Book::getLanguage, "language").setHeader("LANGUAGE").setWidth("180px").setFlexGrow(0);
     }
 
     private void createGenre1Column() {
-        genre1Column = grid.addColumn(Book::getGenre1, "genre1").setHeader("GENRE").setAutoWidth(true).setFlexGrow(0);
+        genre1Column = grid.addColumn(Book::getGenre1, "genre1").setHeader("GENRE").setWidth("200px").setFlexGrow(0);
     }
 
     private void createGenre2Column() {
-        genre2Column = grid.addColumn(Book::getGenre2, "genre2").setHeader("GENRE").setAutoWidth(true).setFlexGrow(0);
+        genre2Column = grid.addColumn(Book::getGenre2, "genre2").setHeader("GENRE").setWidth("200px").setFlexGrow(0);
     }
 
     private void createFormatColumn() {
-        formatColumn = grid.addColumn(Book::getFormat, "format").setHeader("FORMAT").setAutoWidth(true).setFlexGrow(0);
+        formatColumn = grid.addColumn(Book::getFormat, "format").setHeader("FORMAT").setWidth("150px").setFlexGrow(0);
     }
 
     private void createPagesColumn() {
-        pagesColumn = grid.addColumn(Book::getPages, "pages").setHeader("PAGES").setWidth("120px").setFlexGrow(0);
+        pagesColumn = grid.addColumn(Book::getPages, "pages").setHeader("PAGES").setWidth("150px").setFlexGrow(0);
     }
 
     private void createPublisherColumn() {
-        publisherColumn = grid.addColumn(Book::getPublisher, "publisher").setHeader("PUBLISHER").setAutoWidth(true).setFlexGrow(0);
+        publisherColumn = grid.addColumn(Book::getPublisher, "publisher").setHeader("PUBLISHER").setWidth("200px").setFlexGrow(0);
     }
 
     private void createPublishingYearColumn() {
-        publishingYearColumn = grid.addColumn(Book::getPublishingyear, "publishingyear").setHeader("PUBLISHING YEAR").setAutoWidth(true).setFlexGrow(0);
+        publishingYearColumn = grid.addColumn(Book::getPublishingyear, "publishingyear").setHeader("PUBLISHING YEAR").setWidth("200px").setFlexGrow(0);
     }
 
     private void createISBNColumn() {
-        ISBNColumn = grid.addColumn(Book::getIsbn, "isbn").setHeader("ISBN").setAutoWidth(true).setFlexGrow(0);
+        ISBNColumn = grid.addColumn(Book::getIsbn, "isbn").setHeader("ISBN").setWidth("180px").setFlexGrow(0);
     }
 
     private void addFiltersToGrid() {
