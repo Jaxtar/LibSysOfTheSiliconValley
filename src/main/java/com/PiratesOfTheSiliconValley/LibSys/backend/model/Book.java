@@ -5,7 +5,12 @@ import javax.persistence.*;
         import javax.validation.constraints.NotNull;
 
 @Entity
-public class Book extends AbstractModel implements Cloneable {
+public class Book {
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer bookID;
+
 
     public enum Format {
         Pocket, Hardcover, Paperback
@@ -44,6 +49,34 @@ public class Book extends AbstractModel implements Cloneable {
     @NotNull
     @NotEmpty
     private Integer publishingyear;
+
+    public Book(Integer bookID, String title,
+                String author, String description,
+                String language, String genre1,
+                String genre2, Book.Format format,
+                Integer pages, String publisher,
+                Integer publishingyear, String isbn) {
+        this.bookID = bookID;
+        this.title = title;
+        this.author = author;
+        this.description = description;
+        this.language = language;
+        this.genre1 = genre1;
+        this.genre2 = genre2;
+        this.format = format;
+        this.pages = pages;
+        this.publisher = publisher;
+        this.publishingyear = publishingyear;
+        this.isbn = isbn;
+    }
+
+    public Book(){
+        
+    }
+
+    public Integer getBookID() {
+        return bookID;
+    }
 
     public String getTitle() {
         return title;
