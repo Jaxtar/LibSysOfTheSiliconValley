@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@Route(value = "/bookcatalogue", layout = MainView.class)
+@Route(value = "/bookcatalogue", layout = Navbar.class)
 @PageTitle("Book Catalogue")
 @CssImport("./views/bookcatalogue/book-catalogue-view.css")
 @Tag("book-catalogue-view")

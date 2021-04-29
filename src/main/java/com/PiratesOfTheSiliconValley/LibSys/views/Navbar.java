@@ -30,12 +30,12 @@ import java.util.Optional;
 @JsModule("./styles/shared-styles.js")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 @CssImport("./views/main/main-view.css")
-public class MainView extends AppLayout {
+public class Navbar extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
 
-    public MainView() {
+    public Navbar() {
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -77,14 +77,14 @@ public class MainView extends AppLayout {
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
         tabs.setId("tabs");
-       // tabs.add(createMenuItems());
+        tabs.add(createMenuItems());
         return tabs;
     }
 
-   // private Component[] createMenuItems() {
-     //   return new Tab[]{createTab("Main View", MainViewView.class),
-                //createTab("Book Catalogue", BookCatalogueView.class)};
-   // }
+    private Component[] createMenuItems() {
+        return new Tab[]{createTab("Main Page", MainPage.class),
+                createTab("Book Catalogue", BookCatalogueView.class)};
+    }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
         final Tab tab = new Tab();
