@@ -77,14 +77,18 @@ public class Navbar extends AppLayout {
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
         tabs.setId("tabs");
-       // tabs.add(createMenuItems());
+        tabs.add(createMenuItems());
         return tabs;
     }
 
-   // private Component[] createMenuItems() {
-     //   return new Tab[]{createTab("Main View", MainViewView.class),
-                //createTab("Book Catalogue", BookCatalogueView.class)};
-   // }
+    private Component[] createMenuItems() {
+        return new Tab[]{createTab("Huvudsida", MainPage.class),
+                        //createTab("Book Catalogue", BookCatalogueView.class),
+                        createTab("Seminarium", SeminarView.class),
+                        createTab("Öppettider", OpenHoursView.class),
+                        createTab("Om oss", AboutUsView.class)
+        };
+    }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
         final Tab tab = new Tab();
