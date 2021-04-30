@@ -7,7 +7,7 @@ import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "/items", layout = Navbar.class)
+@Route(value = "/hours", layout = Navbar.class)
 @PageTitle("Biblioteket Jisho")
 @CssImport("./views/mainview/main-page.css")
 @Tag("item-view")
