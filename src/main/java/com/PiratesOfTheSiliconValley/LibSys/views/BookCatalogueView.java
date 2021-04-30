@@ -66,7 +66,7 @@ public class BookCatalogueView extends LitTemplate {
     }
 
     private void createGridComponent() {
-        grid.setSelectionMode(SelectionMode.MULTI);
+       // grid.setSelectionMode(SelectionMode.MULTI);
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_COLUMN_BORDERS);
         grid.setHeight("100%");
 
