@@ -10,4 +10,5 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
     List<Book> findAll();
+    List<Book> findByTitleContainsIgnoreCase(String searchTerm);
 }

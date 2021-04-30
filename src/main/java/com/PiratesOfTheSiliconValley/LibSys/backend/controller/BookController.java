@@ -22,6 +22,14 @@ public class BookController {
         return bookRepository.findAll();
     }
 
+    public List<Book> findAll(String stringFilter) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
+            return bookRepository.findAll();
+        } else {
+            return bookRepository.findByTitleContainsIgnoreCase(stringFilter);
+        }
+    }
+
    // public long count() { return bookRepository.count(); }
 
     public void delete(Book book) {

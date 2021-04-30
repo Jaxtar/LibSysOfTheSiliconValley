@@ -11,7 +11,6 @@ public class Book {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer bookID;
 
-
     public enum Format {
         Pocket, Hardcover, Paperback
     }
@@ -49,6 +48,10 @@ public class Book {
     @NotNull
     @NotEmpty
     private Integer publishingyear;
+
+    @NotNull
+    @NotEmpty
+    private String isbn = "";
 
     public Book(Integer bookID, String title,
                 String author, String description,
@@ -165,10 +168,6 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
-    @NotNull
-    @NotEmpty
-    private String isbn = "";
 
     @Override
     public String toString() {

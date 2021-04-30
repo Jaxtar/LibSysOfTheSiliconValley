@@ -5,6 +5,7 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.littemplate.LitTemplate;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -12,7 +13,7 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Biblioteket Jisho")
 @CssImport("./views/staffview/staffmain.css")
 @Tag("staff-main")
-public class StaffMainView extends LitTemplate {
+public class StaffMainView extends VerticalLayout {
 
 
 }

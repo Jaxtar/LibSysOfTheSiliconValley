@@ -8,6 +8,8 @@ import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -20,14 +22,23 @@ public class StaffBookView  extends VerticalLayout {
 
     private BookController bookController;
     private Grid<Book> grid = new Grid<>(Book.class);
+    private TextField filterText = new TextField();
 
     public StaffBookView(BookController bookController) {
         this.bookController = bookController;
         setSizeFull();
+        configureFilter();
         configureGrid();
 
-        add(grid);
+        add(filterText, grid);
         updateList();
+    }
+
+    private void configureFilter() {
+        filterText.setPlaceholder("Filter by name...");
+        filterText.setClearButtonVisible(true);
+        filterText.setValueChangeMode(ValueChangeMode.LAZY);
+        filterText.addValueChangeListener(e -> updateList());
     }
 
     private void configureGrid() {
@@ -37,7 +48,7 @@ public class StaffBookView  extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(bookController.findAll());
+        grid.setItems(bookController.findAll(filterText.getValue()));
     }
 
 
