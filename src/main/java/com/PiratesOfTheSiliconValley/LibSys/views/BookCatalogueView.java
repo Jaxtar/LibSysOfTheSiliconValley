@@ -21,10 +21,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 
 @Route(value = "/bookcatalogue", layout = Navbar.class)
 @PageTitle("Book Catalogue")
@@ -35,20 +32,12 @@ public class BookCatalogueView extends LitTemplate {
 
 
     @Id("mygrid")
-    private GridPro<Book> grid; //= new GridPro<>(Book.class)
+    private GridPro<Book> grid;
     private TextField filter = new TextField();
     private BookController bookController;
     private BookRepository bookRepository;
 
-    //private List<Book> getBooks;
-
-    /**List<Book> books = new ArrayList<>();
-
-    public List<Book> getBooks() {
-        return books;
-    }*/
-
-    ListDataProvider <Book> dataProvider;// = new ListDataProvider<>(bookController.findAll());
+    ListDataProvider <Book> dataProvider;
 
     private Grid.Column<Book> bookIDColumn;
     private Grid.Column<Book> titleColumn;
@@ -81,12 +70,8 @@ public class BookCatalogueView extends LitTemplate {
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_COLUMN_BORDERS);
         grid.setHeight("100%");
 
-        List<Book> books = new ArrayList<>();
-        books.addAll(bookController.findAll());
-        dataProvider = new ListDataProvider<>(books);   //bookController.findAll(filter.getValue()));
-        //List <Book> books;
+        dataProvider = new ListDataProvider<>(bookController.findAll());
         grid.setDataProvider(dataProvider);
-
     }
 
     private void addColumnsToGrid() {
@@ -106,7 +91,6 @@ public class BookCatalogueView extends LitTemplate {
 
     private void createBookIDColumn() {
         bookIDColumn = grid.addColumn(Book::getBookID, "bookID").setHeader("ID").setWidth("90px").setFlexGrow(0);
-
     }
 
     private void createTitleColumn() {
@@ -263,7 +247,6 @@ public class BookCatalogueView extends LitTemplate {
         ISBNFilter.addValueChangeListener(event -> dataProvider
                 .addFilter(book -> StringUtils.containsIgnoreCase(book.getIsbn(), ISBNFilter.getValue())));
         filterRow.getCell(ISBNColumn).setComponent(ISBNFilter);
-
     }
 
 
