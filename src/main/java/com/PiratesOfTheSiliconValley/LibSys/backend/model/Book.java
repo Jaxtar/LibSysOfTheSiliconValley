@@ -38,7 +38,6 @@ public class Book {
     private Book.Format format;
 
     @NotNull
-    @NotEmpty
     private Integer pages;
 
     @NotNull
@@ -46,7 +45,6 @@ public class Book {
     private String publisher = "";
 
     @NotNull
-    @NotEmpty
     private Integer publishingyear;
 
     @NotNull

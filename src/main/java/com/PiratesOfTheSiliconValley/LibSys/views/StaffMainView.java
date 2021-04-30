@@ -11,8 +11,7 @@ import com.vaadin.flow.router.Route;
 
 @Route(value = "/staff/main", layout = StaffLayout.class)
 @PageTitle("Biblioteket Jisho")
-@CssImport("./views/staffview/staffmain.css")
-@Tag("staff-main")
+@CssImport("./views/staffview/staffcommon.css")
 public class StaffMainView extends VerticalLayout {
 
 
