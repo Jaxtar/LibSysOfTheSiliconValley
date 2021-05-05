@@ -1,8 +1,8 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
 import javax.persistence.*;
-        import javax.validation.constraints.NotEmpty;
-        import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Book {
@@ -11,8 +11,24 @@ public class Book {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer bookID;
 
-    public enum Format {
-        Pocket, Hardcover, Paperback
+
+    public enum Format implements CharSequence {
+        Pocket, Hardcover, Paperback;
+
+        @Override
+        public int length() {
+            return 0;
+        }
+
+        @Override
+        public char charAt(int index) {
+            return 0;
+        }
+
+        @Override
+        public CharSequence subSequence(int start, int end) {
+            return null;
+        }
     }
 
     @NotNull
@@ -166,10 +182,11 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
+  
     @Override
     public String toString() {
         return title + " by " + author;
     }
 
 }
+
