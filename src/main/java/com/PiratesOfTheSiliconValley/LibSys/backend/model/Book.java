@@ -11,6 +11,7 @@ public class Book {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer bookID;
 
+
     public enum Format implements CharSequence {
         Pocket, Hardcover, Paperback;
 
@@ -62,6 +63,33 @@ public class Book {
     @NotNull
     private Integer publishingyear;
 
+    @NotNull
+    @NotEmpty
+    private String isbn = "";
+
+    public Book(Integer bookID, String title,
+                String author, String description,
+                String language, String genre1,
+                String genre2, Book.Format format,
+                Integer pages, String publisher,
+                Integer publishingyear, String isbn) {
+        this.bookID = bookID;
+        this.title = title;
+        this.author = author;
+        this.description = description;
+        this.language = language;
+        this.genre1 = genre1;
+        this.genre2 = genre2;
+        this.format = format;
+        this.pages = pages;
+        this.publisher = publisher;
+        this.publishingyear = publishingyear;
+        this.isbn = isbn;
+    }
+
+    public Book(){
+        
+    }
 
     public Integer getBookID() {
         return bookID;
@@ -154,14 +182,11 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
-    @NotNull
-    @NotEmpty
-    private String isbn = "";
-
+  
     @Override
     public String toString() {
         return title + " by " + author;
     }
 
 }
+
