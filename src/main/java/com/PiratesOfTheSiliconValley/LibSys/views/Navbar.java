@@ -83,10 +83,12 @@ public class Navbar extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{
-       //createTab("Main View", MainPage.class),
-       //createTab("Book Catalogue", BookCatalogueView.class)
-       createTab("Staff Login", StaffLoginView.class)
+        return new Tab[]{createTab("Huvudsida", MainPage.class),
+                        //createTab("Book Catalogue", BookCatalogueView.class),
+                        createTab("Seminarium", SeminarView.class),
+                        createTab("Öppettider", OpenHoursView.class),
+                        createTab("Om oss", AboutUsView.class)
+                        createTab("Staff Login", StaffLoginView.class)
         };
     }
 
