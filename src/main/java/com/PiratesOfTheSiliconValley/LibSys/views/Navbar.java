@@ -87,7 +87,7 @@ public class Navbar extends AppLayout {
                         //createTab("Book Catalogue", BookCatalogueView.class),
                         createTab("Seminarium", SeminarView.class),
                         createTab("Öppettider", OpenHoursView.class),
-                        createTab("Om oss", AboutUsView.class)
+                        createTab("Om oss", AboutUsView.class),
                         createTab("Staff Login", StaffLoginView.class)
         };
     }
