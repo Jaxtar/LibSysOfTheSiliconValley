@@ -25,7 +25,7 @@ public class OpenHoursView extends VerticalLayout {
         TextArea area = new TextArea();
         area.setWidth("400px");
 
-       area.setValue("""
+        area.setValue("""
                MÅNDAG     10:00 - 19:00
                TISDAG         10:00 - 19:00
                ONSDAG      10:00 - 19:00
