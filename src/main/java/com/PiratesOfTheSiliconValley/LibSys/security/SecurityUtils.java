@@ -1,7 +1,7 @@
 package com.PiratesOfTheSiliconValley.LibSys.security;
 
 
-import com.vaadin.flow.server.HandlerHelper;
+import com.vaadin.flow.server.HandlerHelper.RequestType;
 import com.vaadin.flow.shared.ApplicationConstants;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,14 +19,16 @@ public final class SecurityUtils {
     static boolean isFrameworkInternalRequest(HttpServletRequest request) {
         final String parameterValue = request.getParameter(ApplicationConstants.REQUEST_TYPE_PARAMETER);
         return parameterValue != null
-                && Stream.of(HandlerHelper.RequestType.values())
+                && Stream.of(RequestType.values())
                 .anyMatch(r -> r.getIdentifier().equals(parameterValue));
     }
 
     static boolean isUserLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication != null
-                && !(authentication instanceof AnonymousAuthenticationToken)
-                && authentication.isAuthenticated();
+        boolean isLoggedIn = false;
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated()) {
+            isLoggedIn = true;
+        }
+        return isLoggedIn;
     }
 }
