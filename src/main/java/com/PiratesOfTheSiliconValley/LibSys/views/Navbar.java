@@ -1,5 +1,6 @@
 package com.PiratesOfTheSiliconValley.LibSys.views;
 
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoginView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -85,6 +86,7 @@ public class Navbar extends AppLayout {
         return new Tab[]{
        //createTab("Main View", MainPage.class),
        //createTab("Book Catalogue", BookCatalogueView.class)
+       createTab("Staff Login", StaffLoginView.class)
         };
     }
 

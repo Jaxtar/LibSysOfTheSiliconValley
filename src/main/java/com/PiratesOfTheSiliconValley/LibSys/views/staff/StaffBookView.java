@@ -1,16 +1,11 @@
-package com.PiratesOfTheSiliconValley.LibSys.views;
+package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.BookController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
-import com.PiratesOfTheSiliconValley.LibSys.backend.repository.BookRepository;
 import com.PiratesOfTheSiliconValley.LibSys.editor.StaffBookForm;
-import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -20,7 +15,7 @@ import com.vaadin.flow.router.Route;
 
 @Route(value = "/staff/books", layout = StaffLayout.class)
 @PageTitle("Biblioteket Jisho")
-@CssImport("./views/staffview/staffcommon.css")
+//@CssImport("./views/staffview/staffcommon.css")
 
 public class StaffBookView  extends VerticalLayout {
 
