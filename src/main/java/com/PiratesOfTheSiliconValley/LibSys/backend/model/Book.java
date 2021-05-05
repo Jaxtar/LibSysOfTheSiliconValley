@@ -1,9 +1,6 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -14,9 +11,24 @@ public class Book {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer bookID;
 
-    //public enum Format {
-    //    Pocket, Hardcover, Paperback
-    //}
+    public enum Format implements CharSequence {
+        Pocket, Hardcover, Paperback;
+
+        @Override
+        public int length() {
+            return 0;
+        }
+
+        @Override
+        public char charAt(int index) {
+            return 0;
+        }
+
+        @Override
+        public CharSequence subSequence(int start, int end) {
+            return null;
+        }
+    }
 
     @NotNull
     @NotEmpty
@@ -36,10 +48,9 @@ public class Book {
 
     private String genre2 = "";
 
-    //@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @NotNull
-    @NotEmpty
-    private String format = "";
+    private Book.Format format;
 
     @NotNull
     private Integer pages;
@@ -51,33 +62,6 @@ public class Book {
     @NotNull
     private Integer publishingyear;
 
-    @NotNull
-    @NotEmpty
-    private String isbn = "";
-
-    public Book(Integer bookID, String title,
-                String author, String description,
-                String language, String genre1,
-                String genre2, String format,
-                Integer pages, String publisher,
-                Integer publishingyear, String isbn) {
-        this.bookID = bookID;
-        this.title = title;
-        this.author = author;
-        this.description = description;
-        this.language = language;
-        this.genre1 = genre1;
-        this.genre2 = genre2;
-        this.format = format;
-        this.pages = pages;
-        this.publisher = publisher;
-        this.publishingyear = publishingyear;
-        this.isbn = isbn;
-    }
-
-    public Book(){
-
-    }
 
     public Integer getBookID() {
         return bookID;
@@ -131,11 +115,11 @@ public class Book {
         this.genre2 = genre2;
     }
 
-    public String getFormat() {
+    public Format getFormat() {
         return format;
     }
 
-    public void setFormat(String format) {
+    public void setFormat(Format format) {
         this.format = format;
     }
 
@@ -170,6 +154,10 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
+    @NotNull
+    @NotEmpty
+    private String isbn = "";
 
     @Override
     public String toString() {

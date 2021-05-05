@@ -22,6 +22,8 @@ import com.vaadin.flow.router.Route;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Route(value = "/bookcatalogue", layout = Navbar.class)
 @PageTitle("Book Catalogue")
@@ -203,8 +205,8 @@ public class BookCatalogueView extends LitTemplate {
                 .addFilter(book -> StringUtils.containsIgnoreCase(book.getGenre2(), genre2Filter.getValue())));
         filterRow.getCell(genre2Column).setComponent(genre2Filter);
 
-        ComboBox<String> formatFilter = new ComboBox<>();
-        formatFilter.setItems(Arrays.asList("Pocket", "Hardcover", "Paperback"));
+        ComboBox<Book.Format> formatFilter = new ComboBox<>();
+        formatFilter.setItems(Book.Format.values());
         formatFilter.setPlaceholder("Filter");
         formatFilter.setClearButtonVisible(true);
         formatFilter.setWidth("100%");
@@ -258,10 +260,10 @@ public class BookCatalogueView extends LitTemplate {
         return true;
     }
 
-    private boolean areFormatEqual(Book book, ComboBox<String> formatFilter) {
-        String formatFilterValue = formatFilter.getValue();
+    private boolean areFormatEqual(Book book, ComboBox<Book.Format> formatFilter) {
+        Enum formatFilterValue = formatFilter.getValue();
         if (formatFilterValue != null) {
-            return StringUtils.equals(book.getFormat(), formatFilterValue);
+            return StringUtils.equals(book.getFormat(), (CharSequence) formatFilterValue);
         }
         return true;
     }
