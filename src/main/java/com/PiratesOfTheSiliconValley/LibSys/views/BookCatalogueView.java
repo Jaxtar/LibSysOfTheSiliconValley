@@ -4,11 +4,11 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.controller.BookController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.BookRepository;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.grid.HeaderRow;
 import com.vaadin.flow.component.gridpro.GridPro;
@@ -22,8 +22,6 @@ import com.vaadin.flow.router.Route;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @Route(value = "/bookcatalogue", layout = Navbar.class)
 @PageTitle("Book Catalogue")
@@ -41,18 +39,13 @@ public class BookCatalogueView extends LitTemplate {
 
     ListDataProvider <Book> dataProvider;
 
-    private Grid.Column<Book> bookIDColumn;
     private Grid.Column<Book> titleColumn;
     private Grid.Column<Book> authorColumn;
-    private Grid.Column<Book> descriptionColumn;
     private Grid.Column<Book> languageColumn;
     private Grid.Column<Book> genre1Column;
     private Grid.Column<Book> genre2Column;
     private Grid.Column<Book> formatColumn;
-    private Grid.Column<Book> pagesColumn;
-    private Grid.Column<Book> publisherColumn;
     private Grid.Column<Book> publishingYearColumn;
-    private Grid.Column<Book> ISBNColumn;
 
     public BookCatalogueView(BookController bookController,
                              BookRepository bookRepository) {
@@ -65,6 +58,11 @@ public class BookCatalogueView extends LitTemplate {
         createGridComponent();
         addColumnsToGrid();
         addFiltersToGrid();
+
+        grid.addItemClickListener(e -> UI.getCurrent()
+                                         .navigate(BookView.class, e.getItem()
+                                                                    .getBookID()
+                                                                    .toString()));
     }
 
     private void createGridComponent() {
@@ -77,22 +75,13 @@ public class BookCatalogueView extends LitTemplate {
     }
 
     private void addColumnsToGrid() {
-        createBookIDColumn();
         createTitleColumn();
         createAuthorColumn();
-        createDescriptionColumn();
         createLanguageColumn();
         createGenre1Column();
         createGenre2Column();
         createFormatColumn();
-        createPagesColumn();
-        createPublisherColumn();
         createPublishingYearColumn();
-        createISBNColumn();
-    }
-
-    private void createBookIDColumn() {
-        bookIDColumn = grid.addColumn(Book::getBookID, "bookID").setHeader("ID").setWidth("90px").setFlexGrow(0);
     }
 
     private void createTitleColumn() {
@@ -101,10 +90,6 @@ public class BookCatalogueView extends LitTemplate {
 
     private void createAuthorColumn() {
         authorColumn = grid.addColumn(Book::getAuthor, "author").setHeader("AUTHOR").setWidth("200px").setFlexGrow(0);
-    }
-
-    private void createDescriptionColumn() {
-        descriptionColumn = grid.addColumn(Book::getDescription, "description").setHeader("DESCRIPTION").setWidth("300px").setFlexGrow(0);
     }
 
     private void createLanguageColumn() {
@@ -123,33 +108,12 @@ public class BookCatalogueView extends LitTemplate {
         formatColumn = grid.addColumn(Book::getFormat, "format").setHeader("FORMAT").setWidth("150px").setFlexGrow(0);
     }
 
-    private void createPagesColumn() {
-        pagesColumn = grid.addColumn(Book::getPages, "pages").setHeader("PAGES").setWidth("150px").setFlexGrow(0);
-    }
-
-    private void createPublisherColumn() {
-        publisherColumn = grid.addColumn(Book::getPublisher, "publisher").setHeader("PUBLISHER").setWidth("200px").setFlexGrow(0);
-    }
-
     private void createPublishingYearColumn() {
         publishingYearColumn = grid.addColumn(Book::getPublishingyear, "publishingyear").setHeader("PUBLISHING YEAR").setWidth("200px").setFlexGrow(0);
     }
 
-    private void createISBNColumn() {
-        ISBNColumn = grid.addColumn(Book::getIsbn, "isbn").setHeader("ISBN").setWidth("180px").setFlexGrow(0);
-    }
-
     private void addFiltersToGrid() {
         HeaderRow filterRow = grid.appendHeaderRow();
-
-        TextField bookIDFilter = new TextField();
-        bookIDFilter.setPlaceholder("Filter");
-        bookIDFilter.setClearButtonVisible(true);
-        bookIDFilter.setWidth("100%");
-        bookIDFilter.setValueChangeMode(ValueChangeMode.EAGER);
-        bookIDFilter.addValueChangeListener(event -> dataProvider.addFilter(
-                book -> StringUtils.containsIgnoreCase(Integer.toString(book.getBookID()), bookIDFilter.getValue())));
-        filterRow.getCell(bookIDColumn).setComponent(bookIDFilter);
 
         TextField titleFilter = new TextField();
         titleFilter.setPlaceholder("Filter");
@@ -169,14 +133,6 @@ public class BookCatalogueView extends LitTemplate {
                 .addFilter(book -> StringUtils.containsIgnoreCase(book.getAuthor(), authorFilter.getValue())));
         filterRow.getCell(authorColumn).setComponent(authorFilter);
 
-        TextField descriptionFilter = new TextField();
-        descriptionFilter.setPlaceholder("Filter");
-        descriptionFilter.setClearButtonVisible(true);
-        descriptionFilter.setWidth("100%");
-        descriptionFilter.setValueChangeMode(ValueChangeMode.EAGER);
-        descriptionFilter.addValueChangeListener(event -> dataProvider
-                .addFilter(book -> StringUtils.containsIgnoreCase(book.getDescription(), descriptionFilter.getValue())));
-        filterRow.getCell(descriptionColumn).setComponent(descriptionFilter);
 
         ComboBox<String> languageFilter = new ComboBox<>();
         languageFilter.setItems(Arrays.asList("Svenska", "English"));
@@ -214,23 +170,6 @@ public class BookCatalogueView extends LitTemplate {
                 event -> dataProvider.addFilter(book -> areFormatEqual(book, formatFilter)));
         filterRow.getCell(formatColumn).setComponent(formatFilter);
 
-        TextField pagesFilter = new TextField();
-        pagesFilter.setPlaceholder("Filter");
-        pagesFilter.setClearButtonVisible(true);
-        pagesFilter.setWidth("100%");
-        pagesFilter.setValueChangeMode(ValueChangeMode.EAGER);
-        pagesFilter.addValueChangeListener(event -> dataProvider.addFilter(
-                book -> StringUtils.containsIgnoreCase(Integer.toString(book.getPages()), pagesFilter.getValue())));
-        filterRow.getCell(pagesColumn).setComponent(pagesFilter);
-
-        TextField publisherFilter = new TextField();
-        publisherFilter.setPlaceholder("Filter");
-        publisherFilter.setClearButtonVisible(true);
-        publisherFilter.setWidth("100%");
-        publisherFilter.setValueChangeMode(ValueChangeMode.EAGER);
-        publisherFilter.addValueChangeListener(event -> dataProvider
-                .addFilter(book -> StringUtils.containsIgnoreCase(book.getPublisher(), publisherFilter.getValue())));
-        filterRow.getCell(publisherColumn).setComponent(publisherFilter);
 
         TextField publishingYearFilter = new TextField();
         publishingYearFilter.setPlaceholder("Filter");
@@ -240,15 +179,6 @@ public class BookCatalogueView extends LitTemplate {
         publishingYearFilter.addValueChangeListener(event -> dataProvider.addFilter(
                 book -> StringUtils.containsIgnoreCase(Integer.toString(book.getPublishingyear()), publishingYearFilter.getValue())));
         filterRow.getCell(publishingYearColumn).setComponent(publishingYearFilter);
-
-        TextField ISBNFilter = new TextField();
-        ISBNFilter.setPlaceholder("Filter");
-        ISBNFilter.setClearButtonVisible(true);
-        ISBNFilter.setWidth("100%");
-        ISBNFilter.setValueChangeMode(ValueChangeMode.EAGER);
-        ISBNFilter.addValueChangeListener(event -> dataProvider
-                .addFilter(book -> StringUtils.containsIgnoreCase(book.getIsbn(), ISBNFilter.getValue())));
-        filterRow.getCell(ISBNColumn).setComponent(ISBNFilter);
     }
 
 
