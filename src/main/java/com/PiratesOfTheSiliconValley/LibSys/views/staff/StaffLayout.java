@@ -1,6 +1,5 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
-import com.PiratesOfTheSiliconValley.LibSys.security.SecurityConfiguration;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -21,11 +20,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 import java.util.Optional;
 
 @JsModule("./styles/shared-styles.js")
@@ -90,7 +85,7 @@ public class StaffLayout extends AppLayout {
         return new Tab[]{
             createTab("Main", StaffMainView.class),
             createTab("Books", StaffBookView.class),
-                //createTab("E-Books", classname.class),
+            createTab("Users", StaffUserView.class),
                 //createTab("AudioBooks", classname.class),
                 //createTab("Movies", classname.class),
                 //createTab("Categories", classname.class)
