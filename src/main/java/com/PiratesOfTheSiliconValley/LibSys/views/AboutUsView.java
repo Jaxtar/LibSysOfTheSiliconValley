@@ -29,6 +29,7 @@ public class AboutUsView extends VerticalLayout {
         VerticalLayout tab1 = new VerticalLayout();
         accordion.add("Med anledning av covid-19", tab1);
         TextArea textArea = new TextArea();
+        textArea.setReadOnly(true);
         textArea.setWidth("700px");
         textArea.setValue("""
                 Du bör inte vistas i inomhusmiljöer där människor samlas just nu. 
@@ -59,6 +60,7 @@ public class AboutUsView extends VerticalLayout {
         VerticalLayout tab2 = new VerticalLayout();
         accordion.add("Om biblioteket", tab2);
         TextArea textArea2 = new TextArea();
+        textArea2.setReadOnly(true);
         textArea2.setWidth("700px");
         textArea2.setValue("""
                 På Jisho biblioteket finns skönlitteratur och facklitteratur inom olika ämnesområden, 
@@ -70,6 +72,7 @@ public class AboutUsView extends VerticalLayout {
         VerticalLayout tab3 = new VerticalLayout();
         accordion.add("Vi som jobbar här", tab3);
         TextArea textArea3 = new TextArea();
+        textArea3.setReadOnly(true);
         textArea3.setWidth("700px");
         textArea3.setValue("""
                 Bibliotekarie Britt-Marie
@@ -79,6 +82,7 @@ public class AboutUsView extends VerticalLayout {
         VerticalLayout tab4 = new VerticalLayout();
         accordion.add("Besök oss", tab4);
         TextArea textArea4 = new TextArea();
+        textArea4.setReadOnly(true);
         textArea4.setWidth("700px");
         textArea4.setValue("""
                 - Adress
@@ -88,6 +92,7 @@ public class AboutUsView extends VerticalLayout {
         VerticalLayout tab5 = new VerticalLayout();
         accordion.add("Kontakt", tab5);
         TextArea textArea5 = new TextArea();
+        textArea5.setReadOnly(true);
         textArea5.setWidth("700px");
         textArea5.setValue("""
                 Telefonnummer

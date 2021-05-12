@@ -69,7 +69,7 @@ public class StaffLayout extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "LIBSYS logo"));
+        logoLayout.add(new Image("images/LIBSYS.png", "LIBSYS logo"));
         logoLayout.add(new H1("LIBSYS"));
         layout.add(logoLayout, menu);
         return layout;
