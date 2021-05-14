@@ -76,7 +76,7 @@ public class AboutUsView extends VerticalLayout {
         textArea3.setWidth("700px");
         textArea3.setValue("""
                 Bibliotekarie Britt-Marie
-                Bibliotekens Chef Chad""");
+                BiblioteksChef Chad""");
         tab3.add(textArea3);
 
         VerticalLayout tab4 = new VerticalLayout();

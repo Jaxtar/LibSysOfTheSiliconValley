@@ -1,10 +1,12 @@
 package com.PiratesOfTheSiliconValley.LibSys.security;
 
+
 import com.PiratesOfTheSiliconValley.LibSys.views.AboutUsView;
 import com.PiratesOfTheSiliconValley.LibSys.views.MainPage;
 import com.PiratesOfTheSiliconValley.LibSys.views.OpenHoursView;
 import com.PiratesOfTheSiliconValley.LibSys.views.SeminarView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
+
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoginView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffMainView;
 import com.vaadin.flow.component.UI;
@@ -25,8 +27,10 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
     }
 
     private void authenticateNavigation(BeforeEnterEvent event) {
+
         if ((StaffBookView.class.equals(event.getNavigationTarget())
                 || StaffMainView.class.equals(event.getNavigationTarget()))
+
                 && !SecurityUtils.isUserLoggedIn()) {
             event.rerouteTo(StaffLoginView.class);
         }
