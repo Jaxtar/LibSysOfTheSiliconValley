@@ -1,7 +1,14 @@
 package com.PiratesOfTheSiliconValley.LibSys.security;
 
-import com.PiratesOfTheSiliconValley.LibSys.views.*;
+
+import com.PiratesOfTheSiliconValley.LibSys.views.AboutUsView;
+import com.PiratesOfTheSiliconValley.LibSys.views.MainPage;
+import com.PiratesOfTheSiliconValley.LibSys.views.OpenHoursView;
+import com.PiratesOfTheSiliconValley.LibSys.views.SeminarView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
+
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoginView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffMainView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;
@@ -20,12 +27,10 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
     }
 
     private void authenticateNavigation(BeforeEnterEvent event) {
-        if (!StaffLoginView.class.equals(event.getNavigationTarget())
-                && !MainPage.class.equals(event.getNavigationTarget())
-                && !BookCatalogueView.class.equals(event.getNavigationTarget())
-                && !SeminarView.class.equals(event.getNavigationTarget())
-                && !OpenHoursView.class.equals(event.getNavigationTarget())
-                && !AboutUsView.class.equals(event.getNavigationTarget())
+
+        if ((StaffBookView.class.equals(event.getNavigationTarget())
+                || StaffMainView.class.equals(event.getNavigationTarget()))
+
                 && !SecurityUtils.isUserLoggedIn()) {
             event.rerouteTo(StaffLoginView.class);
         }

@@ -1,9 +1,10 @@
 package com.PiratesOfTheSiliconValley.LibSys.views;
 
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoginView;
-
+import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
@@ -54,8 +55,15 @@ public class Navbar extends AppLayout {
         layout.add(new DrawerToggle());
         viewTitle = new H1();
         layout.add(viewTitle);
-        layout.add(new Avatar());
+        layout.add(avatar());
         return layout;
+    }
+
+    private Component avatar(){
+        VerticalLayout avatar = new VerticalLayout();
+        avatar.add(new Avatar());
+        avatar.addClickListener(e -> UI.getCurrent().navigate(UserAccount.class));
+        return avatar;
     }
 
     private Component createDrawerContent(Tabs menu) {
@@ -68,8 +76,8 @@ public class Navbar extends AppLayout {
         HorizontalLayout logoLayout = new HorizontalLayout();
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "LIBSYS logo"));
-        logoLayout.add(new H1("LIBSYS"));
+        logoLayout.add(new Image("images/LIBSYS.png", "LIBSYS logo"));
+        logoLayout.add(new H1("Powered by LIBSYS"));
         layout.add(logoLayout, menu);
         return layout;
     }

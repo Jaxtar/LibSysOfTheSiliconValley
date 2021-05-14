@@ -1,3 +1,12 @@
 main-page {
   display: block;
 }
+
+.desc{
+  font-size: 2em;
+  line-height: 1em;
+}
+
+.info{
+  white-space: pre-wrap;
+}
