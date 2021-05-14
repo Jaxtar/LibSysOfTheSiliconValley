@@ -1,9 +1,5 @@
 package com.PiratesOfTheSiliconValley.LibSys.views;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.BookRepository;
 import com.vaadin.flow.component.Tag;
@@ -44,7 +40,7 @@ public class BookView extends VerticalLayout implements HasUrlParameter<String>{
         this.importantInfo = new H3();
         this.description = new Span();
         this.remainingInfo = new H5();
-
+        
         add(image, title, importantInfo, description, remainingInfo);
     }
 
@@ -59,12 +55,10 @@ public class BookView extends VerticalLayout implements HasUrlParameter<String>{
     }
 
     private void createView(){
-        String path = Files.exists(Paths.get(String.format("../../../../../resources/META-INF/resources/images/books/1.png", book.getBookID()))) 
-                    ? String.format("images/books/%s.png", book.getBookID())
-                    : "images/books/bookNotFound.png";
+        String path = String.format("images/books/%s.png", book.getBookID());
         
         image.setSrc(path);
-        image.setMaxHeight("10em");
+        image.setMaxHeight("20em");
 
         title.setText(book.getTitle());
 
