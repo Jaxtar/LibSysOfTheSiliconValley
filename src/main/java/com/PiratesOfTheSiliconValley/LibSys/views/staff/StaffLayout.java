@@ -90,6 +90,7 @@ public class StaffLayout extends AppLayout {
         return new Tab[]{
             createTab("Main", StaffMainView.class),
             createTab("Books", StaffBookView.class),
+            createTab("Staff", StaffView.class)
                 //createTab("E-Books", classname.class),
                 //createTab("AudioBooks", classname.class),
                 //createTab("Movies", classname.class),

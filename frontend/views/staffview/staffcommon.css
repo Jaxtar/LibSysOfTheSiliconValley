@@ -3,7 +3,7 @@
     display: flex;
 }
 
-.list-view .book-grid {
+.list-view .book-grid  {
     flex: 1;
 }
 
@@ -15,6 +15,28 @@
 @media all and (max-width: 1100px) {
     .list-view.editing .toolbar,
     .list-view.editing .book-grid {
+        display: none;
+   }
+}
+
+
+
+.staff-view .div {
+    display: flex;
+}
+
+.staff-view .staff-grid {
+    flex: 1;
+}
+
+.staff-view .staff-form {
+    flex: 1;
+    padding: var(--lumo-space-m);
+}
+
+@media all and (max-width: 1100px) {
+    .staff-view.editing .toolbar,
+    .staff-view.editing .staff-grid {
         display: none;
    }
 }
