@@ -40,3 +40,7 @@
         display: none;
    }
 }
+
+.vaadin-notification-tray {
+    background: yellow;
+}

@@ -96,7 +96,7 @@ public class StaffForm extends FormLayout {
     public static class DeleteEvent extends StaffForm.StaffFormEvent {
         DeleteEvent(StaffForm source, Staff staff) {
             super(source, staff);
-            Notification.show(staff.getFirstname() + " " + staff.getLastname() + " är raderat.");
+            Notification.show(staff.getFirstname() + " " + staff.getLastname() + " är raderat.", 1200, Notification.Position.MIDDLE );
         }
     }
 

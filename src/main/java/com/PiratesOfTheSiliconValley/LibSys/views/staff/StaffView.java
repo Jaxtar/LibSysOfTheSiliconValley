@@ -14,6 +14,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import java.awt.*;
+
 @Route(value = "/staff/info", layout = StaffLayout.class)
 @PageTitle("Biblioteket Jisho")
 public class StaffView extends VerticalLayout {
@@ -82,7 +84,7 @@ public class StaffView extends VerticalLayout {
         if (staff == null) {
             closeEditor();
             Notification.show(staff.getFirstname() + " " + staff.getLastname() + "" +
-                    " uppiften är ändrade.");
+                    " uppiften är ändrade.", 1200, Notification.Position.MIDDLE  );
         } else {
             staffForm.setStaff(staff);
             staffForm.setVisible(true);
@@ -94,7 +96,7 @@ public class StaffView extends VerticalLayout {
         staffController.save(event.getStaff());
         updateList();
         closeEditor();
-        Notification.show("Ny anställd  skapad.");
+        Notification.show("Ny anställd  skapad.", 1200, Notification.Position.MIDDLE );
     }
 
     private void deleteStaff(StaffForm.DeleteEvent event) {
