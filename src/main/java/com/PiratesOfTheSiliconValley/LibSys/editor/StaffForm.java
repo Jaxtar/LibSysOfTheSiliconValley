@@ -9,6 +9,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -90,13 +91,14 @@ public class StaffForm extends FormLayout {
     public static class SaveEvent extends StaffForm.StaffFormEvent {
         SaveEvent(StaffForm source, Staff staff) {
             super(source, staff);
+            Notification.show(staff.getFirstname() + " " + staff.getLastname() + " är nu sparad.", 1500, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         }
     }
 
     public static class DeleteEvent extends StaffForm.StaffFormEvent {
         DeleteEvent(StaffForm source, Staff staff) {
             super(source, staff);
-            Notification.show(staff.getFirstname() + " " + staff.getLastname() + " är raderat.", 1200, Notification.Position.MIDDLE );
+           Notification.show(staff.getFirstname() + " " + staff.getLastname() + " har raderats från lista.", 1500, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }
 

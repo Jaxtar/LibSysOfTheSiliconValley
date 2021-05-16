@@ -4,7 +4,9 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.controller.StaffController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Staff;
 import com.PiratesOfTheSiliconValley.LibSys.editor.StaffForm;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -37,11 +39,11 @@ public class StaffView extends VerticalLayout {
         staffForm.addListener(StaffForm.DeleteEvent.class, this::deleteStaff);
         staffForm.addListener(StaffForm.CloseEvent.class, e -> closeEditor());
 
-        Div div = new Div(grid, staffForm);
-        div.addClassName("div");
-        div.setSizeFull();
+        Div content = new Div(grid, staffForm);
+        content.addClassName("content");
+        content.setSizeFull();
 
-        add(getToolbar(), div);
+        add(getToolbar(), content);
         updateList();
         closeEditor();
     }
@@ -61,7 +63,7 @@ public class StaffView extends VerticalLayout {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addStaffButton = new Button("Add Staff");
+        Button addStaffButton = new Button("Lägg till ny anställd");
         addStaffButton.addClickListener(click -> addStaff());
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addStaffButton);
@@ -83,8 +85,6 @@ public class StaffView extends VerticalLayout {
     public void editStaff(Staff staff) {
         if (staff == null) {
             closeEditor();
-            Notification.show(staff.getFirstname() + " " + staff.getLastname() + "" +
-                    " uppiften är ändrade.", 1200, Notification.Position.MIDDLE  );
         } else {
             staffForm.setStaff(staff);
             staffForm.setVisible(true);
@@ -96,7 +96,6 @@ public class StaffView extends VerticalLayout {
         staffController.save(event.getStaff());
         updateList();
         closeEditor();
-        Notification.show("Ny anställd  skapad.", 1200, Notification.Position.MIDDLE );
     }
 
     private void deleteStaff(StaffForm.DeleteEvent event) {
@@ -108,7 +107,5 @@ public class StaffView extends VerticalLayout {
     private void updateList() {
         grid.setItems(staffController.findAll(filterText.getValue()));
     }
-
-
 }
 
