@@ -1,4 +1,4 @@
-package com.PiratesOfTheSiliconValley.LibSys.views;
+package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -7,16 +7,16 @@ import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "", layout = Navbar.class)
-@PageTitle("Biblioteket Jisho")
+@Route(value = "/seminars", layout = Navbar.class)
+@PageTitle("Seminarium")
 @CssImport("./views/mainview/main-page.css")
-@Tag("main-page")
+@Tag("item-view")
 @JsModule("./views/mainview/main-page.ts")
-public class MainPage extends LitTemplate {
+public class SeminarView extends LitTemplate {
 
     // This is the Java companion file of a design
     // You can find the design file inside /frontend/views/
 
-    public MainPage() {
+    public SeminarView() {
     }
 }

@@ -18,6 +18,10 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    public User getByUsername(String filterName){
+        return userRepository.getByUsername(filterName);
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -26,11 +30,9 @@ public class UserController {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return userRepository.findAll();
         } else {
-            return userRepository.findByLastnameContainsIgnoreCase(stringFilter);
+            return userRepository.findByUsernameContainsIgnoreCase(stringFilter);
         }
     }
-
-    // public long count() { return bookRepository.count(); }
 
     public void delete(User user) {
         userRepository.delete(user);
@@ -41,7 +43,18 @@ public class UserController {
             LOGGER.log(Level.SEVERE,
                     "User is null. Are you sure you have connected your form to the application?");
             return;
+        } else if (user.getPasswordHash() == null) {
+            LOGGER.log(Level.SEVERE,
+                    "Hash is Null.");
+            return;
         }
+        /*
+        else if (user.getPasswordSalt() == null){
+
+            LOGGER.log(Level.SEVERE,
+                    "Salt is Null.");
+            return;
+        }*/
         userRepository.save(user);
     }
 }

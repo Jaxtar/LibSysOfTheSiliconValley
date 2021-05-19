@@ -1,6 +1,7 @@
-package com.PiratesOfTheSiliconValley.LibSys.views.staff;
+package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
-import com.PiratesOfTheSiliconValley.LibSys.views.login.LoggedInMain;
+import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -8,7 +9,6 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -19,20 +19,25 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 import java.util.Optional;
 
+/**
+ * The main view is a top-level placeholder for other views.
+ */
+@PWA(name = "LIBSYS", shortName = "LIBSYS", enableInstallPrompt = false)
 @JsModule("./styles/shared-styles.js")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 @CssImport("./views/main/navbar.css")
-public class StaffLayout extends AppLayout {
+public class Navbar extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
 
-    public StaffLayout() {
+    public Navbar() {
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -47,11 +52,9 @@ public class StaffLayout extends AppLayout {
         layout.setSpacing(false);
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.add(new DrawerToggle());
-
         viewTitle = new H1();
-        Anchor staffLogout = new Anchor("logout", "Log out");
         layout.add(viewTitle);
-        layout.add(new Avatar(), staffLogout);
+        layout.add(new Avatar());
         return layout;
     }
 
@@ -80,17 +83,17 @@ public class StaffLayout extends AppLayout {
         return tabs;
     }
 
-
-
     private Component[] createMenuItems() {
         return new Tab[]{
-            createTab("Main", LoggedInMain.class),
-            createTab("Books", StaffBookView.class),
-            createTab("Users", StaffUserView.class),
-                //createTab("AudioBooks", classname.class),
-                //createTab("Movies", classname.class),
-                //createTab("Categories", classname.class)
-                //createTab("Logout", stafflogout)
+
+                createTab("Huvudsida", MainPage.class),
+                        createTab("Boklista", BookCatalogueView.class),
+                        createTab("Seminarium", SeminarView.class),
+                        createTab("Öppettider", OpenHoursView.class),
+                        createTab("Om oss", AboutUsView.class),
+                        createTab("Login", LoginView.class)
+
+
         };
     }
 
@@ -109,10 +112,7 @@ public class StaffLayout extends AppLayout {
     }
 
     private Optional<Tab> getTabForComponent(Component component) {
-        return menu.getChildren()
-                .filter(tab -> ComponentUtil
-                        .getData(tab, Class.class)
-                        .equals(component.getClass()))
+        return menu.getChildren().filter(tab -> ComponentUtil.getData(tab, Class.class).equals(component.getClass()))
                 .findFirst().map(Tab.class::cast);
     }
 
@@ -120,5 +120,4 @@ public class StaffLayout extends AppLayout {
         PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
         return title == null ? "" : title.value();
     }
-
 }

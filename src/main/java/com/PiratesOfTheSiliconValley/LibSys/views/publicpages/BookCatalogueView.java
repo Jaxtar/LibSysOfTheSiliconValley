@@ -1,4 +1,4 @@
-package com.PiratesOfTheSiliconValley.LibSys.views;
+package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.BookController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
@@ -8,7 +8,6 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.grid.HeaderRow;
 import com.vaadin.flow.component.gridpro.GridPro;
@@ -22,8 +21,6 @@ import com.vaadin.flow.router.Route;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @Route(value = "/bookcatalogue", layout = Navbar.class)
 @PageTitle("Book Catalogue")

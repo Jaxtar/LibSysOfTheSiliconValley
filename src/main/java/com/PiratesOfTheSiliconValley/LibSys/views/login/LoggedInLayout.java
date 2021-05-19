@@ -1,7 +1,8 @@
-package com.PiratesOfTheSiliconValley.LibSys.views;
+package com.PiratesOfTheSiliconValley.LibSys.views.login;
 
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoginView;
-
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
+import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
+import com.PiratesOfTheSiliconValley.LibSys.views.*;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -20,24 +21,24 @@ import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 import java.util.Optional;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
-@PWA(name = "LIBSYS", shortName = "LIBSYS", enableInstallPrompt = false)
+
 @JsModule("./styles/shared-styles.js")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 @CssImport("./views/main/navbar.css")
-public class Navbar extends AppLayout {
+public class LoggedInLayout extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
+    private AuthService authService;
 
-    public Navbar() {
+    public LoggedInLayout(AuthService authService) {
+        this.authService = authService;
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -84,13 +85,10 @@ public class Navbar extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{createTab("Huvudsida", MainPage.class),
-                        createTab("Boklista", BookCatalogueView.class),
-                        createTab("Seminarium", SeminarView.class),
-                        createTab("Öppettider", OpenHoursView.class),
-                        createTab("Om oss", AboutUsView.class),
-                        createTab("Staff Login", StaffLoginView.class)
-        };
+        User user = VaadinSession.getCurrent().getAttribute(User.class);
+        return authService.getAuthorizedRoutes(user.getRole()).stream()
+                .map(r -> createTab(r.name(), r.view()))
+                .toArray(Component[]::new);
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

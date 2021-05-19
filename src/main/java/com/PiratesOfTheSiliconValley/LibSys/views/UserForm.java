@@ -1,13 +1,17 @@
-package com.PiratesOfTheSiliconValley.LibSys.editor;
+package com.PiratesOfTheSiliconValley.LibSys.views;
 
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -16,20 +20,14 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
 
-public class StaffUserForm extends FormLayout {
+public class UserForm extends FormLayout {
 
     private User user;
 
-    TextField personal_id_number = new TextField("Personal ID Number");
+    IntegerField userID = new IntegerField("UserID");
+    ComboBox<Role> role = new ComboBox<Role>("Role");
+    TextField username = new TextField("Username");
     PasswordField password = new PasswordField("Password");
-    TextField firstname = new TextField("Firstname");
-    TextField lastname = new TextField("Lastname");
-    TextField streetaddress = new TextField("Street Address");
-    TextField postalcode = new TextField("PostalCode");
-    TextField city = new TextField("City");
-    TextField email = new TextField("Email");
-    TextField phone = new TextField("Phone");
-
 
     Binder<User> binder = new BeanValidationBinder<>(User.class);
 
@@ -37,13 +35,28 @@ public class StaffUserForm extends FormLayout {
     Button delete = new Button("Delete");
     Button close = new Button("Cancel");
 
-    public StaffUserForm() {
+    public UserForm() {
         addClassName("user-form");
+        role.setItems(Role.values());
+
         binder.bindInstanceFields(this);
 
-        add(personal_id_number, password, firstname, lastname,
-                streetaddress, postalcode, city, email, phone,
+        add(userID,role,username, password,
                 createButtonsLayout());
+    }
+
+    public static class Bean {
+        private Role field;
+
+        public Role getField() {
+
+            return field;
+        }
+
+        public void setField(Role field) {
+
+            this.field = field;
+        }
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -67,7 +80,7 @@ public class StaffUserForm extends FormLayout {
     private void validateAndSave() {
         try {
             binder.writeBean(user);
-            fireEvent(new SaveEvent(this, user));
+           fireEvent(new SaveEvent(this, user));
         } catch (ValidationException e) {
             e.printStackTrace();
         }
@@ -79,10 +92,10 @@ public class StaffUserForm extends FormLayout {
     }
 
     // Events
-    public static abstract class StaffUserFormEvent extends ComponentEvent<StaffUserForm> {
+    public static abstract class UserFormEvent extends ComponentEvent<UserForm> {
         private User user;
 
-        protected StaffUserFormEvent(StaffUserForm source, User user) {
+        protected UserFormEvent(UserForm source, User user) {
             super(source, false);
             this.user = user;
         }
@@ -92,21 +105,21 @@ public class StaffUserForm extends FormLayout {
         }
     }
 
-    public static class SaveEvent extends StaffUserFormEvent {
-        SaveEvent(StaffUserForm source, User user) {
+    public static class SaveEvent extends UserFormEvent {
+        SaveEvent(UserForm source, User user) {
             super(source, user);
         }
     }
 
-    public static class DeleteEvent extends StaffUserFormEvent {
-        DeleteEvent(StaffUserForm source, User user) {
+    public static class DeleteEvent extends UserFormEvent {
+        DeleteEvent(UserForm source, User user) {
             super(source, user);
         }
 
     }
 
-    public static class CloseEvent extends StaffUserFormEvent {
-        CloseEvent(StaffUserForm source) {
+    public static class CloseEvent extends UserFormEvent {
+        CloseEvent(UserForm source) {
             super(source, null);
         }
     }

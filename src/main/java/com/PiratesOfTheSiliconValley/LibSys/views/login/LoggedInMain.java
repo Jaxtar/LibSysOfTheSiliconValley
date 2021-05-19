@@ -1,4 +1,4 @@
-package com.PiratesOfTheSiliconValley.LibSys.views.staff;
+package com.PiratesOfTheSiliconValley.LibSys.views.login;
 
 
 import com.vaadin.flow.component.dependency.CssImport;
@@ -6,10 +6,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "/staff/main", layout = StaffLayout.class)
-@PageTitle("Biblioteket Jisho")
+//@Route(value = "/staffmain", layout = StaffLayout.class)
+@PageTitle("LoggedInMain")
 @CssImport("./views/staffview/staffcommon.css")
-public class StaffMainView extends VerticalLayout {
+public class LoggedInMain extends VerticalLayout {
 
 
 }

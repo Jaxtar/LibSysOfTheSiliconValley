@@ -2,7 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.UserController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
-import com.PiratesOfTheSiliconValley.LibSys.editor.StaffUserForm;
+import com.PiratesOfTheSiliconValley.LibSys.views.UserForm;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -11,16 +11,15 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 
 
-@Route(value = "/staff/user", layout = StaffLayout.class)
-@PageTitle("Biblioteket Jisho")
+//@Route(value = "/staffuser", layout = StaffLayout.class)
+@PageTitle("Staffuser")
 
 public class StaffUserView extends VerticalLayout {
 
     private UserController userController;
-    private StaffUserForm staffUserForm;
+    private UserForm staffUserForm;
 
     private Grid<User> grid = new Grid<>(User.class);
     private TextField filterText = new TextField();
@@ -32,10 +31,10 @@ public class StaffUserView extends VerticalLayout {
         configureGrid();
 
 
-        staffUserForm = new StaffUserForm();
-        staffUserForm.addListener(StaffUserForm.SaveEvent.class, this::saveUser);
-        staffUserForm.addListener(StaffUserForm.DeleteEvent.class, this::deleteUser);
-        staffUserForm.addListener(StaffUserForm.CloseEvent.class, e -> closeEditor());
+        staffUserForm = new UserForm();
+        staffUserForm.addListener(UserForm.SaveEvent.class, this::saveUser);
+        staffUserForm.addListener(UserForm.DeleteEvent.class, this::deleteUser);
+        staffUserForm.addListener(UserForm.CloseEvent.class, e -> closeEditor());
 
 
         Div content = new Div(grid, staffUserForm);
@@ -93,13 +92,13 @@ public class StaffUserView extends VerticalLayout {
         }
     }
 
-    private void saveUser(StaffUserForm.SaveEvent event) {
+    private void saveUser(UserForm.SaveEvent event) {
         userController.save(event.getUser());
         updateList();
         closeEditor();
     }
 
-    private void deleteUser(StaffUserForm.DeleteEvent event) {
+    private void deleteUser(UserForm.DeleteEvent event) {
         userController.delete(event.getUser());
         updateList();
         closeEditor();
