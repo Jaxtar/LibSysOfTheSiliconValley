@@ -35,6 +35,7 @@ public class StaffBookView  extends VerticalLayout {
         staffBookForm.addListener(StaffBookForm.SaveEvent.class, this::saveBook);
         staffBookForm.addListener(StaffBookForm.DeleteEvent.class, this::deleteBook);
         staffBookForm.addListener(StaffBookForm.CloseEvent.class, e -> closeEditor());
+        staffBookForm.setMinWidth("20em");
 
         Div content = new Div(grid, staffBookForm);
         content.addClassName("content");
@@ -105,6 +106,4 @@ public class StaffBookView  extends VerticalLayout {
     private void updateList() {
         grid.setItems(bookController.findAll(filterText.getValue()));
     }
-
-
 }
