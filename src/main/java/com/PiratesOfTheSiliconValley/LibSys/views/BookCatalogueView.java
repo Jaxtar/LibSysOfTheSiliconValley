@@ -134,8 +134,8 @@ public class BookCatalogueView extends LitTemplate {
         filterRow.getCell(authorColumn).setComponent(authorFilter);
 
 
-        ComboBox<String> languageFilter = new ComboBox<>();
-        languageFilter.setItems(Arrays.asList("Svenska", "English"));
+        ComboBox<Book.Language> languageFilter = new ComboBox<>();
+        languageFilter.setItems(Book.Language.values());
         languageFilter.setPlaceholder("Filter");
         languageFilter.setClearButtonVisible(true);
         languageFilter.setWidth("100%");
@@ -143,22 +143,22 @@ public class BookCatalogueView extends LitTemplate {
                 event -> dataProvider.addFilter(book -> areLanguageEqual(book, languageFilter)));
         filterRow.getCell(languageColumn).setComponent(languageFilter);
 
-        TextField genre1Filter = new TextField();
+        ComboBox<Book.Genre> genre1Filter = new ComboBox<>();
+        genre1Filter.setItems(Book.Genre.values());
         genre1Filter.setPlaceholder("Filter");
         genre1Filter.setClearButtonVisible(true);
         genre1Filter.setWidth("100%");
-        genre1Filter.setValueChangeMode(ValueChangeMode.EAGER);
-        genre1Filter.addValueChangeListener(event -> dataProvider
-                .addFilter(book -> StringUtils.containsIgnoreCase(book.getGenre1(), genre1Filter.getValue())));
+        genre1Filter.addValueChangeListener(
+            event -> dataProvider.addFilter(book -> areGenre1Equal(book, genre1Filter)));
         filterRow.getCell(genre1Column).setComponent(genre1Filter);
 
-        TextField genre2Filter = new TextField();
+        ComboBox<Book.Genre> genre2Filter = new ComboBox<>();
+        genre2Filter.setItems(Book.Genre.values());
         genre2Filter.setPlaceholder("Filter");
         genre2Filter.setClearButtonVisible(true);
         genre2Filter.setWidth("100%");
-        genre2Filter.setValueChangeMode(ValueChangeMode.EAGER);
-        genre2Filter.addValueChangeListener(event -> dataProvider
-                .addFilter(book -> StringUtils.containsIgnoreCase(book.getGenre2(), genre2Filter.getValue())));
+        genre2Filter.addValueChangeListener(
+                event -> dataProvider.addFilter(book -> areGenre2Equal(book, genre2Filter)));
         filterRow.getCell(genre2Column).setComponent(genre2Filter);
 
         ComboBox<Book.Format> formatFilter = new ComboBox<>();
@@ -182,18 +182,30 @@ public class BookCatalogueView extends LitTemplate {
     }
 
 
-    private boolean areLanguageEqual(Book book, ComboBox<String> languageFilter) {
-        String languageFilterValue = languageFilter.getValue();
-        if (languageFilterValue != null) {
-            return StringUtils.equals(book.getLanguage(), languageFilterValue);
+    private boolean areLanguageEqual(Book book, ComboBox<Book.Language> languageFilter) {
+        if (languageFilter.getValue() != null) {
+            return book.getLanguage().toString().equals(languageFilter.getValue().toString());
         }
         return true;
     }
 
     private boolean areFormatEqual(Book book, ComboBox<Book.Format> formatFilter) {
-        Enum formatFilterValue = formatFilter.getValue();
-        if (formatFilterValue != null) {
-            return StringUtils.equals(book.getFormat(), (CharSequence) formatFilterValue);
+        if (formatFilter.getValue() != null) {
+            return book.getFormat().toString().equals(formatFilter.getValue().toString());
+        }
+        return true;
+    }
+
+    private boolean areGenre1Equal(Book book, ComboBox<Book.Genre> formatFilter) {
+        if (formatFilter.getValue() != null) {
+            return book.getGenre1().toString().equals(formatFilter.getValue().toString());
+        }
+        return true;
+    }
+
+    private boolean areGenre2Equal(Book book, ComboBox<Book.Genre> formatFilter) {
+        if (formatFilter.getValue() != null) {
+            return book.getGenre2().toString().equals(formatFilter.getValue().toString());
         }
         return true;
     }

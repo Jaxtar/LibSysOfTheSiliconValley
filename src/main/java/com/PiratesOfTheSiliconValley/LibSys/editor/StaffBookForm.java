@@ -17,8 +17,6 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
-import java.util.List;
-
 public class StaffBookForm extends FormLayout {
 
     private Book book;
@@ -26,9 +24,9 @@ public class StaffBookForm extends FormLayout {
     TextField title = new TextField("Title");
     TextField author = new TextField("Author");
     TextArea description = new TextArea("Description");
-    TextField language = new TextField("Language");
-    TextField genre1 = new TextField("Genre 1");
-    TextField genre2 = new TextField("Genre 2");
+    ComboBox<Book.Language> language = new ComboBox<>("Language");
+    ComboBox<Book.Genre> genre1 = new ComboBox<>("Genre");
+    ComboBox<Book.Genre> genre2 = new ComboBox<>("Genre");
     ComboBox<Book.Format> format = new ComboBox<>("Format");
     IntegerField pages = new IntegerField("Pages");
     TextField publisher = new TextField("Publisher");
@@ -37,20 +35,25 @@ public class StaffBookForm extends FormLayout {
 
     Binder<Book> binder = new BeanValidationBinder<>(Book.class);
 
-    Button save = new Button("Save");
-    Button delete = new Button("Delete");
-    Button close = new Button("Cancel");
+    Button save = new Button("Spara");
+    Button delete = new Button("Radera");
+    Button close = new Button("Avbryt");
 
     public StaffBookForm() {
         addClassName("book-form");
         binder.bindInstanceFields(this);
+        binder.addValueChangeListener(e -> save.setEnabled(binder.isValid()));
 
+        language.setItems(Book.Language.values());
+        genre1.setItems(Book.Genre.values());
+        genre2.setItems(Book.Genre.values());
         format.setItems(Book.Format.values());
 
-        add(title, author, description,
+        add(createButtonsLayout(),title, author, description,
             language, genre1, genre2, format,
-            pages, publisher, publishingyear, isbn,
-                createButtonsLayout());
+            pages, publisher, publishingyear, isbn
+                );
+        
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -65,8 +68,8 @@ public class StaffBookForm extends FormLayout {
         delete.addClickListener(event -> fireEvent(new DeleteEvent(this, book)));
         close.addClickListener(event -> fireEvent(new CloseEvent(this)));
 
-
-        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
+        save.setEnabled(false);
+        
 
         return new HorizontalLayout(save, delete, close);
     }
