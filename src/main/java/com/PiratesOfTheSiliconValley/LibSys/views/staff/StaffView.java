@@ -4,19 +4,16 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.controller.StaffController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Staff;
 import com.PiratesOfTheSiliconValley.LibSys.editor.StaffForm;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
-import java.awt.*;
 
 @Route(value = "/staff/info", layout = StaffLayout.class)
 @PageTitle("Biblioteket Jisho")
@@ -52,6 +49,7 @@ public class StaffView extends VerticalLayout {
         addClassName("staff-grid");
         grid.setSizeFull();
         grid.setColumns("firstname", "lastname", "username", "email", "occupation");
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event ->
                 editStaff(event.getValue()));
@@ -72,8 +70,8 @@ public class StaffView extends VerticalLayout {
     }
 
     void addStaff() {
-        grid.asSingleSelect().clear();
-        editStaff(new Staff());
+            grid.asSingleSelect().clear();
+            editStaff(new Staff());
     }
 
     private void closeEditor() {
@@ -85,7 +83,7 @@ public class StaffView extends VerticalLayout {
     public void editStaff(Staff staff) {
         if (staff == null) {
             closeEditor();
-        } else {
+        }else {
             staffForm.setStaff(staff);
             staffForm.setVisible(true);
             addClassName("editing");
@@ -96,6 +94,8 @@ public class StaffView extends VerticalLayout {
         staffController.save(event.getStaff());
         updateList();
         closeEditor();
+        Notification.show("Anställd är nu sparad.", 1500,
+                Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
 
     private void deleteStaff(StaffForm.DeleteEvent event) {
@@ -108,4 +108,5 @@ public class StaffView extends VerticalLayout {
         grid.setItems(staffController.findAll(filterText.getValue()));
     }
 }
+
 

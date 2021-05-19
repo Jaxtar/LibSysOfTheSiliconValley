@@ -34,12 +34,14 @@ public class StaffForm extends FormLayout {
     Button delete = new Button("Delete");
     Button close = new Button("Cancel");
 
+
     public StaffForm(){
+
         addClassName("staff-form");
+
         binder.bindInstanceFields(this);
 
         occupation.setItems(Staff.Occupation.values());
-
         add(firstname, lastname, username, password, email, occupation, createButtonLayout());
     }
 
@@ -54,7 +56,6 @@ public class StaffForm extends FormLayout {
         save.addClickListener(event -> validateAndSave());
         delete.addClickListener(event -> fireEvent(new StaffForm.DeleteEvent(this, staff)));
         close.addClickListener(event -> fireEvent(new StaffForm.CloseEvent(this)));
-
 
         binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
 
@@ -91,14 +92,14 @@ public class StaffForm extends FormLayout {
     public static class SaveEvent extends StaffForm.StaffFormEvent {
         SaveEvent(StaffForm source, Staff staff) {
             super(source, staff);
-            Notification.show(staff.getFirstname() + " " + staff.getLastname() + " är nu sparad.", 1500, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         }
     }
 
     public static class DeleteEvent extends StaffForm.StaffFormEvent {
         DeleteEvent(StaffForm source, Staff staff) {
             super(source, staff);
-           Notification.show(staff.getFirstname() + " " + staff.getLastname() + " har raderats från lista.", 1500, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
+            Notification.show(staff.getFirstname() + " " + staff.getLastname() + " har raderats från lista.",
+                    1500, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }
 
@@ -112,5 +113,5 @@ public class StaffForm extends FormLayout {
                                                                   ComponentEventListener<T> listener) {
         return getEventBus().addListener(eventType, listener);
     }
-
 }
+

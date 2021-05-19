@@ -1,6 +1,7 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -36,6 +37,7 @@ public class Staff {
 
     @NotNull
     @NotEmpty
+    @Email
     private String email = "";
 
     @Enumerated(EnumType.STRING)
@@ -107,5 +109,10 @@ public class Staff {
 
     public void setOccupation(Occupation occupation) {
         this.occupation = occupation;
+    }
+
+    @Override
+    public String toString() {
+        return username;
     }
 }

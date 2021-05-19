@@ -1,10 +1,13 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.controller;
 
-import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.StaffRepository;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +16,7 @@ import java.util.logging.Logger;
 public class StaffController {
     private static final Logger LOGGER = Logger.getLogger(StaffController.class.getName());
     private StaffRepository staffRepository;
+    private Staff staff;
 
     public StaffController(StaffRepository staffRepository){
         this.staffRepository = staffRepository;
@@ -41,5 +45,4 @@ public class StaffController {
         }
         staffRepository.save(staff);
     }
-
 }
