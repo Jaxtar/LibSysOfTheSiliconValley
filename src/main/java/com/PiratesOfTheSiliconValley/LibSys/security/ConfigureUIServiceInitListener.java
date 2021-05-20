@@ -1,18 +1,18 @@
 package com.PiratesOfTheSiliconValley.LibSys.security;
 
 
-import com.PiratesOfTheSiliconValley.LibSys.views.AboutUsView;
-import com.PiratesOfTheSiliconValley.LibSys.views.MainPage;
-import com.PiratesOfTheSiliconValley.LibSys.views.OpenHoursView;
-import com.PiratesOfTheSiliconValley.LibSys.views.SeminarView;
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
+import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.UsersView;
 
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoginView;
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffMainView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;
 import com.vaadin.flow.server.VaadinServiceInitListener;
+import com.vaadin.flow.server.VaadinSession;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,12 +27,13 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
     }
 
     private void authenticateNavigation(BeforeEnterEvent event) {
+        User user = VaadinSession.getCurrent().getAttribute(User.class);
 
         if ((StaffBookView.class.equals(event.getNavigationTarget())
-                || StaffMainView.class.equals(event.getNavigationTarget()))
-
-                && !SecurityUtils.isUserLoggedIn()) {
-            event.rerouteTo(StaffLoginView.class);
+                || UsersView.class.equals(event.getNavigationTarget())
+                )
+                && (user == null || user.getRole().equals(Role.USER))) {
+            event.rerouteTo(LoginView.class);
         }
     }
 }

@@ -1,14 +1,22 @@
-package com.PiratesOfTheSiliconValley.LibSys.views.staff;
+package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
-import com.PiratesOfTheSiliconValley.LibSys.security.SecurityConfiguration;
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
+import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
+import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
+import com.PiratesOfTheSiliconValley.LibSys.views.logout.LogoutView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.UsersView;
+import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -19,27 +27,36 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.PWA;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
+import org.springframework.context.annotation.Bean;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+/**
+ * The main view is a top-level placeholder for other views.
+ */
+@PWA(name = "LIBSYS", shortName = "LIBSYS", enableInstallPrompt = false)
 @JsModule("./styles/shared-styles.js")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
 @CssImport("./views/main/navbar.css")
-public class StaffLayout extends AppLayout {
+public class Navbar extends AppLayout {
 
-    private final Tabs menu;
+    private Tabs menu;
     private H1 viewTitle;
+    private AuthService authService;
 
-    public StaffLayout() {
+
+    public Navbar() {
+        menu = new Tabs();
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
-        menu = createMenu();
+        createMenu();
         addToDrawer(createDrawerContent(menu));
     }
 
@@ -51,12 +68,17 @@ public class StaffLayout extends AppLayout {
         layout.setSpacing(false);
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.add(new DrawerToggle());
-
         viewTitle = new H1();
-        Anchor staffLogout = new Anchor("logout", "Log out");
         layout.add(viewTitle);
-        layout.add(new Avatar(), staffLogout);
+        layout.add(avatar());
         return layout;
+    }
+
+    private Component avatar(){
+        VerticalLayout avatar = new VerticalLayout();
+        avatar.add(new Avatar());
+        avatar.addClickListener(e -> UI.getCurrent().navigate(UserAccount.class));
+        return avatar;
     }
 
     private Component createDrawerContent(Tabs menu) {
@@ -70,32 +92,46 @@ public class StaffLayout extends AppLayout {
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         logoLayout.add(new Image("images/LIBSYS.png", "LIBSYS logo"));
-        logoLayout.add(new H1("LIBSYS"));
+        logoLayout.add(new H1("Powered by LIBSYS"));
         layout.add(logoLayout, menu);
         return layout;
     }
 
-    private Tabs createMenu() {
-        final Tabs tabs = new Tabs();
-        tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
-        tabs.setId("tabs");
-        tabs.add(createMenuItems());
-        return tabs;
+    private void createMenu() {
+        menu.setOrientation(Tabs.Orientation.VERTICAL);
+        menu.addThemeVariants(TabsVariant.LUMO_MINIMAL);
+        menu.setId("tabs");
+        menu.add(createMenuItems());
     }
 
-
-
     private Component[] createMenuItems() {
-        return new Tab[]{
-            createTab("Main", StaffMainView.class),
-            createTab("Books", StaffBookView.class),
-                //createTab("E-Books", classname.class),
-                //createTab("AudioBooks", classname.class),
-                //createTab("Movies", classname.class),
-                //createTab("Categories", classname.class)
-                //createTab("Logout", stafflogout)
-        };
+        User user = VaadinSession.getCurrent().getAttribute(User.class);
+
+        List<Tab> tabs = new ArrayList<>();
+        
+        tabs.add(createTab("Huvudsida", MainPage.class));
+        
+        if (user != null && user.getRole().equals(Role.USER)){
+            tabs.add(createTab("Boklista", BookCatalogueView.class));
+            tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab("Öppettider", OpenHoursView.class));
+            tabs.add(createTab("Om oss", AboutUsView.class));
+            tabs.add(createTab("Account", UserAccount.class));
+            tabs.add(createTab("Logout", LogoutView.class));
+        } else if (user != null && user.getRole().equals(Role.ADMIN)) {
+            tabs.add(createTab("Books", StaffBookView.class));
+            tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab( "User List", UsersView.class));
+            tabs.add(createTab( "Logout", LogoutView.class));
+        } else  {
+            tabs.add(createTab("Boklista", BookCatalogueView.class));
+            tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab("Öppettider", OpenHoursView.class));
+            tabs.add(createTab("Om oss", AboutUsView.class));
+            tabs.add(createTab("Login", LoginView.class));
+        }
+
+        return tabs.toArray(Component[]::new);
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
@@ -113,10 +149,7 @@ public class StaffLayout extends AppLayout {
     }
 
     private Optional<Tab> getTabForComponent(Component component) {
-        return menu.getChildren()
-                .filter(tab -> ComponentUtil
-                        .getData(tab, Class.class)
-                        .equals(component.getClass()))
+        return menu.getChildren().filter(tab -> ComponentUtil.getData(tab, Class.class).equals(component.getClass()))
                 .findFirst().map(Tab.class::cast);
     }
 
@@ -124,5 +157,4 @@ public class StaffLayout extends AppLayout {
         PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
         return title == null ? "" : title.value();
     }
-
 }

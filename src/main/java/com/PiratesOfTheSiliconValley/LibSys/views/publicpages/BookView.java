@@ -1,4 +1,4 @@
-package com.PiratesOfTheSiliconValley.LibSys.views;
+package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.BookRepository;
