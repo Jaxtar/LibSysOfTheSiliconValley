@@ -1,4 +1,4 @@
-package com.PiratesOfTheSiliconValley.LibSys.editor;
+package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.vaadin.flow.component.ComponentEvent;

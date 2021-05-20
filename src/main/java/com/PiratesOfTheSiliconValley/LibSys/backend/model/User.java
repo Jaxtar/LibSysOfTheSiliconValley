@@ -27,7 +27,7 @@ public class User {
     private String passwordHash;
 
     @NotNull
-    @Column(columnDefinition = "ENUM('USER', 'ADMIN')")
+    @Column(columnDefinition = "ENUM('ADMIN', 'STAFF', 'USER')")
     @Enumerated(EnumType.STRING)
     private Role role;
 

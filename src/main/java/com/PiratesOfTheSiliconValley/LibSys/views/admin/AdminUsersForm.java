@@ -1,4 +1,4 @@
-package com.PiratesOfTheSiliconValley.LibSys.editor;
+package com.PiratesOfTheSiliconValley.LibSys.views.admin;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
@@ -10,7 +10,6 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -19,7 +18,7 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
 
-public class UserForm extends FormLayout {
+public class AdminUsersForm extends FormLayout {
 
     private User user;
 
@@ -38,13 +37,13 @@ public class UserForm extends FormLayout {
     Button close = new Button("Cancel");
 
 
-    public UserForm() {
+    public AdminUsersForm() {
         addClassName("user-form");
         role.setItems(Role.values());
 
         binder.bindInstanceFields(this);
 
-        add(personal_id_number, firstname, lastname, phone, role,username, passwordHash,
+        add(personal_id_number, firstname, lastname, phone, username, passwordHash, role,
                 createButtonsLayout());
     }
 
@@ -95,10 +94,10 @@ public class UserForm extends FormLayout {
     }
 
     // Events
-    public static abstract class UserFormEvent extends ComponentEvent<UserForm> {
+    public static abstract class AdminUserFormEvent extends ComponentEvent<AdminUsersForm> {
         private User user;
 
-        protected UserFormEvent(UserForm source, User user) {
+        protected AdminUserFormEvent(AdminUsersForm source, User user) {
             super(source, false);
             this.user = user;
         }
@@ -108,21 +107,21 @@ public class UserForm extends FormLayout {
         }
     }
 
-    public static class SaveEvent extends UserFormEvent {
-        SaveEvent(UserForm source, User user) {
+    public static class SaveEvent extends AdminUserFormEvent {
+        SaveEvent(AdminUsersForm source, User user) {
             super(source, user);
         }
     }
 
-    public static class DeleteEvent extends UserFormEvent {
-        DeleteEvent(UserForm source, User user) {
+    public static class DeleteEvent extends AdminUserFormEvent {
+        DeleteEvent(AdminUsersForm source, User user) {
             super(source, user);
         }
 
     }
 
-    public static class CloseEvent extends UserFormEvent {
-        CloseEvent(UserForm source) {
+    public static class CloseEvent extends AdminUserFormEvent {
+        CloseEvent(AdminUsersForm source) {
             super(source, null);
         }
     }
