@@ -23,10 +23,13 @@ public class UserForm extends FormLayout {
 
     private User user;
 
-    IntegerField userID = new IntegerField("UserID");
+    TextField personal_id_number = new TextField("Personal ID Number");
+    TextField firstname = new TextField("Firstname");
+    TextField lastname = new TextField("Lastname");
+    TextField phone = new TextField("Phone");
     ComboBox<Role> role = new ComboBox<Role>("Role");
     TextField username = new TextField("Username");
-    PasswordField password = new PasswordField("Password");
+    PasswordField passwordHash = new PasswordField("Password");
 
     Binder<User> binder = new BeanValidationBinder<>(User.class);
 
@@ -34,13 +37,14 @@ public class UserForm extends FormLayout {
     Button delete = new Button("Delete");
     Button close = new Button("Cancel");
 
+
     public UserForm() {
         addClassName("user-form");
         role.setItems(Role.values());
 
         binder.bindInstanceFields(this);
 
-        add(userID,role,username, password,
+        add(personal_id_number, firstname, lastname, phone, role,username, passwordHash,
                 createButtonsLayout());
     }
 

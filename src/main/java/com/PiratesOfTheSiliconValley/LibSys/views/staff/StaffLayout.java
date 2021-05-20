@@ -84,9 +84,8 @@ public class StaffLayout extends AppLayout {
 
     private Component[] createMenuItems() {
         return new Tab[]{
-            createTab("Main", LoggedInMain.class),
-            createTab("Books", StaffBookView.class),
-            createTab("Users", StaffPersonView.class),
+            //createTab("Main", LoggedInMain.class),
+            //createTab("Books", StaffBookView.class),
                 //createTab("AudioBooks", classname.class),
                 //createTab("Movies", classname.class),
                 //createTab("Categories", classname.class)

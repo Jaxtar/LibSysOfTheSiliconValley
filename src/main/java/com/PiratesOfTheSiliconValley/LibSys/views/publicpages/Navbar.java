@@ -1,7 +1,15 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
+import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
+import com.PiratesOfTheSiliconValley.LibSys.views.login.LoggedInMain;
 import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
 
+import com.PiratesOfTheSiliconValley.LibSys.views.logout.LogoutView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.UsersView;
+import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -20,9 +28,12 @@ import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,6 +47,8 @@ public class Navbar extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
+    private AuthService authService;
+
 
     public Navbar() {
         setPrimarySection(Section.DRAWER);
@@ -84,17 +97,33 @@ public class Navbar extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{
+        User user = VaadinSession.getCurrent().getAttribute(User.class);
 
-                createTab("Huvudsida", MainPage.class),
-                        createTab("Boklista", BookCatalogueView.class),
-                        createTab("Seminarium", SeminarView.class),
-                        createTab("Öppettider", OpenHoursView.class),
-                        createTab("Om oss", AboutUsView.class),
-                        createTab("Login", LoginView.class)
+        List<Tab> tabs = new ArrayList<>();
 
+        tabs.add(createTab("Huvudsida", MainPage.class));
 
-        };
+        if (user != null && user.getRole().equals(Role.USER)){
+            tabs.add(createTab("Boklista", BookCatalogueView.class));
+            tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab("Öppettider", OpenHoursView.class));
+            tabs.add(createTab("Om oss", AboutUsView.class));
+            tabs.add(createTab("Account", UserAccount.class));
+            tabs.add(createTab("Logout", LogoutView.class));
+        } else if (user != null && user.getRole().equals(Role.ADMIN)) {
+            tabs.add(createTab("Books", StaffBookView.class));
+            tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab( "User List", UsersView.class));
+            tabs.add(createTab( "Logout", LogoutView.class));
+        } else  {
+            tabs.add(createTab("Boklista", BookCatalogueView.class));
+            tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab("Öppettider", OpenHoursView.class));
+            tabs.add(createTab("Om oss", AboutUsView.class));
+            tabs.add(createTab("Login", LoginView.class));
+        }
+
+        return tabs.toArray(Component[]::new);
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

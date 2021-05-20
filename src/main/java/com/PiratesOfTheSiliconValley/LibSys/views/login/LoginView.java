@@ -1,6 +1,7 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.login;
 
 import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
+import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.MainPage;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -33,10 +34,10 @@ public class LoginView extends VerticalLayout {
                     new Button("Login", event -> {
 
                         try {
-                            authService.authenticate(username.getValue()/*, password.getValue()*/);
-                            UI.getCurrent().navigate("loggedinmain");
+                            authService.authenticate(username.getValue(), password.getValue());
+                            UI.getCurrent().navigate(MainPage.class);
                         } catch (AuthService.AuthException e) {
-                            Notification.show("Wrong username or password.");
+                            Notification.show("Wrong username and/or password.");
                         }
                     })
             );
