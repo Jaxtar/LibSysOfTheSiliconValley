@@ -1,8 +1,6 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.RandomStringUtils;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -19,15 +17,12 @@ public class User extends AbstractEntity{
     private String username;
 
    // private String passwordSalt;
-    
     private String passwordHash;
 
     @NotNull
     @Column(columnDefinition = "ENUM('USER', 'ADMIN')")
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    private boolean active;
 
     public User() {
     }
@@ -81,12 +76,4 @@ public class User extends AbstractEntity{
         this.role = role;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 }
-

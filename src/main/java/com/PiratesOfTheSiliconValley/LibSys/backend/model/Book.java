@@ -13,7 +13,7 @@ public class Book {
 
 
     public enum Format implements CharSequence {
-        Pocket, Hardcover, Paperback;
+        POCKET, HARDCOVER, PAPERBACK;
 
         @Override
         public int length() {

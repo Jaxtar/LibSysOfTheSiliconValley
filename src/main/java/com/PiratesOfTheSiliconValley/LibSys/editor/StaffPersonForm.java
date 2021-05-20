@@ -1,8 +1,6 @@
 package com.PiratesOfTheSiliconValley.LibSys.editor;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Person;
-import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
-import com.PiratesOfTheSiliconValley.LibSys.views.UserForm;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;

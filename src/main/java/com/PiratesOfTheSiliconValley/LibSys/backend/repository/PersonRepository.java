@@ -1,7 +1,6 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.repository;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Person;
-import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

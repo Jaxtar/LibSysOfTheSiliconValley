@@ -1,8 +1,8 @@
-package com.PiratesOfTheSiliconValley.LibSys.views;
+package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.UserController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
-import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
+import com.PiratesOfTheSiliconValley.LibSys.editor.UserForm;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
@@ -12,9 +12,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 
-@Route(value = "/users", layout = Navbar.class)
+//@Route(value = "/users", layout = Navbar.class)
 @PageTitle("Users")
 @CssImport("./views/staffview/staffcommon.css")
 public class UsersView extends VerticalLayout {
