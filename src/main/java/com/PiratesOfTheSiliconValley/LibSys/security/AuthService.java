@@ -1,7 +1,17 @@
 package com.PiratesOfTheSiliconValley.LibSys.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.UserRepository;
+import com.PiratesOfTheSiliconValley.LibSys.views.login.LoggedInMain;
+import com.PiratesOfTheSiliconValley.LibSys.views.logout.LogoutView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.UsersView;
+import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +30,8 @@ public class AuthService {
     /*
     public record AuthorizedRoute(String path, String name, Class<? extends Component> view) {
     }
-
-     */
+*/
+     
 
     public void authenticate(String username, String password) throws AuthException {
         User user = userRepository.getByUsername(username);
@@ -72,7 +82,7 @@ public class AuthService {
         }
         return routes;
     }
-
-     */
+*/
+     
 
 }

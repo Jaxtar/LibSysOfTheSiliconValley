@@ -3,13 +3,12 @@ package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
-import com.PiratesOfTheSiliconValley.LibSys.views.login.LoggedInMain;
 import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
-
 import com.PiratesOfTheSiliconValley.LibSys.views.logout.LogoutView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.UsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -32,6 +31,8 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
+import org.springframework.context.annotation.Bean;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,15 +46,16 @@ import java.util.Optional;
 @CssImport("./views/main/navbar.css")
 public class Navbar extends AppLayout {
 
-    private final Tabs menu;
+    private Tabs menu;
     private H1 viewTitle;
     private AuthService authService;
 
 
     public Navbar() {
+        menu = new Tabs();
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
-        menu = createMenu();
+        createMenu();
         addToDrawer(createDrawerContent(menu));
     }
 
@@ -87,22 +89,20 @@ public class Navbar extends AppLayout {
         return layout;
     }
 
-    private Tabs createMenu() {
-        final Tabs tabs = new Tabs();
-        tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
-        tabs.setId("tabs");
-        tabs.add(createMenuItems());
-        return tabs;
+    private void createMenu() {
+        menu.setOrientation(Tabs.Orientation.VERTICAL);
+        menu.addThemeVariants(TabsVariant.LUMO_MINIMAL);
+        menu.setId("tabs");
+        menu.add(createMenuItems());
     }
 
     private Component[] createMenuItems() {
         User user = VaadinSession.getCurrent().getAttribute(User.class);
 
         List<Tab> tabs = new ArrayList<>();
-
+        
         tabs.add(createTab("Huvudsida", MainPage.class));
-
+        
         if (user != null && user.getRole().equals(Role.USER)){
             tabs.add(createTab("Boklista", BookCatalogueView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));

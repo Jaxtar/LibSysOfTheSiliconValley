@@ -1,12 +1,16 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.user;
 
+import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
+
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 
-@PageTitle("Useraccount")
+@Route(value = "/account", layout = Navbar.class)
+@PageTitle("Kontoinställningar")
 @CssImport("./views/mainview/main-page.css")
 @Tag("item-view")
 @JsModule("./views/mainview/main-page.ts")
