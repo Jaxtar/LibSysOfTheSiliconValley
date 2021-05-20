@@ -13,7 +13,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 
-//@Route(value = "/staffbook", layout = StaffLayout.class)
 @PageTitle("Staffbook")
 @CssImport("./views/staffview/staffcommon.css")
 

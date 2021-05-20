@@ -13,7 +13,6 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 
 
-//@Route(value = "/staffuser", layout = StaffLayout.class)
 @PageTitle("Staffperson")
 
 public class StaffPersonView extends VerticalLayout {

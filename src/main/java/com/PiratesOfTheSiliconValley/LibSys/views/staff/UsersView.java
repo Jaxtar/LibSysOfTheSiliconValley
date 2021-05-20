@@ -13,7 +13,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 
-//@Route(value = "/users", layout = Navbar.class)
 @PageTitle("Users")
 @CssImport("./views/staffview/staffcommon.css")
 public class UsersView extends VerticalLayout {
