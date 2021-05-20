@@ -48,17 +48,6 @@ public class User {
     public User() {
     }
 
-    /*
-    public User(String username, String password, Role role) {
-        this.username = username;
-        this.passwordSalt = RandomStringUtils.random(32);
-        this.passwordHash = DigestUtils.sha1Hex(password + passwordSalt);
-
-        //this.passwordHash = DigestUtils.sha1Hex(password);
-        this.role = role;
-    }
-     */
-
     public boolean checkPassword(String password) {
         return DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash);
     }
