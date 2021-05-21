@@ -16,7 +16,7 @@ public class Staff {
     }
 
     public enum Occupation {
-        bibliotekchef, bibliotekarie
+        chef, bibliotekarie
     }
 
     @NotNull
