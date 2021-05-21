@@ -16,36 +16,36 @@ public class Staff {
     }
 
     public enum Occupation {
-        chef, bibliotekarie
+        bibliotekchef, bibliotekarie
     }
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Du måste fylla rutan")
     private String firstname = "";
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Du måste fylla rutan")
     private String lastname = "";
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Du måste fylla rutan")
     private String username = "";
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Du måste fylla rutan")
     private String password = "";
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Du måste fylla rutan")
     @Email
     private String email = "";
 
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @NotNull(message = "Du måste fylla rutan")
     private Staff.Occupation occupation;
 
-    public Staff (Integer staffID, String firstname, String lastname, String username,
-                  String password, Staff.Occupation occupation){
+    public Staff(Integer staffID, String firstname, String lastname, String username,
+                 String password, Staff.Occupation occupation) {
 
         this.staffID = staffID;
         this.firstname = firstname;
@@ -109,10 +109,5 @@ public class Staff {
 
     public void setOccupation(Occupation occupation) {
         this.occupation = occupation;
-    }
-
-    @Override
-    public String toString() {
-        return username;
     }
 }

@@ -15,7 +15,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
+import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.shared.Registration;
+import org.springframework.dao.DataIntegrityViolationException;
 
 public class StaffForm extends FormLayout {
 
@@ -40,10 +42,17 @@ public class StaffForm extends FormLayout {
         addClassName("staff-form");
 
         binder.bindInstanceFields(this);
-
+        binder.forField(email)
+                .withValidator(new EmailValidator(
+                        "Mail adress stämmer inte"))
+                .withValidator(
+                        email -> email.endsWith("@jisho.com"),
+                        "Bara adress jisho.com kan användas")
+                .bind(Staff::getEmail, Staff::setEmail);
         occupation.setItems(Staff.Occupation.values());
         add(firstname, lastname, username, password, email, occupation, createButtonLayout());
     }
+
 
     private HorizontalLayout createButtonLayout(){
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -62,19 +71,26 @@ public class StaffForm extends FormLayout {
         return new HorizontalLayout(save, delete, close);
     }
 
+
     private void validateAndSave() {
         try {
             binder.writeBean(staff);
             fireEvent(new StaffForm.SaveEvent(this, staff));
         } catch (ValidationException e) {
             e.printStackTrace();
+        }catch (DataIntegrityViolationException e){
+            e.printStackTrace();
+            Notification.show(" Användarnamn används redan, försök med en ny.",
+                    2000, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }
+
 
     public void setStaff(Staff staff) {
         this.staff = staff;
         binder.readBean(staff);
     }
+
 
     public static abstract class StaffFormEvent extends ComponentEvent<StaffForm> {
         private Staff staff;
