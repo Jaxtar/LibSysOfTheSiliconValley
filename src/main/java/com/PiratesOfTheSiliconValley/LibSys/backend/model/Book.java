@@ -1,19 +1,47 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
 import javax.persistence.*;
-        import javax.validation.constraints.NotEmpty;
-        import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Book {
 
+    public enum Language{
+        SVENSKA{            public String toString(){return "Svenska";}},
+        ENGELSKA{           public String toString(){return "English";}},
+        ARABISKA{           public String toString(){return "العربية";}},
+        ITALIENSKA{         public String toString(){return "Italiano";}},
+        FRANSKA{            public String toString(){return "Français";}},
+        SPANSKA{            public String toString(){return "Español";}},
+        TYSKA{              public String toString(){return "Deutsche";}},
+        JAPANSKA{           public String toString(){return "日本語";}},
+        FINSKA{             public String toString(){return "Suomi";}}
+    }
+
+    public enum Format{
+        POCKET{             public String toString(){return "Pocket";}}, 
+        HARDCOVER{          public String toString(){return "Hard Cover";}}, 
+        PAPERBACK{          public String toString(){return "Paperback";}}
+    }
+
+    public enum Genre {
+        SKÖNLITTERATUR{     public String toString(){return "Skönlitteratur";}}, 
+        FIKTION{            public String toString(){return "Fiktion";}}, 
+        SCIFI{              public String toString(){return "Science Fiction";}}, 
+        FILOSOFI{           public String toString(){return "Filosofi";}}, 
+        FANTASY{            public String toString(){return "Fantasy";}}, 
+        VETENSKAPOCHTEKNIK{ public String toString(){return "Vetenskap & Teknik";}}, 
+        SJÄLVBIOGRAFI{      public String toString(){return "Självbiografi";}}, 
+        KONST{              public String toString(){return "Konst";}}, 
+        KLASSIKER{          public String toString(){return "Klassiker";}}, 
+        DECKARE{            public String toString(){return "Deckare";}},
+        MUSIK{              public String toString(){return "Musik";}}
+    }
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer bookID;
-
-    public enum Format {
-        Pocket, Hardcover, Paperback
-    }
 
     @NotNull
     @NotEmpty
@@ -25,13 +53,15 @@ public class Book {
 
     private String description = "";
 
-    private String language = "";
+    @Enumerated(EnumType.STRING)
+    private Book.Language language;
 
     @NotNull
-    @NotEmpty
-    private String genre1 = "";
+    @Enumerated(EnumType.STRING)
+    private Book.Genre genre1;
 
-    private String genre2 = "";
+    @Enumerated(EnumType.STRING)
+    private Book.Genre genre2;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -53,8 +83,8 @@ public class Book {
 
     public Book(Integer bookID, String title,
                 String author, String description,
-                String language, String genre1,
-                String genre2, Book.Format format,
+                Book.Language language, Book.Genre genre1,
+                Book.Genre genre2, Book.Format format,
                 Integer pages, String publisher,
                 Integer publishingyear, String isbn) {
         this.bookID = bookID;
@@ -103,28 +133,28 @@ public class Book {
         this.description = description;
     }
 
-    public String getLanguage() {
+    public Language getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(Language language) {
         this.language = language;
     }
 
-    public String getGenre1() {
+    public Genre getGenre1() {
         return genre1;
     }
 
-    public void setGenre1(String genre1) {
-        this.genre1 = genre1;
+    public void setGenre1(Genre genre) {
+        this.genre1 = genre;
     }
 
-    public String getGenre2() {
+    public Genre getGenre2() {
         return genre2;
     }
 
-    public void setGenre2(String genre2) {
-        this.genre2 = genre2;
+    public void setGenre2(Genre genre) {
+        this.genre2 = genre;
     }
 
     public Format getFormat() {
@@ -166,10 +196,11 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
+  
     @Override
     public String toString() {
         return title + " by " + author;
     }
 
 }
+
