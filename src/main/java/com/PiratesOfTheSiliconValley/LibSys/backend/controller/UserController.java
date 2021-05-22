@@ -1,5 +1,6 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.controller;
 
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,19 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    public List<User> findAllUser(String stringFilter, Role role) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
+            return userRepository.findByRole(role);
+        } else {
+            return userRepository.findByLastnameContainsIgnoreCaseAndRole(stringFilter, role);
+        }
+    }
+
     public List<User> findAll(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return userRepository.findAll();
         } else {
-            return userRepository.findByUsernameContainsIgnoreCase(stringFilter);
+            return userRepository.findByLastnameContainsIgnoreCase(stringFilter);
         }
     }
 
@@ -47,14 +56,11 @@ public class UserController {
             LOGGER.log(Level.SEVERE,
                     "Hash is Null.");
             return;
-        }
-        /*
-        else if (user.getPasswordSalt() == null){
-
+        } else if (user.getRole() == null) {
             LOGGER.log(Level.SEVERE,
-                    "Salt is Null.");
+                    "Role is Null.");
             return;
-        }*/
+        }
         userRepository.save(user);
     }
 }

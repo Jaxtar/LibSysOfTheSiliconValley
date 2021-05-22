@@ -2,7 +2,6 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.BookController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
-import com.PiratesOfTheSiliconValley.LibSys.editor.StaffBookForm;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;

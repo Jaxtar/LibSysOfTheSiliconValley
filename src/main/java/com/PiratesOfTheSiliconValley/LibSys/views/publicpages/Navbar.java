@@ -6,7 +6,8 @@ import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
 import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
 import com.PiratesOfTheSiliconValley.LibSys.views.logout.LogoutView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.UsersView;
+import com.PiratesOfTheSiliconValley.LibSys.views.admin.AdminUsersView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
 
 import com.vaadin.flow.component.Component;
@@ -31,8 +32,6 @@ import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
-
-import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,18 +110,24 @@ public class Navbar extends AppLayout {
         
         tabs.add(createTab("Huvudsida", MainPage.class));
         
-        if (user != null && user.getRole().equals(Role.USER)){
+        if (user != null && user.getRole().equals(Role.ADMIN)) {
+            tabs.add(createTab("Books", StaffBookView.class));
+            tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab( "User List", AdminUsersView.class));
+            tabs.add(createTab( "Logout", LogoutView.class));
+        } else if (user != null && user.getRole().equals(Role.STAFF)){
+            tabs.add(createTab("Books", StaffBookView.class));
+            tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab("User List", StaffUsersView.class));
+            tabs.add(createTab("Account", UserAccount.class));
+            tabs.add(createTab("Logout", LogoutView.class));
+        } else if (user != null && user.getRole().equals(Role.USER)){
             tabs.add(createTab("Boklista", BookCatalogueView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
             tabs.add(createTab("Öppettider", OpenHoursView.class));
             tabs.add(createTab("Om oss", AboutUsView.class));
             tabs.add(createTab("Account", UserAccount.class));
             tabs.add(createTab("Logout", LogoutView.class));
-        } else if (user != null && user.getRole().equals(Role.ADMIN)) {
-            tabs.add(createTab("Books", StaffBookView.class));
-            tabs.add(createTab("Seminarium", SeminarView.class));
-            tabs.add(createTab( "User List", UsersView.class));
-            tabs.add(createTab( "Logout", LogoutView.class));
         } else  {
             tabs.add(createTab("Boklista", BookCatalogueView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));

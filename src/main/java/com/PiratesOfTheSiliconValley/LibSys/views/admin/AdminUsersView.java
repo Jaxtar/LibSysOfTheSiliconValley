@@ -1,8 +1,7 @@
-package com.PiratesOfTheSiliconValley.LibSys.views.staff;
+package com.PiratesOfTheSiliconValley.LibSys.views.admin;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.UserController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
-import com.PiratesOfTheSiliconValley.LibSys.editor.UserForm;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -15,28 +14,28 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "/staff/users", layout = Navbar.class)
+@Route(value = "/admin/users", layout = Navbar.class)
 @PageTitle("Users")
 @CssImport("./views/staffview/staffcommon.css")
-public class UsersView extends VerticalLayout {
+public class AdminUsersView extends VerticalLayout {
 
         private UserController userController;
-        private UserForm userForm;
+        private AdminUsersForm userForm;
 
         private Grid<User> grid = new Grid<>(User.class);
         private TextField filterText = new TextField();
 
-        public UsersView(UserController userController) {
+        public AdminUsersView(UserController userController) {
             this.userController = userController;
             addClassName("list-view");
             setSizeFull();
             configureGrid();
 
 
-            userForm = new UserForm();
-            userForm.addListener(UserForm.SaveEvent.class, this::saveUser);
-            userForm.addListener(UserForm.DeleteEvent.class, this::deleteUser);
-            userForm.addListener(UserForm.CloseEvent.class, e -> closeEditor());
+            userForm = new AdminUsersForm();
+            userForm.addListener(AdminUsersForm.SaveEvent.class, this::saveUser);
+            userForm.addListener(AdminUsersForm.DeleteEvent.class, this::deleteUser);
+            userForm.addListener(AdminUsersForm.CloseEvent.class, e -> closeEditor());
 
 
             Div content = new Div(grid, userForm);
@@ -51,7 +50,8 @@ public class UsersView extends VerticalLayout {
         private void configureGrid() {
             addClassName("user-grid");
             grid.setSizeFull();
-            grid.setColumns("userID", "username", "role");
+            grid.setColumns("personal_id_number", "firstname", "lastname",
+                    "phone", "username", "role");
             grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
             grid.asSingleSelect().addValueChangeListener(event ->
@@ -59,7 +59,7 @@ public class UsersView extends VerticalLayout {
         }
 
         private HorizontalLayout getToolbar() {
-            filterText.setPlaceholder("Filter by username...");
+            filterText.setPlaceholder("Filter by lastname...");
             filterText.setClearButtonVisible(true);
             filterText.setValueChangeMode(ValueChangeMode.LAZY);
             filterText.addValueChangeListener(e -> updateList());
@@ -93,13 +93,13 @@ public class UsersView extends VerticalLayout {
             }
         }
 
-        private void saveUser(UserForm.SaveEvent event) {
+        private void saveUser(AdminUsersForm.SaveEvent event) {
             userController.save(event.getUser());
             updateList();
             closeEditor();
         }
 
-        private void deleteUser(UserForm.DeleteEvent event) {
+        private void deleteUser(AdminUsersForm.DeleteEvent event) {
             userController.delete(event.getUser());
             updateList();
             closeEditor();
