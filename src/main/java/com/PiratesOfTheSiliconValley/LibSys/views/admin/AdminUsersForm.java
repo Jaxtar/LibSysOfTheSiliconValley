@@ -1,6 +1,7 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.admin;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.Staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -17,6 +18,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
+import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.shared.Registration;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -29,6 +31,7 @@ public class AdminUsersForm extends FormLayout {
     TextField firstname = new TextField("Firstname");
     TextField lastname = new TextField("Lastname");
     TextField phone = new TextField("Phone");
+    TextField email = new TextField("Mail");
     ComboBox<Role> role = new ComboBox<Role>("Role");
     TextField username = new TextField("Username");
     PasswordField passwordHash = new PasswordField("Password");
@@ -45,8 +48,15 @@ public class AdminUsersForm extends FormLayout {
         role.setItems(Role.values());
 
         binder.bindInstanceFields(this);
+        binder.forField(email)
+                .withValidator(new EmailValidator(
+                        "Mail adress stämmer inte"))
+                .withValidator(
+                        email -> email.endsWith("@jisho.com"),
+                        "Bara adress jisho.com kan användas")
+                .bind(User::getEmail, User::setEmail);
 
-        add(personal_id_number, firstname, lastname, phone, username, passwordHash, role,
+        add(personal_id_number, firstname, lastname, phone, email, username, passwordHash, role,
                 createButtonsLayout());
     }
 

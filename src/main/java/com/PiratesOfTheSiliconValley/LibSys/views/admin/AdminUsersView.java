@@ -53,7 +53,7 @@ public class AdminUsersView extends VerticalLayout {
             addClassName("user-grid");
             grid.setSizeFull();
             grid.setColumns("personal_id_number", "firstname", "lastname",
-                    "phone", "username", "role");
+                    "phone", "email", "username", "role");
             grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
             grid.asSingleSelect().addValueChangeListener(event ->
