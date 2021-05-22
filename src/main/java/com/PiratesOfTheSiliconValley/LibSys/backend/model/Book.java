@@ -44,11 +44,11 @@ public class Book {
     private Integer bookID;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String title = "";
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String author = "";
 
     private String description = "";
@@ -64,21 +64,21 @@ public class Book {
     private Book.Genre genre2;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @NotNull(message = "Rutan får inte vara tom")
     private Book.Format format;
 
     @NotNull
     private Integer pages;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String publisher = "";
 
     @NotNull
     private Integer publishingyear;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String isbn = "";
 
     public Book(Integer bookID, String title,

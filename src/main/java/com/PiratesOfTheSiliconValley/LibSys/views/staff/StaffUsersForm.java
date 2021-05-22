@@ -9,6 +9,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -16,6 +18,7 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+import org.springframework.dao.DataIntegrityViolationException;
 
 public class StaffUsersForm extends FormLayout {
 
@@ -84,6 +87,10 @@ public class StaffUsersForm extends FormLayout {
             fireEvent(new SaveEvent(this, user));
         } catch (ValidationException e) {
             e.printStackTrace();
+        }catch (DataIntegrityViolationException e){
+            e.printStackTrace();
+            Notification.show(" Användarnamn används redan, försök med en ny.",
+                    2000, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }
 
@@ -115,6 +122,8 @@ public class StaffUsersForm extends FormLayout {
     public static class DeleteEvent extends StaffUserFormEvent {
         DeleteEvent(StaffUsersForm source, User user) {
             super(source, user);
+            Notification.show(user.getFirstname() + " " + user.getLastname() + " har raderats från lista.",
+                    1500, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
 
     }

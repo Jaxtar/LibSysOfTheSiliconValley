@@ -8,6 +8,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -111,6 +113,8 @@ public class StaffBookForm extends FormLayout {
     public static class DeleteEvent extends StaffBookFormEvent {
         DeleteEvent(StaffBookForm source, Book book) {
             super(source, book);
+            Notification.show(book.getTitle() + " har raderats från lista.", 1500,
+                    Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
 
     }

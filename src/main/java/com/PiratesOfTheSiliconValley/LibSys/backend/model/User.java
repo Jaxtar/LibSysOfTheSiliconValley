@@ -20,7 +20,7 @@ public class User {
     }
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String username;
 
     private String passwordSalt;
@@ -32,15 +32,15 @@ public class User {
     private Role role;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String personal_id_number = "";
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String firstname = "";
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String lastname = "";
 
     private String phone;

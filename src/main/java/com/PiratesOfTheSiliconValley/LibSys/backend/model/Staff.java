@@ -20,28 +20,28 @@ public class Staff {
     }
 
     @NotNull
-    @NotEmpty(message = "Du måste fylla rutan")
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String firstname = "";
 
     @NotNull
-    @NotEmpty(message = "Du måste fylla rutan")
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String lastname = "";
 
     @NotNull
-    @NotEmpty(message = "Du måste fylla rutan")
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String username = "";
 
     @NotNull
-    @NotEmpty(message = "Du måste fylla rutan")
+    @NotEmpty(message = "Rutan får inte vara tom")
     private String password = "";
 
     @NotNull
-    @NotEmpty(message = "Du måste fylla rutan")
+    @NotEmpty(message = "Rutan får inte vara tom")
     @Email
     private String email = "";
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Du måste fylla rutan")
+    @NotNull(message = "Rutan får inte vara tom")
     private Staff.Occupation occupation;
 
     public Staff(Integer staffID, String firstname, String lastname, String username,
