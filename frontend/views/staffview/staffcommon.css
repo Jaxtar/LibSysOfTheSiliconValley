@@ -18,3 +18,27 @@
         display: none;
    }
 }
+
+
+
+.staff-view .content {
+    display: flex;
+}
+
+.staff-view .staff-grid {
+    flex: 1;
+}
+
+.staff-view .staff-form {
+    flex: 1;
+    padding: var(--lumo-space-m);
+}
+
+@media all and (max-width: 1100px) {
+    .staff-view.editing .toolbar,
+    .staff-view.editing .staff-grid {
+        display: none
+   }
+}
+
+
