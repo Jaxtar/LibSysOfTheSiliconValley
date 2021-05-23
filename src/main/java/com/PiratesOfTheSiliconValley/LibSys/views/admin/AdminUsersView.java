@@ -7,6 +7,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -51,7 +53,7 @@ public class AdminUsersView extends VerticalLayout {
             addClassName("user-grid");
             grid.setSizeFull();
             grid.setColumns("personal_id_number", "firstname", "lastname",
-                    "phone", "username", "role");
+                    "phone", "email", "username", "role");
             grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
             grid.asSingleSelect().addValueChangeListener(event ->
@@ -97,6 +99,8 @@ public class AdminUsersView extends VerticalLayout {
             userController.save(event.getUser());
             updateList();
             closeEditor();
+            Notification.show("Person är nu sparad.", 1500,
+                    Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         }
 
         private void deleteUser(AdminUsersForm.DeleteEvent event) {
