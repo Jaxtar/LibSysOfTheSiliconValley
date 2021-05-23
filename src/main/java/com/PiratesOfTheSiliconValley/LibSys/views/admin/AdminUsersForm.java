@@ -1,7 +1,6 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.admin;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
-import com.PiratesOfTheSiliconValley.LibSys.backend.model.Staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
