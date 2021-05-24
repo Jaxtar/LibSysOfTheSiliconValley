@@ -47,13 +47,13 @@ public class AdminUsersForm extends FormLayout {
         role.setItems(Role.values());
 
         binder.bindInstanceFields(this);
-        binder.forField(email)
+        /**binder.forField(email)
                 .withValidator(new EmailValidator(
                         "Mail adress stämmer inte"))
                 .withValidator(
                         email -> email.endsWith("@jisho.com"),
                         "Bara adress jisho.com kan användas")
-                .bind(User::getEmail, User::setEmail);
+                .bind(User::getEmail, User::setEmail);*/
 
         add(personal_id_number, firstname, lastname, phone, email, username, passwordHash, role,
                 createButtonsLayout());
