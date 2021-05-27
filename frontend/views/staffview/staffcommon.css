@@ -3,7 +3,7 @@
     display: flex;
 }
 
-.list-view .book-grid .user-grid {
+.list-view .book-grid .user-grid .loancard-grid {
     flex: 1;
 }
 
