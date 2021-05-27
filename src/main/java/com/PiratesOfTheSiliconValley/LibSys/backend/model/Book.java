@@ -40,8 +40,7 @@ public class Book {
     }
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer bookID;
+    private String isbn = "";
 
     @NotNull
     @NotEmpty(message = "Rutan får inte vara tom")
@@ -51,10 +50,12 @@ public class Book {
     @NotEmpty(message = "Rutan får inte vara tom")
     private String author = "";
 
-    private String description = "";
-
     @Enumerated(EnumType.STRING)
     private Book.Language language;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Rutan får inte vara tom")
+    private Book.Format format;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -63,50 +64,47 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private Book.Genre genre2;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull(message = "Rutan får inte vara tom")
-    private Book.Format format;
+    private String description = "";
 
     @NotNull
     private Integer pages;
+
+    private Integer publishingyear;
 
     @NotNull
     @NotEmpty(message = "Rutan får inte vara tom")
     private String publisher = "";
 
-    @NotNull
-    private Integer publishingyear;
+    private Double price;
 
-    @NotNull
-    @NotEmpty(message = "Rutan får inte vara tom")
-    private String isbn = "";
 
-    public Book(Integer bookID, String title,
-                String author, String description,
-                Book.Language language, Book.Genre genre1,
-                Book.Genre genre2, Book.Format format,
-                Integer pages, String publisher,
-                Integer publishingyear, String isbn) {
-        this.bookID = bookID;
+    public Book(String isbn, String title, String author, Book.Language language,
+                Book.Format format, Book.Genre genre1, Book.Genre genre2, String description,
+                Integer pages, Integer publishingyear, String publisher, Double price) {
+        this.isbn = isbn;
         this.title = title;
         this.author = author;
-        this.description = description;
         this.language = language;
+        this.format = format;
         this.genre1 = genre1;
         this.genre2 = genre2;
-        this.format = format;
+        this.description = description;
         this.pages = pages;
-        this.publisher = publisher;
         this.publishingyear = publishingyear;
-        this.isbn = isbn;
+        this.publisher = publisher;
+        this.price = price;
     }
 
     public Book(){
         
     }
 
-    public Integer getBookID() {
-        return bookID;
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getTitle() {
@@ -125,20 +123,20 @@ public class Book {
         this.author = author;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Language getLanguage() {
         return language;
     }
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public Format getFormat() {
+        return format;
+    }
+
+    public void setFormat(Format format) {
+        this.format = format;
     }
 
     public Genre getGenre1() {
@@ -157,12 +155,12 @@ public class Book {
         this.genre2 = genre;
     }
 
-    public Format getFormat() {
-        return format;
+    public String getDescription() {
+        return description;
     }
 
-    public void setFormat(Format format) {
-        this.format = format;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getPages() {
@@ -173,14 +171,6 @@ public class Book {
         this.pages = pages;
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
     public Integer getPublishingyear() {
         return publishingyear;
     }
@@ -189,12 +179,20 @@ public class Book {
         this.publishingyear = publishingyear;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
   
     @Override

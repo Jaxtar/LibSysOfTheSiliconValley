@@ -52,8 +52,7 @@ public class StaffBookView  extends VerticalLayout {
     private void configureGrid() {
         addClassName("book-grid");
         grid.setSizeFull();
-        grid.setColumns("title", "author", "language", "format", "pages");
-        //grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        grid.setColumns("title", "author", "language", "format", "pages", "price");
 
         grid.asSingleSelect().addValueChangeListener(event ->
                 editBook(event.getValue()));

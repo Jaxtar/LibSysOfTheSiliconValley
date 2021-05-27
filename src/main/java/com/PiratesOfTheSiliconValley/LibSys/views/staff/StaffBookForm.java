@@ -12,28 +12,31 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+import org.springframework.dao.DataIntegrityViolationException;
 
 public class StaffBookForm extends FormLayout {
 
     private Book book;
 
+    TextField isbn = new TextField("ISBN");
     TextField title = new TextField("Title");
     TextField author = new TextField("Author");
-    TextArea description = new TextArea("Description");
     ComboBox<Book.Language> language = new ComboBox<>("Language");
+    ComboBox<Book.Format> format = new ComboBox<>("Format");
     ComboBox<Book.Genre> genre1 = new ComboBox<>("Genre");
     ComboBox<Book.Genre> genre2 = new ComboBox<>("Genre");
-    ComboBox<Book.Format> format = new ComboBox<>("Format");
+    TextArea description = new TextArea("Description");
     IntegerField pages = new IntegerField("Pages");
-    TextField publisher = new TextField("Publisher");
     IntegerField publishingyear = new IntegerField("Publishing Year");
-    TextField isbn = new TextField("ISBN");
+    TextField publisher = new TextField("Publisher");
+    NumberField price = new NumberField("Price");
 
     Binder<Book> binder = new BeanValidationBinder<>(Book.class);
 
@@ -47,15 +50,14 @@ public class StaffBookForm extends FormLayout {
         binder.addValueChangeListener(e -> save.setEnabled(binder.isValid()));
 
         language.setItems(Book.Language.values());
+        format.setItems(Book.Format.values());
         genre1.setItems(Book.Genre.values());
         genre2.setItems(Book.Genre.values());
-        format.setItems(Book.Format.values());
 
-        add(createButtonsLayout(),title, author, description,
-            language, genre1, genre2, format,
-            pages, publisher, publishingyear, isbn
-                );
-        
+
+        add(createButtonsLayout(),isbn, title, author,
+            language,  format, genre1, genre2, description,
+            pages, publishingyear, publisher,  price);
     }
 
     private HorizontalLayout createButtonsLayout() {
