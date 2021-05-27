@@ -21,8 +21,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Arrays;
-
 @Route(value = "/bookcatalogue", layout = Navbar.class)
 @PageTitle("Book Catalogue")
 @CssImport("./views/bookcatalogue/book-catalogue-view.css")
@@ -61,12 +59,10 @@ public class BookCatalogueView extends LitTemplate {
 
         grid.addItemClickListener(e -> UI.getCurrent()
                                          .navigate(BookView.class, e.getItem()
-                                                                    .getBookID()
-                                                                    .toString()));
+                                                                    .getIsbn()));
     }
 
     private void createGridComponent() {
-       // grid.setSelectionMode(SelectionMode.MULTI);
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_COLUMN_BORDERS);
         grid.setHeight("100%");
 
@@ -78,34 +74,34 @@ public class BookCatalogueView extends LitTemplate {
         createTitleColumn();
         createAuthorColumn();
         createLanguageColumn();
+        createFormatColumn();
         createGenre1Column();
         createGenre2Column();
-        createFormatColumn();
         createPublishingYearColumn();
     }
 
     private void createTitleColumn() {
-        titleColumn = grid.addColumn(Book::getTitle, "title").setHeader("TITLE").setWidth("250px").setFlexGrow(0);
+        titleColumn = grid.addColumn(Book::getTitle, "title").setHeader("TITLE").setWidth("330px").setFlexGrow(0);
     }
 
     private void createAuthorColumn() {
-        authorColumn = grid.addColumn(Book::getAuthor, "author").setHeader("AUTHOR").setWidth("200px").setFlexGrow(0);
+        authorColumn = grid.addColumn(Book::getAuthor, "author").setHeader("AUTHOR").setWidth("250px").setFlexGrow(0);
     }
 
     private void createLanguageColumn() {
         languageColumn = grid.addColumn(Book::getLanguage, "language").setHeader("LANGUAGE").setWidth("180px").setFlexGrow(0);
     }
 
+    private void createFormatColumn() {
+        formatColumn = grid.addColumn(Book::getFormat, "format").setHeader("FORMAT").setWidth("180px").setFlexGrow(0);
+    }
+
     private void createGenre1Column() {
-        genre1Column = grid.addColumn(Book::getGenre1, "genre1").setHeader("GENRE").setWidth("200px").setFlexGrow(0);
+        genre1Column = grid.addColumn(Book::getGenre1, "genre1").setHeader("GENRE").setWidth("250px").setFlexGrow(0);
     }
 
     private void createGenre2Column() {
-        genre2Column = grid.addColumn(Book::getGenre2, "genre2").setHeader("GENRE").setWidth("200px").setFlexGrow(0);
-    }
-
-    private void createFormatColumn() {
-        formatColumn = grid.addColumn(Book::getFormat, "format").setHeader("FORMAT").setWidth("150px").setFlexGrow(0);
+        genre2Column = grid.addColumn(Book::getGenre2, "genre2").setHeader("GENRE").setWidth("250px").setFlexGrow(0);
     }
 
     private void createPublishingYearColumn() {

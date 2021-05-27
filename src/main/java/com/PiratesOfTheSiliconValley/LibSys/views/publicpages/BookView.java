@@ -46,16 +46,16 @@ public class BookView extends VerticalLayout implements HasUrlParameter<String>{
 
     @Override
     public void setParameter(BeforeEvent event, String param){
-        getBook(Integer.parseInt(param));
+        getBook(param);
         createView();
     }
 
-    private void getBook(int bookID){
-        book = repo.findByBookID(bookID).get(0);
+    private void getBook(String isbn){
+        book = repo.findByIsbn(isbn).get(0);
     }
 
     private void createView(){
-        String path = String.format("images/books/%s.png", book.getBookID());
+        String path = String.format("images/books/%s.png", book.getIsbn());
         
         image.setSrc(path);
         image.setMaxHeight("20em");

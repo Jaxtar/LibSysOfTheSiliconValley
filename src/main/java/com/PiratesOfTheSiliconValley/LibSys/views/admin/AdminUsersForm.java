@@ -31,7 +31,7 @@ public class AdminUsersForm extends FormLayout {
     TextField lastname = new TextField("Lastname");
     TextField phone = new TextField("Phone");
     TextField email = new TextField("Mail");
-    ComboBox<Role> role = new ComboBox<Role>("Role");
+    ComboBox<Role> role = new ComboBox<>("Role");
     TextField username = new TextField("Username");
     PasswordField passwordHash = new PasswordField("Password");
 
