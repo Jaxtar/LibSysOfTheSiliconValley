@@ -9,6 +9,6 @@ import java.util.List;
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
     List<Inventory> findAll();
-    List<Inventory> findByTitleContainsIgnoreCase(String searchTerm);
+    List<Inventory> findByIsbnContainsIgnoreCase(String searchTerm);
 
 }
