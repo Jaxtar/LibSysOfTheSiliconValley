@@ -19,7 +19,6 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
-import org.springframework.dao.DataIntegrityViolationException;
 
 public class StaffBookForm extends FormLayout {
 
@@ -43,6 +42,7 @@ public class StaffBookForm extends FormLayout {
     Button save = new Button("Spara");
     Button delete = new Button("Radera");
     Button close = new Button("Avbryt");
+    Button inventory = new Button("Lägg till lager");
 
     public StaffBookForm() {
         addClassName("book-form");
@@ -64,6 +64,7 @@ public class StaffBookForm extends FormLayout {
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
         close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        inventory.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
         save.addClickShortcut(Key.ENTER);
         close.addClickShortcut(Key.ESCAPE);
@@ -73,9 +74,8 @@ public class StaffBookForm extends FormLayout {
         close.addClickListener(event -> fireEvent(new CloseEvent(this)));
 
         save.setEnabled(false);
-        
 
-        return new HorizontalLayout(save, delete, close);
+        return new HorizontalLayout(save, delete, close, inventory);
     }
 
     private void validateAndSave() {
