@@ -1,6 +1,5 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.repository;
 
-import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -9,6 +8,6 @@ import java.util.List;
 public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
     List<Inventory> findAll();
-    List<Inventory> findByIsbnContainsIgnoreCase(String searchTerm);
+    List<Inventory> findByIsbn(String isbn);
 
 }

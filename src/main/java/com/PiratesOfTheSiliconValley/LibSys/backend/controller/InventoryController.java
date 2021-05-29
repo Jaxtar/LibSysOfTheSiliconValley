@@ -23,7 +23,7 @@ public class InventoryController {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return inventoryRepository.findAll();
         } else {
-            return inventoryRepository.findByIsbnContainsIgnoreCase(stringFilter);
+            return inventoryRepository.findByIsbn(stringFilter);
         }
     }
 

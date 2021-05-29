@@ -36,16 +36,15 @@ public class Inventory {
     private String classification;
 
     @NotNull
-    @NotEmpty
+    @Enumerated(EnumType.STRING)
     private Inventory.Condition condition;
 
     @NotNull
-    @NotEmpty
+    @Enumerated(EnumType.STRING)
     private Inventory.Status status;
 
     @NotNull
-    @NotEmpty
-    private Date date_added;
+    private Date date_added = Date.valueOf(LocalDate.now());
 
     public Inventory(Integer bookID, String isbn, String classification, Inventory.Condition condition,
                      Inventory.Status status, Date date_added){
@@ -55,6 +54,10 @@ public class Inventory {
         this.condition = condition;
         this.status = status;
         this.date_added = date_added;
+    }
+
+    public Inventory(){
+
     }
 
     public Integer getBookID() {
