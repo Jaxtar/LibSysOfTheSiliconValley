@@ -61,7 +61,6 @@ public class StaffInventoryForm extends FormLayout {
         try {
             binder.writeBean(inventory);
             LocalDateTime date = LocalDateTime.now();
-            inventory.getDate_added();
             inventory.setDate_added(date);
             fireEvent(new SaveEvent(this, inventory));
         } catch (ValidationException e) {
