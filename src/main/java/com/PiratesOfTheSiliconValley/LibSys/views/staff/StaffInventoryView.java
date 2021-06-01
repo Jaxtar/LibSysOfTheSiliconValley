@@ -95,7 +95,7 @@ public class StaffInventoryView  extends VerticalLayout {
         inventoryController.save(event.getInventory());
         updateList();
         closeEditor();
-        Notification.show("Bok är nu sparad", 1500,
+        Notification.show("Boken är nu sparad", 1500,
                 Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
 

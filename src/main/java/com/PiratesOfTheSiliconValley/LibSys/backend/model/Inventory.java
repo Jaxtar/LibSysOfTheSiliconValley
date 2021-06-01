@@ -3,8 +3,7 @@ package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "inventory")
@@ -29,28 +28,30 @@ public class Inventory {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer bookID;
 
+    public Integer getBookID() {
+        return bookID;
+    }
+
     @NotNull
-    @NotEmpty
-    private String isbn;
+    @NotEmpty(message = "Rutan får inte vara tom")
+    private String isbn = "";
 
     private String classification;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Rutan får inte vara tom")
     private Inventory.Condition condition;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Rutan får inte vara tom")
     private Inventory.Status status;
 
-    @NotNull
-    private Date date_added = Date.valueOf(LocalDate.now());
+    private LocalDateTime date_added; //= Date.valueOf(LocalDate.now());
 
-    public Inventory(Integer bookID, String isbn, String classification, Inventory.Condition condition,
-                     Inventory.Status status, Date date_added){
+    public Inventory(Integer bookID, String isbn, Inventory.Condition condition,
+                     Inventory.Status status, LocalDateTime date_added){
         this.bookID = bookID;
         this.isbn = isbn;
-        this.classification = classification;
         this.condition = condition;
         this.status = status;
         this.date_added = date_added;
@@ -58,14 +59,6 @@ public class Inventory {
 
     public Inventory(){
 
-    }
-
-    public Integer getBookID() {
-        return bookID;
-    }
-
-    public void setBookID(Integer bookID) {
-        this.bookID = bookID;
     }
 
     public String getIsbn() {
@@ -100,11 +93,11 @@ public class Inventory {
         this.status = status;
     }
 
-    public Date getDate_added() {
+    public LocalDateTime getDate_added() {
         return date_added;
     }
 
-    public void setDate_added(Date date_added) {
+    public void setDate_added(LocalDateTime date_added) {
         this.date_added = date_added;
     }
 }

@@ -7,7 +7,6 @@ import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -15,6 +14,8 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+
+import java.time.LocalDateTime;
 
 public class StaffInventoryForm extends FormLayout {
 
@@ -24,7 +25,7 @@ public class StaffInventoryForm extends FormLayout {
     TextField classification = new TextField("Classification");
     ComboBox<Inventory.Condition> condition = new ComboBox<>("Condition");
     ComboBox<Inventory.Status> status = new ComboBox<>("Status");
-    DatePicker date = new DatePicker("Date");
+
 
     Binder<Inventory> binder = new BeanValidationBinder<>(Inventory.class);
 
@@ -32,12 +33,7 @@ public class StaffInventoryForm extends FormLayout {
     Button close = new Button("Avbryt");
 
     public StaffInventoryForm() {
-        //binder.forField(date)
-        //        .withConverter(new LocalDateToDateConverter()
-        //        .bind(Inventory::getDate_added, Inventory::setDate_added);
-
         binder.addValueChangeListener(e -> save.setEnabled(binder.isValid()));
-
 
         binder.bindInstanceFields(this);
 
@@ -64,6 +60,9 @@ public class StaffInventoryForm extends FormLayout {
     private void validateAndSave() {
         try {
             binder.writeBean(inventory);
+            LocalDateTime date = LocalDateTime.now();
+            inventory.getDate_added();
+            inventory.setDate_added(date);
             fireEvent(new SaveEvent(this, inventory));
         } catch (ValidationException e) {
             e.printStackTrace();
