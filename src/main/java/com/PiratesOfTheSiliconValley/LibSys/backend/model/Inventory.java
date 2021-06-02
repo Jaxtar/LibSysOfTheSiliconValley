@@ -48,10 +48,11 @@ public class Inventory {
 
     private LocalDateTime date_added; //= Date.valueOf(LocalDate.now());
 
-    public Inventory(Integer bookID, String isbn, Inventory.Condition condition,
+    public Inventory(Integer bookID, String isbn, String classification, Inventory.Condition condition,
                      Inventory.Status status, LocalDateTime date_added){
         this.bookID = bookID;
         this.isbn = isbn;
+        this.classification = classification;
         this.condition = condition;
         this.status = status;
         this.date_added = date_added;

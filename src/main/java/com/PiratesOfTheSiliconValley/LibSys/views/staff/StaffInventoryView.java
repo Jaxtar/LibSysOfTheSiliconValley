@@ -3,7 +3,6 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -36,7 +35,7 @@ public class StaffInventoryView  extends VerticalLayout {
         staffInventoryForm = new StaffInventoryForm();
         staffInventoryForm.addListener(StaffInventoryForm.SaveEvent.class, this::saveInventory);
         staffInventoryForm.addListener(StaffBookForm.CloseEvent.class, e -> closeEditor());
-        staffInventoryForm.setMinWidth("20em");
+        //staffInventoryForm.setMinWidth("30em");
 
         Div content = new Div(grid, staffInventoryForm);
         content.addClassName("content");
@@ -62,18 +61,18 @@ public class StaffInventoryView  extends VerticalLayout {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addBookButton = new Button("Add Book to Inventory");
-        addBookButton.addClickListener(click -> addBooktoInventory());
+        //Button addBookButton = new Button("Add Book to Inventory");
+        //addBookButton.addClickListener(click -> addBooktoInventory());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText, addBookButton);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText);//, addBookButton);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
-
+    /**
     void addBooktoInventory() {
         grid.asSingleSelect().clear();
         editInventory(new Inventory());
-    }
+    }*/
 
     private void closeEditor() {
         staffInventoryForm.setInventory(null);

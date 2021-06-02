@@ -15,8 +15,6 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
-import java.time.LocalDateTime;
-
 public class StaffInventoryForm extends FormLayout {
 
     private Inventory inventory;
@@ -25,12 +23,14 @@ public class StaffInventoryForm extends FormLayout {
     TextField classification = new TextField("Classification");
     ComboBox<Inventory.Condition> condition = new ComboBox<>("Condition");
     ComboBox<Inventory.Status> status = new ComboBox<>("Status");
+    //LocalDateTime date = LocalDateTime.now();
 
 
     Binder<Inventory> binder = new BeanValidationBinder<>(Inventory.class);
 
     Button save = new Button("Spara");
     Button close = new Button("Avbryt");
+    Button radera = new Button("Radera");
 
     public StaffInventoryForm() {
         binder.addValueChangeListener(e -> save.setEnabled(binder.isValid()));
@@ -40,11 +40,13 @@ public class StaffInventoryForm extends FormLayout {
         condition.setItems(Inventory.Condition.values());
         status.setItems(Inventory.Status.values());
 
+
         add(createButtonsLayout(), isbn, classification, condition, status);
     }
     private HorizontalLayout createButtonsLayout() {
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        radera.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
         save.addClickShortcut(Key.ENTER);
         close.addClickShortcut(Key.ESCAPE);
@@ -54,14 +56,15 @@ public class StaffInventoryForm extends FormLayout {
 
         save.setEnabled(false);
 
-        return new HorizontalLayout(save, close);
+        return new HorizontalLayout(save, close, radera);
     }
 
     private void validateAndSave() {
         try {
+            //Inventory inventory = new Inventory();
+            //inventory.setDate_added(date);
             binder.writeBean(inventory);
-            LocalDateTime date = LocalDateTime.now();
-            inventory.setDate_added(date);
+
             fireEvent(new SaveEvent(this, inventory));
         } catch (ValidationException e) {
             e.printStackTrace();
