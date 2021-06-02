@@ -7,8 +7,15 @@ import javax.validation.constraints.NotNull;
 public class Loan_Card {
 
     public enum Status{
-        DISABLED{             public String toString(){return "Spärrad";}},
-        ENABLED{          public String toString(){return "Aktiverad";}}
+        DISABLED{
+            public String toString(){
+                return "Spärrad"; }
+        },
+
+        ENABLED{
+            public String toString(){
+                return "Aktiverad";}
+        }
     }
 
     public enum Reason{
@@ -62,6 +69,6 @@ public class Loan_Card {
 
     @Override
     public String toString() {
-        return "Kort " + status + ". Anledning: " + reason;
+        return "Kort " + card_id + " " + status;
     }
 }

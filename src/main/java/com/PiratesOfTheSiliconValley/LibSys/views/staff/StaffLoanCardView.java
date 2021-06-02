@@ -3,14 +3,13 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.LoanCardController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Loan_Card;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
@@ -33,16 +32,9 @@ public class StaffLoanCardView extends VerticalLayout {
         setSizeFull();
         configureGrid();
 
-
         Div content = new Div(grid);
         content.addClassName("content");
         content.setSizeFull();
-
-        /*
-        add(filterInteger, grid);
-        addClassName("content");
-        setSizeFull();
-         */
 
         add(getToolbar(), content);
         updateList();
@@ -53,7 +45,30 @@ public class StaffLoanCardView extends VerticalLayout {
         grid.setSizeFull();
         grid.setColumns("card_id", "status", "reason");
 
-        //grid.asSingleSelect().addValueChangeListener(event -> editLoan_Card(event.getValue()));
+        grid.addComponentColumn(loanCard -> {
+            Button enable = new Button("Aktivera");
+
+            Loan_Card finalLoanCard = loanCard;
+            enable.addClickListener(click ->
+                    enableCard(finalLoanCard)
+            );
+            loanCard = new Loan_Card();
+            System.out.println("loanCard: " + loanCard);
+
+            return enable;
+        });
+
+        grid.addComponentColumn(loanCard -> {
+            Button disable = new Button("Spärra");
+
+            Loan_Card finalLoanCard = loanCard;
+            disable.addClickListener(click ->
+                    disableCard(finalLoanCard)
+            );
+            loanCard = new Loan_Card();
+
+            return disable;
+        });
     }
 
     private HorizontalLayout getToolbar() {
@@ -67,10 +82,37 @@ public class StaffLoanCardView extends VerticalLayout {
         return toolbar;
     }
 
+    private void enableCard(Loan_Card loanCard) {
+
+        if (loanCard != null || loanCard.getStatus().equals(Loan_Card.Status.DISABLED)) {
+            loanCard.setStatus(Loan_Card.Status.ENABLED);
+        } else {
+            System.out.println("Error (enableCard): " + loanCard);
+        }
+
+        Notification.show("Kort " + loanCard.getCard_id() + " är nu " + loanCard.getStatus());
+
+        loanCardController.save(loanCard);
+        updateList();
+    }
+
+    private void disableCard(Loan_Card loanCard) {
+
+        if (loanCard != null || loanCard.getStatus().equals(Loan_Card.Status.ENABLED)) {
+            loanCard.setStatus(Loan_Card.Status.DISABLED);
+        } else {
+            System.out.println("Error (disableCard): " + loanCard);
+        }
+
+        Notification.show("Kort " + loanCard.getCard_id() + " är nu " + loanCard.getStatus());
+
+        loanCardController.save(loanCard);
+        updateList();
+    }
 
     private void updateList() {
         grid.setItems(loanCardController.findAll(filterText.getValue()));
     }
 
-
 }
+
