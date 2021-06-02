@@ -4,6 +4,7 @@ package com.PiratesOfTheSiliconValley.LibSys.security;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.AddBookToInventoryView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
 import com.PiratesOfTheSiliconValley.LibSys.views.admin.AdminUsersView;
 
@@ -35,6 +36,7 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
                 || AdminUsersView.class.equals(event.getNavigationTarget())
                 || StaffInventoryView.class.equals(event.getNavigationTarget())
                 || StaffUsersView.class.equals(event.getNavigationTarget())
+                || AddBookToInventoryView.class.equals(event.getNavigationTarget())
                 )
                 && (user == null || user.getRole().equals(Role.USER))) {
             event.rerouteTo(LoginView.class);

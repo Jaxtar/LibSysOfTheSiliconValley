@@ -35,7 +35,7 @@ public class StaffInventoryView  extends VerticalLayout {
         staffInventoryForm = new StaffInventoryForm();
         staffInventoryForm.addListener(StaffInventoryForm.SaveEvent.class, this::saveInventory);
         staffInventoryForm.addListener(StaffBookForm.CloseEvent.class, e -> closeEditor());
-        //staffInventoryForm.setMinWidth("30em");
+        staffInventoryForm.setMinWidth("20em");
 
         Div content = new Div(grid, staffInventoryForm);
         content.addClassName("content");

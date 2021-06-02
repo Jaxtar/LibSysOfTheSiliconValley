@@ -4,6 +4,7 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryControll
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -33,8 +34,6 @@ import com.vaadin.flow.router.Route;
         private Binder<Inventory> binder = new BeanValidationBinder<>(Inventory.class);
 
         public AddBookToInventoryView(InventoryController inventoryController) {
-            addClassName("add-book-to-inventory");
-
             add(createTitle());
             add(createFormLayout());
             add(createButtonLayout());
@@ -43,9 +42,10 @@ import com.vaadin.flow.router.Route;
             condition.setItems(Inventory.Condition.values());
             status.setItems(Inventory.Status.values());
 
-            clearForm();
+            //clearForm();
 
-            cancel.addClickListener(e -> clearForm());
+            cancel.addClickListener(e -> UI.getCurrent()
+                    .navigate(StaffBookView.class));
             save.addClickListener(e -> {
                 inventoryController.save(binder.getBean());
                 Notification.show(binder.getBean().getClass().getSimpleName() + " details stored.");
