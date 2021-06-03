@@ -9,6 +9,7 @@ import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,6 +24,8 @@ import com.vaadin.flow.router.Route;
 @CssImport("./views/staffview/staffcommon.css")
 public class StaffLoanPage extends VerticalLayout{
     private LoanController loanController;
+    //private InventoryRepository inventoryRepo;
+    //private Loan_CardRepository loanCardRepo;
 
     IntegerField bookId = new IntegerField("Bokens identifikationsnummer");
     LocalDateTime loanDate = LocalDateTime.now();
@@ -32,7 +35,7 @@ public class StaffLoanPage extends VerticalLayout{
 
     Button loanButton = new Button("Låna");
 
-    public StaffLoanPage(LoanController loanController){
+    public StaffLoanPage(LoanController loanController/*, InventoryRepository inventoryRepo, Loan_CardRepository loanCardRepo*/){
         this.loanController = loanController;
         addClassName("loanPage");
         binder.bindInstanceFields(this);
@@ -50,16 +53,26 @@ public class StaffLoanPage extends VerticalLayout{
     }
 
     private void save(){
-        Loan loan = new Loan();
-        loan.setBookId(bookId.getValue());
-        loan.setLoanDate(LocalDateTime.now());
-        loan.setCardId(cardId.getValue());
+        /*if(loanCardRepo.findByCardID(cardId.getValue()).get(0) == Loan_Card.Status.DISABLED){
+            Notification.show("Lånekortet är spärrat",
+                                1500,
+                                Notification.Position.MIDDLE).addThemeVariants(NotificationVariant.LUMO_ERROR);
+        } else if (inventoryRepo.findByBookID(bookId.getValue()).get(0) != Inventory.Status.INNE){
+            Notification.show("Boken är inte inne, om du ändå håller i den kontakta biblotikarien",
+                                1500,
+                                Notification.Position.MIDDLE).addThemeVariants(NotificationVariant.LUMO_ERROR);
+        } else{*/
+            Loan loan = new Loan();
+            loan.setBookId(bookId.getValue());
+            loan.setLoanDate(LocalDateTime.now());
+            loan.setCardId(cardId.getValue());
 
-        loanController.save(loan);
+            loanController.save(loan);
 
         
-        Notification.show("Lånet är registrerat.", 
-                            1500,
-                            Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+            Notification.show("Lånet är registrerat.", 
+                                1500,
+                                Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+        //}
     }
 }
