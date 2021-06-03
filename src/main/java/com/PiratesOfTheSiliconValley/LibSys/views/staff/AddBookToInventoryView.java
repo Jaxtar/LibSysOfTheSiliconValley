@@ -12,6 +12,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
@@ -19,11 +20,15 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-    @Route(value = "/staff/addtoinventory", layout = Navbar.class)
+@Route(value = "/staff/addtoinventory", layout = Navbar.class)
     @PageTitle("Add book to Inventory")
     public class AddBookToInventoryView extends Div {
 
+    private StaffBookView staffBookView;
+    private InventoryController inventoryController;
+
         TextField isbn = new TextField("ISBN");
+        TextField title = new TextField("Title");
         TextField classification = new TextField("Classification");
         ComboBox<Inventory.Condition> condition = new ComboBox<>("Condition");
         ComboBox<Inventory.Status> status = new ComboBox<>("Status");
@@ -34,27 +39,25 @@ import com.vaadin.flow.router.Route;
         private Binder<Inventory> binder = new BeanValidationBinder<>(Inventory.class);
 
         public AddBookToInventoryView(InventoryController inventoryController) {
+            this.inventoryController = inventoryController;
             add(createTitle());
             add(createFormLayout());
             add(createButtonLayout());
             binder.addValueChangeListener(e -> save.setEnabled(binder.isValid()));
-            binder.bindInstanceFields(this);
+
             condition.setItems(Inventory.Condition.values());
             status.setItems(Inventory.Status.values());
 
-            //clearForm();
+            binder.bindInstanceFields(this);
 
             cancel.addClickListener(e -> UI.getCurrent()
                     .navigate(StaffBookView.class));
             save.addClickListener(e -> {
                 inventoryController.save(binder.getBean());
-                Notification.show(binder.getBean().getClass().getSimpleName() + " details stored.");
-                clearForm();
+                Notification.show(" Boken med är nu sparad i inventory", 1500,
+                        Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+                UI.getCurrent().navigate(StaffInventoryView.class);
             });
-        }
-
-        private void clearForm() {
-            binder.setBean(new Inventory());
         }
 
         private Component createTitle() {
@@ -63,7 +66,7 @@ import com.vaadin.flow.router.Route;
 
         private Component createFormLayout() {
             FormLayout formLayout = new FormLayout();
-            formLayout.add(isbn, classification, condition, status);
+            formLayout.add(title, isbn, classification, condition, status);
             return formLayout;
         }
 

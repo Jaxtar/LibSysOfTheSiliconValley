@@ -34,7 +34,7 @@ public class StaffInventoryView  extends VerticalLayout {
 
         staffInventoryForm = new StaffInventoryForm();
         staffInventoryForm.addListener(StaffInventoryForm.SaveEvent.class, this::saveInventory);
-        staffInventoryForm.addListener(StaffBookForm.CloseEvent.class, e -> closeEditor());
+        staffInventoryForm.addListener(StaffInventoryForm.CloseEvent.class, e -> closeEditor());
         staffInventoryForm.setMinWidth("20em");
 
         Div content = new Div(grid, staffInventoryForm);
@@ -49,7 +49,7 @@ public class StaffInventoryView  extends VerticalLayout {
     private void configureGrid() {
         addClassName("inventory-grid");
         grid.setSizeFull();
-        grid.setColumns("isbn", "classification", "condition", "status", "date_added");
+        grid.setColumns("isbn", "title", "classification", "condition", "status", "date_added");
 
         grid.asSingleSelect().addValueChangeListener(event ->
                 editInventory(event.getValue()));
@@ -61,18 +61,10 @@ public class StaffInventoryView  extends VerticalLayout {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        //Button addBookButton = new Button("Add Book to Inventory");
-        //addBookButton.addClickListener(click -> addBooktoInventory());
-
-        HorizontalLayout toolbar = new HorizontalLayout(filterText);//, addBookButton);
+        HorizontalLayout toolbar = new HorizontalLayout(filterText);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
-    /**
-    void addBooktoInventory() {
-        grid.asSingleSelect().clear();
-        editInventory(new Inventory());
-    }*/
 
     private void closeEditor() {
         staffInventoryForm.setInventory(null);

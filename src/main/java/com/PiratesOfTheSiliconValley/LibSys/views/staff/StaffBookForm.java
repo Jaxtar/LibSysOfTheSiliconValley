@@ -69,6 +69,8 @@ public class StaffBookForm extends FormLayout {
             fireEvent(new DeleteEvent(this, book));
             dialog.close();
         });
+        confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS
+        );
         Button cancelButton = new Button("Cancel", event ->
             dialog.close()
         );

@@ -36,6 +36,10 @@ public class Inventory {
     @NotEmpty(message = "Rutan får inte vara tom")
     private String isbn = "";
 
+    @NotNull
+    @NotEmpty
+    private String title = "";
+
     private String classification;
 
     @Enumerated(EnumType.STRING)
@@ -48,10 +52,11 @@ public class Inventory {
 
     private LocalDateTime date_added; //= Date.valueOf(LocalDate.now());
 
-    public Inventory(Integer bookID, String isbn, String classification, Inventory.Condition condition,
+    public Inventory(Integer bookID, String isbn, String title, String classification, Inventory.Condition condition,
                      Inventory.Status status, LocalDateTime date_added){
         this.bookID = bookID;
         this.isbn = isbn;
+        this.title = title;
         this.classification = classification;
         this.condition = condition;
         this.status = status;
@@ -68,6 +73,14 @@ public class Inventory {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getClassification() {
@@ -98,7 +111,7 @@ public class Inventory {
         return date_added;
     }
 
-    public void setDate_added(LocalDateTime date_added) {
-        this.date_added = date_added;
+    public void setDate_added(/**LocalDateTime date_added*/) {
+        this.date_added = LocalDateTime.now();
     }
 }

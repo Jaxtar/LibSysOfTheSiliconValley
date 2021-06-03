@@ -39,7 +39,7 @@ public class InventoryController {
                     "Inventory is null. Are you sure you have connected your form to the application?");
             return;
         }
-        inventory.setDate_added(date);
+        //inventory.setDate_added(date);
         inventoryRepository.save(inventory);
     }
 }

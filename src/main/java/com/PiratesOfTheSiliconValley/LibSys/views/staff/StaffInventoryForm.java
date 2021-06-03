@@ -24,6 +24,7 @@ public class StaffInventoryForm extends FormLayout {
     private Inventory inventory;
 
     TextField isbn = new TextField("ISBN");
+    TextField title = new TextField("Title");
     TextField classification = new TextField("Classification");
     ComboBox<Inventory.Condition> condition = new ComboBox<>("Condition");
     ComboBox<Inventory.Status> status = new ComboBox<>("Status");
@@ -45,8 +46,9 @@ public class StaffInventoryForm extends FormLayout {
         status.setItems(Inventory.Status.values());
 
 
-        add(createButtonsLayout(), isbn, classification, condition, status);
+        add(createButtonsLayout(), isbn, title, classification, condition, status);
     }
+
     private HorizontalLayout createButtonsLayout() {
         Dialog dialog = new Dialog();
         TextField reason = new TextField("Ange en anledning:");
@@ -59,7 +61,8 @@ public class StaffInventoryForm extends FormLayout {
             fireEvent(new DeleteEvent(this, inventory));
             dialog.close();
         });
-        confirmButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS
+        );
         Button cancelButton = new Button("Cancel", event ->
             dialog.close()
         );
