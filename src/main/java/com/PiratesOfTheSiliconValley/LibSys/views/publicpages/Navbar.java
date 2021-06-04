@@ -9,6 +9,7 @@ import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
 import com.PiratesOfTheSiliconValley.LibSys.views.admin.AdminUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffDecommissionedView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffInventoryView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanCardView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
 
@@ -118,6 +119,7 @@ public class Navbar extends AppLayout {
             tabs.add(createTab("Decommissioned", StaffDecommissionedView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
             tabs.add(createTab( "User List", AdminUsersView.class));
+            tabs.add(createTab("Loan Card", StaffLoanCardView.class));
             tabs.add(createTab( "Logout", LogoutView.class));
         } else if (user != null && user.getRole().equals(Role.STAFF)){
             tabs.add(createTab("Books", StaffBookView.class));
@@ -125,6 +127,7 @@ public class Navbar extends AppLayout {
             tabs.add(createTab("Decommissioned", StaffDecommissionedView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
             tabs.add(createTab("User List", StaffUsersView.class));
+            tabs.add(createTab("Loan Card", StaffLoanCardView.class));
             tabs.add(createTab("Account", UserAccount.class));
             tabs.add(createTab("Logout", LogoutView.class));
         } else if (user != null && user.getRole().equals(Role.USER)){

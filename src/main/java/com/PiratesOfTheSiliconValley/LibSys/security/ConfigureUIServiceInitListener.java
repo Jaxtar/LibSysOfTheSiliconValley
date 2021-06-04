@@ -7,6 +7,8 @@ import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.*;
 import com.PiratesOfTheSiliconValley.LibSys.views.admin.AdminUsersView;
 
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanCardView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUsersView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;
@@ -35,7 +37,8 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
                 || StaffUsersView.class.equals(event.getNavigationTarget())
                 || AddBookToInventoryView.class.equals(event.getNavigationTarget())
                 || StaffDecommissionedView.class.equals(event.getNavigationTarget())
-        )
+                || StaffLoanCardView.class.equals(event.getNavigationTarget())
+                )
                 && (user == null || user.getRole().equals(Role.USER))) {
             event.rerouteTo(LoginView.class);
         }
