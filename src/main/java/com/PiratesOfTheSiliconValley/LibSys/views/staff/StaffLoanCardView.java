@@ -54,7 +54,6 @@ public class StaffLoanCardView extends VerticalLayout {
                     enableCard(finalLoanCard)
             );
             loanCard = new Loan_Card();
-            System.out.println("loanCard: " + loanCard);
 
             return enable;
         });
@@ -124,6 +123,7 @@ public class StaffLoanCardView extends VerticalLayout {
                 loanCardController.save(loanCard);
                 updateList();
                 statusNotification.show("Kort " + loanCard.getCard_id() + " är " + loanCard.getStatus());
+                errorNotification.setDuration(500);
                 notification.close();
             } else {
                 errorNotification.show("Något gick fel! Försök igen.");
