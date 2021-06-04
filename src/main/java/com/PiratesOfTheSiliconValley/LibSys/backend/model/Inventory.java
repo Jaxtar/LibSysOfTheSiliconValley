@@ -111,7 +111,7 @@ public class Inventory {
         return date_added;
     }
 
-    public void setDate_added(/**LocalDateTime date_added*/) {
-        this.date_added = LocalDateTime.now();
+    public void setDate_added(LocalDateTime date_added) {
+        this.date_added = date_added;//LocalDateTime.now();
     }
 }
