@@ -1,15 +1,13 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
-import com.vaadin.flow.component.ComponentEvent;
-import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -19,7 +17,6 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
-import org.springframework.dao.DataIntegrityViolationException;
 
 public class StaffBookForm extends FormLayout {
 
@@ -43,6 +40,7 @@ public class StaffBookForm extends FormLayout {
     Button save = new Button("Spara");
     Button delete = new Button("Radera");
     Button close = new Button("Avbryt");
+    Button inventory = new Button("Lägg till lager");
 
     public StaffBookForm() {
         addClassName("book-form");
@@ -60,22 +58,43 @@ public class StaffBookForm extends FormLayout {
             pages, publishingyear, publisher,  price);
     }
 
+
     private HorizontalLayout createButtonsLayout() {
+        Dialog dialog = new Dialog();
+        dialog.add(new Text("Är du säkert att du vill radera boken från listan?"));
+        dialog.setCloseOnEsc(false);
+        dialog.setCloseOnOutsideClick(false);
+
+        Button confirmButton = new Button("Confirm", event -> {
+            fireEvent(new DeleteEvent(this, book));
+            dialog.close();
+        });
+        confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS
+        );
+        Button cancelButton = new Button("Cancel", event ->
+            dialog.close()
+        );
+
+        dialog.add(new Div( confirmButton, cancelButton));
+
+
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
         close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        inventory.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
         save.addClickShortcut(Key.ENTER);
         close.addClickShortcut(Key.ESCAPE);
 
         save.addClickListener(event -> validateAndSave());
-        delete.addClickListener(event -> fireEvent(new DeleteEvent(this, book)));
+        delete.addClickListener(event -> dialog.open());
         close.addClickListener(event -> fireEvent(new CloseEvent(this)));
+        inventory.addClickListener(e -> UI.getCurrent()
+                .navigate(AddBookToInventoryView.class));
 
         save.setEnabled(false);
-        
 
-        return new HorizontalLayout(save, delete, close);
+        return new HorizontalLayout(save, delete, close, inventory);
     }
 
     private void validateAndSave() {
@@ -115,10 +134,7 @@ public class StaffBookForm extends FormLayout {
     public static class DeleteEvent extends StaffBookFormEvent {
         DeleteEvent(StaffBookForm source, Book book) {
             super(source, book);
-            Notification.show(book.getTitle() + " har raderats från lista.", 1500,
-                    Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
-
     }
 
     public static class CloseEvent extends StaffBookFormEvent {
