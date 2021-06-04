@@ -18,10 +18,10 @@ public class Inventory {
 
     public enum Status{
         INNE{ public String toString(){return "inne";}},
-        UTLÅNAD{ public String toString(){return "utlånad";}},
+        //UTLÅNAD{ public String toString(){return "utlånad";}},
         RESERVERAD{ public String toString(){return "reserverad";}},
         STULEN{ public String toString(){return "stulen";}},
-        FÖRSVUNNEN{ public String toString(){return "försvunnen";}}
+        //FÖRSVUNNEN{ public String toString(){return "försvunnen";}}
     }
 
     @Id

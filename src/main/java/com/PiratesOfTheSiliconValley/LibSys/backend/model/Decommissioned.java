@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "decomissioned")
+@Table(name = "decommissioned")
 public class Decommissioned {
 
     public enum Condition{
@@ -25,7 +25,10 @@ public class Decommissioned {
 
     @NotNull
     @NotEmpty
-    private String book_isbn;
+    private String book_isbn = "";
+
+    @NotNull
+    private String title = "";
 
     private String classification;
 
@@ -39,10 +42,11 @@ public class Decommissioned {
 
     private String reason;
 
-    public Decommissioned(Integer bookID, String book_isbn, String classification, Decommissioned.Condition condition,
+    public Decommissioned(Integer bookID, String book_isbn, String title, String classification, Decommissioned.Condition condition,
                           LocalDateTime date_added, LocalDateTime date_removed, String reason){
             this.bookID = bookID;
             this.book_isbn = book_isbn;
+            this.title = title;
             this.classification = classification;
             this.condition = condition;
             this.date_added = date_added;
@@ -64,6 +68,14 @@ public class Decommissioned {
 
     public void setBook_isbn(String book_isbn) {
         this.book_isbn = book_isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getClassification() {

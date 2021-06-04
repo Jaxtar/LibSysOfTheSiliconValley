@@ -25,7 +25,7 @@ public class InventoryController {
         if (stringFilter == null || stringFilter.isEmpty()) {
             return inventoryRepository.findAll();
         } else {
-            return inventoryRepository.findByIsbn(stringFilter);
+            return inventoryRepository.findByTitleContainsIgnoreCase(stringFilter);
         }
     }
 

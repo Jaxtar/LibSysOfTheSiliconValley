@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface DecomissionedRepository extends JpaRepository<Decommissioned, Integer> {
+public interface DecommissionedRepository extends JpaRepository<Decommissioned, Integer> {
 
     List<Decommissioned> findAll();
+    List<Decommissioned> findByTitleContainsIgnoreCase(String searchTerm);
 }
 
