@@ -10,6 +10,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
@@ -62,6 +63,7 @@ public class StaffLoanCardView extends VerticalLayout {
             Button disable = new Button("Spärra");
 
             Loan_Card finalLoanCard = loanCard;
+
             disable.addClickListener(click ->
                     disableCard(finalLoanCard)
             );
@@ -69,6 +71,9 @@ public class StaffLoanCardView extends VerticalLayout {
 
             return disable;
         });
+
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
     }
 
     private HorizontalLayout getToolbar() {
@@ -83,31 +88,55 @@ public class StaffLoanCardView extends VerticalLayout {
     }
 
     private void enableCard(Loan_Card loanCard) {
+        Notification errorNotification = new Notification();
+        Notification statusNotification = new Notification();
 
         if (loanCard != null || loanCard.getStatus().equals(Loan_Card.Status.DISABLED)) {
             loanCard.setStatus(Loan_Card.Status.ENABLED);
+            loanCard.setReason(null);
+            statusNotification.show("Kort " + loanCard.getCard_id() + " är " + loanCard.getStatus());
+            statusNotification.setDuration(500);
+            loanCardController.save(loanCard);
+            updateList();
         } else {
-            System.out.println("Error (enableCard): " + loanCard);
+            errorNotification.show("Något gick fel! Försök igen.");
+            errorNotification.setDuration(500);
+            System.out.println("Error (enableCard)");
+            System.out.println("LoanCard Status: " + loanCard);
+            System.out.println("Reason DBValue: " + loanCard.getReason());
         }
-
-        Notification.show("Kort " + loanCard.getCard_id() + " är nu " + loanCard.getStatus());
-
-        loanCardController.save(loanCard);
-        updateList();
     }
 
     private void disableCard(Loan_Card loanCard) {
+        RadioButtonGroup<Loan_Card.Reason> reasonRadio = new RadioButtonGroup<>();
+        reasonRadio.setItems(loanCard.getReason().values());
+        Button chooseButton = new Button("Välj");
+        Button cancelButton = new Button("Avbryt");
+        Notification notification = new Notification(reasonRadio, chooseButton, cancelButton);
+        Notification errorNotification = new Notification();
+        Notification statusNotification = new Notification();
+        notification.open();
 
-        if (loanCard != null || loanCard.getStatus().equals(Loan_Card.Status.ENABLED)) {
-            loanCard.setStatus(Loan_Card.Status.DISABLED);
-        } else {
-            System.out.println("Error (disableCard): " + loanCard);
-        }
+        chooseButton.addClickListener(event -> {
+            if (loanCard != null && loanCard.getStatus().equals(Loan_Card.Status.ENABLED) && reasonRadio.getValue() != null) {
+                loanCard.setReason(reasonRadio.getValue());
+                loanCard.setStatus(Loan_Card.Status.DISABLED);
+                loanCardController.save(loanCard);
+                updateList();
+                statusNotification.show("Kort " + loanCard.getCard_id() + " är " + loanCard.getStatus());
+                notification.close();
+            } else {
+                errorNotification.show("Något gick fel! Försök igen.");
+                errorNotification.setDuration(500);
+                System.out.println("Error (disableCard)");
+                System.out.println("LoanCard Status: " + loanCard);
+                System.out.println("ReasonRadioValue: " + reasonRadio.getValue());
+                System.out.println("Reason DBValue: " + loanCard.getReason());
+            }
+                });
 
-        Notification.show("Kort " + loanCard.getCard_id() + " är nu " + loanCard.getStatus());
-
-        loanCardController.save(loanCard);
-        updateList();
+        cancelButton.addClickListener(event -> notification.close());
+        notification.setPosition(Notification.Position.MIDDLE);
     }
 
     private void updateList() {

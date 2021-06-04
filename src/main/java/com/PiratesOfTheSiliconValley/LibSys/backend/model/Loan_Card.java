@@ -19,9 +19,9 @@ public class Loan_Card {
     }
 
     public enum Reason{
-        LATE{             public String toString(){return "Många sena böcker.";}},
-        LOST{          public String toString(){return "Många försvunna böcker.";}},
-        THEFT{          public String toString(){return "Stöld.";}}
+        LATE{             public String toString(){return "Många sena böcker";}},
+        LOST{          public String toString(){return "Många försvunna böcker";}},
+        THEFT{          public String toString(){return "Stöld";}}
     }
 
     @Id
