@@ -40,6 +40,9 @@ public class StaffLoanPage extends VerticalLayout{
 
     public StaffLoanPage(LoanController loanController, InventoryRepository inventoryRepo, LoanCardRepository loanCardRepo){
         this.loanController = loanController;
+        this.inventoryRepo = inventoryRepo;
+        this.loanCardRepo = loanCardRepo;
+
         addClassName("loanPage");
         binder.bindInstanceFields(this);
         binder.addValueChangeListener(e -> loanButton.setEnabled(binder.isValid()));
@@ -56,7 +59,7 @@ public class StaffLoanPage extends VerticalLayout{
     }
 
     private void save(){
-        if(loanCardRepo.findByCard_id(cardId.getValue()).get(0).getStatus() == Loan_Card.Status.DISABLED){
+        if(loanCardRepo.findByCardId(cardId.getValue()).get(0).getStatus() == Loan_Card.Status.DISABLED){
             Notification.show("Lånekortet är spärrat",
                                 1500,
                                 Notification.Position.MIDDLE).addThemeVariants(NotificationVariant.LUMO_ERROR);
@@ -71,7 +74,7 @@ public class StaffLoanPage extends VerticalLayout{
             loan.setCardId(cardId.getValue());
 
             loanController.save(loan);
-
+            inventoryRepo.findByBookID(bookId.getValue()).get(0).setStatus(Inventory.Status.UTLÅNAD);
         
             Notification.show("Lånet är registrerat.", 
                                 1500,
