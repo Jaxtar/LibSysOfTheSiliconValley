@@ -1,7 +1,6 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -18,10 +17,10 @@ public class Inventory {
 
     public enum Status{
         INNE{ public String toString(){return "inne";}},
-        //UTLÅNAD{ public String toString(){return "utlånad";}},
+        UTLÅNAD{ public String toString(){return "utlånad";}},
         RESERVERAD{ public String toString(){return "reserverad";}},
         STULEN{ public String toString(){return "stulen";}},
-        //FÖRSVUNNEN{ public String toString(){return "försvunnen";}}
+        FÖRSVUNNEN{ public String toString(){return "försvunnen";}}
     }
 
     @Id
@@ -33,35 +32,23 @@ public class Inventory {
     }
 
     @NotNull
-    @NotEmpty(message = "Rutan får inte vara tom")
-    private String isbn = "";
+    private String isbn;
 
     @NotNull
-    @NotEmpty
-    private String title = "";
+    private String title;
 
     private String classification;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Rutan får inte vara tom")
-    private Inventory.Condition condition;
+    @NotNull()
+    private Inventory.Condition book_condition;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Rutan får inte vara tom")
+    @NotNull()
     private Inventory.Status status;
 
-    private LocalDateTime date_added; //= Date.valueOf(LocalDate.now());
-
-    public Inventory(Integer bookID, String isbn, String title, String classification, Inventory.Condition condition,
-                     Inventory.Status status, LocalDateTime date_added){
-        this.bookID = bookID;
-        this.isbn = isbn;
-        this.title = title;
-        this.classification = classification;
-        this.condition = condition;
-        this.status = status;
-        this.date_added = date_added;
-    }
+    @NotNull()
+    private LocalDateTime date_added;
 
     public Inventory(){
 
@@ -91,12 +78,12 @@ public class Inventory {
         this.classification = classification;
     }
 
-    public Condition getCondition() {
-        return condition;
+    public Condition getBook_condition() {
+        return book_condition;
     }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
+    public void setBook_condition(Condition book_condition) {
+        this.book_condition = book_condition;
     }
 
     public Status getStatus() {
@@ -112,6 +99,6 @@ public class Inventory {
     }
 
     public void setDate_added(LocalDateTime date_added) {
-        this.date_added = date_added;//LocalDateTime.now();
+        this.date_added = date_added;}
     }
-}
+

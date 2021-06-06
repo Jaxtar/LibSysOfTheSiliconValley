@@ -35,7 +35,6 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
                 || AdminUsersView.class.equals(event.getNavigationTarget())
                 || StaffInventoryView.class.equals(event.getNavigationTarget())
                 || StaffUsersView.class.equals(event.getNavigationTarget())
-                || AddBookToInventoryView.class.equals(event.getNavigationTarget())
                 || StaffDecommissionedView.class.equals(event.getNavigationTarget())
                 || StaffLoanCardView.class.equals(event.getNavigationTarget())
                 )
