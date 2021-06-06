@@ -11,4 +11,5 @@ public interface LoanCardRepository extends JpaRepository<Loan_Card, Integer> {
 
     List<Loan_Card> findAll();
     List<Loan_Card> findByReason(String reasonString);
+    List<Loan_Card> findByCard_id(Integer card_id);
 }
