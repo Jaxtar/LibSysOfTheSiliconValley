@@ -75,6 +75,7 @@ public class StaffBookView  extends VerticalLayout {
     void addBook() {
         grid.asSingleSelect().clear();
         editBook(new Book());
+        staffBookForm.inventory.setVisible(false);
     }
 
     private void closeEditor() {
@@ -90,6 +91,7 @@ public class StaffBookView  extends VerticalLayout {
             staffBookForm.setBook(book);
             staffBookForm.setVisible(true);
             addClassName("editing");
+            staffBookForm.inventory.setVisible(book.getIsbn() != null);
         }
     }
 
@@ -97,7 +99,7 @@ public class StaffBookView  extends VerticalLayout {
         bookController.save(event.getBook());
         updateList();
         closeEditor();
-        Notification.show("Bok är nu sparad.", 1500,
+        Notification.show("Boken är nu sparad.", 1500,
                 Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
 
