@@ -10,6 +10,8 @@ import com.PiratesOfTheSiliconValley.LibSys.views.admin.AdminUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffDecommissionedView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffInventoryView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanCardView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanPage;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffReturnPage;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
 
@@ -126,6 +128,8 @@ public class Navbar extends AppLayout {
             tabs.add(createTab("Inventarium", StaffInventoryView.class));
             tabs.add(createTab("Obrukligt arkiv", StaffDecommissionedView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab("Utlåning", StaffLoanPage.class));
+            tabs.add(createTab("Lämna tillbaka", StaffReturnPage.class));
             tabs.add(createTab("Användare", StaffUsersView.class));
             tabs.add(createTab("Lånekort", StaffLoanCardView.class));
             tabs.add(createTab("Konto", UserAccount.class));

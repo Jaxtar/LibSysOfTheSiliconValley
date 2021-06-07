@@ -40,7 +40,8 @@ public class Inventory {
     private String classification;
 
     @Enumerated(EnumType.STRING)
-    @NotNull()
+
+    @NotNull(message = "Rutan får inte vara tom")
     private Inventory.Condition book_condition;
 
     @Enumerated(EnumType.STRING)

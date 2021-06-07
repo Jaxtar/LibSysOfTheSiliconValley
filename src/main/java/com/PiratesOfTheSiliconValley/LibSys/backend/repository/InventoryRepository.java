@@ -9,4 +9,5 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 
     List<Inventory> findAll();
     List<Inventory> findByTitleContainsIgnoreCase(String searchTerm);
+    List<Inventory> findByBookID(Integer bookID);
 }
