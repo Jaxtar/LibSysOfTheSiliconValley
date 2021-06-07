@@ -35,7 +35,7 @@ public class StaffDecommissionedView extends VerticalLayout {
     private void configureGrid() {
         addClassName("decommissioned-grid");
         grid.setSizeFull();
-        grid.setColumns("book_isbn", "title", "classification", "condition", "date_added", "date_removed", "reason");
+        grid.setColumns("book_isbn", "title", "classification", "book_condition", "date_added", "date_removed", "reason");
     }
 
     private HorizontalLayout getToolbar() {

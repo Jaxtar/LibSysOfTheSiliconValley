@@ -9,13 +9,6 @@ import java.time.LocalDateTime;
 @Table(name = "decommissioned")
 public class Decommissioned {
 
-    public enum Condition{
-        PERFEKT{ public String toString(){return "perfekt";}},
-        BRA{ public String toString(){return "bra";}},
-        SLITEN{ public String toString(){return "sliten";}},
-        TRASIG{ public String toString(){return "trasig";}}
-    }
-
     @Id
     private Integer bookID;
 
@@ -25,38 +18,29 @@ public class Decommissioned {
 
     @NotNull
     @NotEmpty
-    private String book_isbn = "";
+    private String book_isbn;
 
     @NotNull
-    private String title = "";
+    private String title;
 
     private String classification;
 
+    @NotNull()
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Rutan får inte vara tom")
-    private Decommissioned.Condition condition;
+    private Inventory.Condition book_condition;
 
-    private LocalDateTime date_added; //= Date.valueOf(LocalDate.now());
+    @NotNull()
+    private LocalDateTime date_added;
 
+    @NotNull()
     private LocalDateTime date_removed;
 
+    @NotNull()
     private String reason;
 
-    public Decommissioned(Integer bookID, String book_isbn, String title, String classification, Decommissioned.Condition condition,
-                          LocalDateTime date_added, LocalDateTime date_removed, String reason){
-            this.bookID = bookID;
-            this.book_isbn = book_isbn;
-            this.title = title;
-            this.classification = classification;
-            this.condition = condition;
-            this.date_added = date_added;
-            this.date_removed = date_removed;
-            this.reason = reason;
-        }
+    public Decommissioned(){
 
-        public Decommissioned(){
-
-        }
+    }
 
     public void setBookID(Integer bookID) {
         this.bookID = bookID;
@@ -86,12 +70,12 @@ public class Decommissioned {
         this.classification = classification;
     }
 
-    public Condition getCondition() {
-        return condition;
+    public Inventory.Condition getBook_condition() {
+        return book_condition;
     }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
+    public void setBook_condition(Inventory.Condition book_condition) {
+        this.book_condition = book_condition;
     }
 
     public LocalDateTime getDate_added() {
