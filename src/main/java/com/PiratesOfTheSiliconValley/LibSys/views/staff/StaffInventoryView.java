@@ -1,5 +1,6 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
+import com.PiratesOfTheSiliconValley.LibSys.backend.controller.DecommissionedController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
@@ -21,18 +22,20 @@ import com.vaadin.flow.router.Route;
 public class StaffInventoryView  extends VerticalLayout {
 
     private InventoryController inventoryController;
+    private DecommissionedController decommissionedController;
     private StaffInventoryForm staffInventoryForm;
 
     private Grid<Inventory> grid = new Grid<>(Inventory.class);
     private TextField filterText = new TextField();
 
-    public StaffInventoryView(InventoryController inventoryController){
+    public StaffInventoryView(InventoryController inventoryController, DecommissionedController decommissionedController){
         this.inventoryController = inventoryController;
+        this.decommissionedController = decommissionedController;
         addClassName("list-view");
         setSizeFull();
         configureGrid();
 
-        staffInventoryForm = new StaffInventoryForm();
+        staffInventoryForm = new StaffInventoryForm(decommissionedController);
         staffInventoryForm.addListener(StaffInventoryForm.SaveEvent.class, this::saveInventory);
         staffInventoryForm.addListener(StaffInventoryForm.CloseEvent.class, e -> closeEditor());
         staffInventoryForm.setMinWidth("20em");
@@ -49,14 +52,21 @@ public class StaffInventoryView  extends VerticalLayout {
     private void configureGrid() {
         addClassName("inventory-grid");
         grid.setSizeFull();
-        grid.setColumns("isbn", "title", "classification", "condition", "status", "date_added");
+        grid.setColumns("isbn", "title", "classification", "book_condition", "status", "date_added");
+
+        grid.getColumnByKey("isbn").setHeader("ISBN");
+        grid.getColumnByKey("title").setHeader("Titel");
+        grid.getColumnByKey("classification").setHeader("Klassificering");
+        grid.getColumnByKey("book_condition").setHeader("Skick");
+        grid.getColumnByKey("status").setHeader("Status");
+        grid.getColumnByKey("date_added").setHeader("Tillagd").setAutoWidth(true);
 
         grid.asSingleSelect().addValueChangeListener(event ->
                 editInventory(event.getValue()));
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by title...");
+        filterText.setPlaceholder("Sök titel...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
@@ -86,7 +96,7 @@ public class StaffInventoryView  extends VerticalLayout {
         inventoryController.save(event.getInventory());
         updateList();
         closeEditor();
-        Notification.show("Boken är nu sparad", 1500,
+        Notification.show("Ändringen är nu sparad", 1500,
                 Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
 

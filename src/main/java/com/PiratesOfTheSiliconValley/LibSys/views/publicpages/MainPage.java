@@ -8,7 +8,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "", layout = Navbar.class)
-@PageTitle("Mainpage")
+@PageTitle("Huvudsida")
 @CssImport("./views/mainview/main-page.css")
 @Tag("main-page")
 @JsModule("./views/mainview/main-page.ts")

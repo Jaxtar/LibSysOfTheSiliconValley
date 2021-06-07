@@ -4,7 +4,6 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.model.Decommissioned;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.DecommissionedRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +12,6 @@ import java.util.logging.Logger;
 public class DecommissionedController {
     private static final Logger LOGGER = Logger.getLogger(DecommissionedController.class.getName());
     private DecommissionedRepository decommissionedRepository;
-    LocalDateTime date = LocalDateTime.now();
 
     public DecommissionedController(DecommissionedRepository decommissionedRepository) {this.decommissionedRepository = decommissionedRepository;}
 
@@ -39,7 +37,6 @@ public class DecommissionedController {
                     "Bok decomissioned is null. Are you sure you have connected your form to the application?");
             return;
         }
-        //decommissioned.setDate_removed(date);
         decommissionedRepository.save(decommissioned);
     }
 }

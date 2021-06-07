@@ -22,7 +22,7 @@ import com.vaadin.flow.router.Route;
 import org.apache.commons.lang3.StringUtils;
 
 @Route(value = "/bookcatalogue", layout = Navbar.class)
-@PageTitle("Book Catalogue")
+@PageTitle("Böcker")
 @CssImport("./views/bookcatalogue/book-catalogue-view.css")
 @Tag("book-catalogue-view")
 @JsModule("./views/bookcatalogue/book-catalogue-view.ts")
@@ -81,38 +81,38 @@ public class BookCatalogueView extends LitTemplate {
     }
 
     private void createTitleColumn() {
-        titleColumn = grid.addColumn(Book::getTitle, "title").setHeader("TITLE").setWidth("330px").setFlexGrow(0);
+        titleColumn = grid.addColumn(Book::getTitle, "title").setHeader("Titel").setWidth("330px").setFlexGrow(0);
     }
 
     private void createAuthorColumn() {
-        authorColumn = grid.addColumn(Book::getAuthor, "author").setHeader("AUTHOR").setWidth("250px").setFlexGrow(0);
+        authorColumn = grid.addColumn(Book::getAuthor, "author").setHeader("Författare").setWidth("250px").setFlexGrow(0);
     }
 
     private void createLanguageColumn() {
-        languageColumn = grid.addColumn(Book::getLanguage, "language").setHeader("LANGUAGE").setWidth("180px").setFlexGrow(0);
+        languageColumn = grid.addColumn(Book::getLanguage, "language").setHeader("Språk").setWidth("180px").setFlexGrow(0);
     }
 
     private void createFormatColumn() {
-        formatColumn = grid.addColumn(Book::getFormat, "format").setHeader("FORMAT").setWidth("180px").setFlexGrow(0);
+        formatColumn = grid.addColumn(Book::getFormat, "format").setHeader("Format").setWidth("180px").setFlexGrow(0);
     }
 
     private void createGenre1Column() {
-        genre1Column = grid.addColumn(Book::getGenre1, "genre1").setHeader("GENRE").setWidth("250px").setFlexGrow(0);
+        genre1Column = grid.addColumn(Book::getGenre1, "genre1").setHeader("Genre").setWidth("250px").setFlexGrow(0);
     }
 
     private void createGenre2Column() {
-        genre2Column = grid.addColumn(Book::getGenre2, "genre2").setHeader("GENRE").setWidth("250px").setFlexGrow(0);
+        genre2Column = grid.addColumn(Book::getGenre2, "genre2").setHeader("Genre").setWidth("250px").setFlexGrow(0);
     }
 
     private void createPublishingYearColumn() {
-        publishingYearColumn = grid.addColumn(Book::getPublishingyear, "publishingyear").setHeader("PUBLISHING YEAR").setWidth("200px").setFlexGrow(0);
+        publishingYearColumn = grid.addColumn(Book::getPublishingyear, "publishingyear").setHeader("Utgivningsår").setWidth("200px").setFlexGrow(0);
     }
 
     private void addFiltersToGrid() {
         HeaderRow filterRow = grid.appendHeaderRow();
 
         TextField titleFilter = new TextField();
-        titleFilter.setPlaceholder("Filter");
+        titleFilter.setPlaceholder("Sök titel");
         titleFilter.setClearButtonVisible(true);
         titleFilter.setWidth("100%");
         titleFilter.setValueChangeMode(ValueChangeMode.EAGER);
@@ -121,7 +121,7 @@ public class BookCatalogueView extends LitTemplate {
         filterRow.getCell(titleColumn).setComponent(titleFilter);
 
         TextField authorFilter = new TextField();
-        authorFilter.setPlaceholder("Filter");
+        authorFilter.setPlaceholder("Sök författare");
         authorFilter.setClearButtonVisible(true);
         authorFilter.setWidth("100%");
         authorFilter.setValueChangeMode(ValueChangeMode.EAGER);
@@ -132,7 +132,7 @@ public class BookCatalogueView extends LitTemplate {
 
         ComboBox<Book.Language> languageFilter = new ComboBox<>();
         languageFilter.setItems(Book.Language.values());
-        languageFilter.setPlaceholder("Filter");
+        languageFilter.setPlaceholder("Sök språk");
         languageFilter.setClearButtonVisible(true);
         languageFilter.setWidth("100%");
         languageFilter.addValueChangeListener(
@@ -141,7 +141,7 @@ public class BookCatalogueView extends LitTemplate {
 
         ComboBox<Book.Genre> genre1Filter = new ComboBox<>();
         genre1Filter.setItems(Book.Genre.values());
-        genre1Filter.setPlaceholder("Filter");
+        genre1Filter.setPlaceholder("Sök genre");
         genre1Filter.setClearButtonVisible(true);
         genre1Filter.setWidth("100%");
         genre1Filter.addValueChangeListener(
@@ -150,7 +150,7 @@ public class BookCatalogueView extends LitTemplate {
 
         ComboBox<Book.Genre> genre2Filter = new ComboBox<>();
         genre2Filter.setItems(Book.Genre.values());
-        genre2Filter.setPlaceholder("Filter");
+        genre2Filter.setPlaceholder("Sök genre");
         genre2Filter.setClearButtonVisible(true);
         genre2Filter.setWidth("100%");
         genre2Filter.addValueChangeListener(
@@ -159,7 +159,7 @@ public class BookCatalogueView extends LitTemplate {
 
         ComboBox<Book.Format> formatFilter = new ComboBox<>();
         formatFilter.setItems(Book.Format.values());
-        formatFilter.setPlaceholder("Filter");
+        formatFilter.setPlaceholder("Sök format");
         formatFilter.setClearButtonVisible(true);
         formatFilter.setWidth("100%");
         formatFilter.addValueChangeListener(
@@ -168,7 +168,7 @@ public class BookCatalogueView extends LitTemplate {
 
 
         TextField publishingYearFilter = new TextField();
-        publishingYearFilter.setPlaceholder("Filter");
+        publishingYearFilter.setPlaceholder("Sök år");
         publishingYearFilter.setClearButtonVisible(true);
         publishingYearFilter.setWidth("100%");
         publishingYearFilter.setValueChangeMode(ValueChangeMode.EAGER);

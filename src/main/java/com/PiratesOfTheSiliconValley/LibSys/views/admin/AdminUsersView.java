@@ -55,13 +55,20 @@ public class AdminUsersView extends VerticalLayout {
             grid.setColumns("personal_id_number", "firstname", "lastname",
                     "phone", "email", "username", "role");
             grid.getColumns().forEach(col -> col.setAutoWidth(true));
+            grid.getColumnByKey("personal_id_number").setHeader("Personnummer");
+            grid.getColumnByKey("firstname").setHeader("Förnamn");
+            grid.getColumnByKey("lastname").setHeader("Efternamn");
+            grid.getColumnByKey("phone").setHeader("Telefon");
+            grid.getColumnByKey("email").setHeader("Mail");
+            grid.getColumnByKey("username").setHeader("Användarnamn");
+            grid.getColumnByKey("role").setHeader("Roll");
 
             grid.asSingleSelect().addValueChangeListener(event ->
                     editUser(event.getValue()));
         }
 
         private HorizontalLayout getToolbar() {
-            filterText.setPlaceholder("Filter by lastname...");
+            filterText.setPlaceholder("Sök via efternamn...");
             filterText.setClearButtonVisible(true);
             filterText.setValueChangeMode(ValueChangeMode.LAZY);
             filterText.addValueChangeListener(e -> updateList());
@@ -99,7 +106,8 @@ public class AdminUsersView extends VerticalLayout {
             userController.save(event.getUser());
             updateList();
             closeEditor();
-            Notification.show("Person är nu sparad.", 1500,
+            Notification.show(event.getUser().getFirstname() +
+                    " " + event.getUser().getLastname() + " är nu sparad.", 1500,
                     Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         }
 

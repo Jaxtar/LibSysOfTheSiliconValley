@@ -116,37 +116,37 @@ public class Navbar extends AppLayout {
         tabs.add(createTab("Huvudsida", MainPage.class));
         
         if (user != null && user.getRole().equals(Role.ADMIN)) {
-            tabs.add(createTab("Books", StaffBookView.class));
-            tabs.add(createTab("Inventory", StaffInventoryView.class));
-            tabs.add(createTab("Decommissioned", StaffDecommissionedView.class));
+            tabs.add(createTab("Böcker", StaffBookView.class));
+            tabs.add(createTab("Inventarium", StaffInventoryView.class));
+            tabs.add(createTab("Obrukligt arkiv", StaffDecommissionedView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
-            tabs.add(createTab( "User List", AdminUsersView.class));
-            tabs.add(createTab("Loan Card", StaffLoanCardView.class));
-            tabs.add(createTab( "Logout", LogoutView.class));
+            tabs.add(createTab( "Användare", AdminUsersView.class));
+            tabs.add(createTab("Lånekort", StaffLoanCardView.class));
+            tabs.add(createTab( "Logga ut", LogoutView.class));
         } else if (user != null && user.getRole().equals(Role.STAFF)){
-            tabs.add(createTab("Books", StaffBookView.class));
-            tabs.add(createTab("Inventory", StaffInventoryView.class));
-            tabs.add(createTab("Decommissioned", StaffDecommissionedView.class));
+            tabs.add(createTab("Böcker", StaffBookView.class));
+            tabs.add(createTab("Inventarium", StaffInventoryView.class));
+            tabs.add(createTab("Obrukligt arkiv", StaffDecommissionedView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
-            tabs.add(createTab("User List", StaffUsersView.class));
-            tabs.add(createTab("Loan Card", StaffLoanCardView.class));
             tabs.add(createTab("Utlåning", StaffLoanPage.class));
             tabs.add(createTab("Lämna tillbaka", StaffReturnPage.class));
-            tabs.add(createTab("Account", UserAccount.class));
-            tabs.add(createTab("Logout", LogoutView.class));
+            tabs.add(createTab("Användare", StaffUsersView.class));
+            tabs.add(createTab("Lånekort", StaffLoanCardView.class));
+            tabs.add(createTab("Konto", UserAccount.class));
+            tabs.add(createTab("Logga ut", LogoutView.class));
         } else if (user != null && user.getRole().equals(Role.USER)){
-            tabs.add(createTab("Boklista", BookCatalogueView.class));
+            tabs.add(createTab("Böcker", BookCatalogueView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
             tabs.add(createTab("Öppettider", OpenHoursView.class));
             tabs.add(createTab("Om oss", AboutUsView.class));
-            tabs.add(createTab("Account", UserAccount.class));
-            tabs.add(createTab("Logout", LogoutView.class));
+            tabs.add(createTab("Konto", UserAccount.class));
+            tabs.add(createTab("Logga ut", LogoutView.class));
         } else  {
-            tabs.add(createTab("Boklista", BookCatalogueView.class));
+            tabs.add(createTab("Böcker", BookCatalogueView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
             tabs.add(createTab("Öppettider", OpenHoursView.class));
             tabs.add(createTab("Om oss", AboutUsView.class));
-            tabs.add(createTab("Login", LoginView.class));
+            tabs.add(createTab("Logga in", LoginView.class));
         }
 
         return tabs.toArray(Component[]::new);

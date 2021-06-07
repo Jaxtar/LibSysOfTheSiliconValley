@@ -1,6 +1,7 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.BookController;
+import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
 import com.vaadin.flow.component.button.Button;
@@ -23,18 +24,20 @@ import com.vaadin.flow.router.Route;
 public class StaffBookView  extends VerticalLayout {
 
     private BookController bookController;
+    private InventoryController inventoryController;
     private StaffBookForm staffBookForm;
 
     private Grid<Book> grid = new Grid<>(Book.class);
     private TextField filterText = new TextField();
 
-    public StaffBookView(BookController bookController) {
+    public StaffBookView(BookController bookController, InventoryController inventoryController) {
         this.bookController = bookController;
+        this.inventoryController = inventoryController;
         addClassName("list-view");
         setSizeFull();
         configureGrid();
 
-        staffBookForm = new StaffBookForm();
+        staffBookForm = new StaffBookForm(inventoryController);
         staffBookForm.addListener(StaffBookForm.SaveEvent.class, this::saveBook);
         staffBookForm.addListener(StaffBookForm.DeleteEvent.class, this::deleteBook);
         staffBookForm.addListener(StaffBookForm.CloseEvent.class, e -> closeEditor());
@@ -54,17 +57,24 @@ public class StaffBookView  extends VerticalLayout {
         grid.setSizeFull();
         grid.setColumns("title", "author", "language", "format", "pages", "price");
 
+        grid.getColumnByKey("title").setHeader("Titel");
+        grid.getColumnByKey("author").setHeader("Författare");
+        grid.getColumnByKey("language").setHeader("Språk");
+        grid.getColumnByKey("format").setHeader("Format");
+        grid.getColumnByKey("pages").setHeader("Antal sidor");
+        grid.getColumnByKey("price").setHeader("Pris");
+
         grid.asSingleSelect().addValueChangeListener(event ->
                 editBook(event.getValue()));
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by title...");
+        filterText.setPlaceholder("Sök titel...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addBookButton = new Button("Add Book");
+        Button addBookButton = new Button("Lägg till bok");
         addBookButton.addClickListener(click -> addBook());
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addBookButton);
