@@ -11,6 +11,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
@@ -46,6 +47,10 @@ public class StaffLoanCardView extends VerticalLayout {
         grid.setSizeFull();
         grid.setColumns("card_id", "status", "reason");
 
+        grid.getColumnByKey("card_id").setHeader("Kort-ID");
+        grid.getColumnByKey("status").setHeader("Status");
+        grid.getColumnByKey("reason").setHeader("Orsak");
+
         grid.addComponentColumn(loanCard -> {
             Button enable = new Button("Aktivera");
 
@@ -76,7 +81,7 @@ public class StaffLoanCardView extends VerticalLayout {
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by Reason...");
+        filterText.setPlaceholder("Sök på orsak...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());

@@ -57,17 +57,24 @@ public class StaffUsersView extends VerticalLayout {
                 "phone", "username", "role");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
+        grid.getColumnByKey("personal_id_number").setHeader("Personnummer");
+        grid.getColumnByKey("firstname").setHeader("Förnamn");
+        grid.getColumnByKey("lastname").setHeader("Efternamn");
+        grid.getColumnByKey("phone").setHeader("Telefon");
+        grid.getColumnByKey("username").setHeader("Användarnamn");
+        grid.getColumnByKey("role").setHeader("Roll");
+
         grid.asSingleSelect().addValueChangeListener(event ->
                 editUser(event.getValue()));
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by lastname...");
+        filterText.setPlaceholder("Sök efternamn...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addUserButton = new Button("Add User");
+        Button addUserButton = new Button("Lägg till användare");
         addUserButton.addClickListener(click -> addUser());
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addUserButton);

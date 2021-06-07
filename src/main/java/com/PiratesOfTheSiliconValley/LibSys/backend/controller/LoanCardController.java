@@ -17,6 +17,7 @@ public class LoanCardController {
         this.repository = repository;
     }
 
+
     public List<Loan_Card> findAll(String reasonString){
         if (reasonString == null || reasonString.isEmpty()){
             return repository.findAll();
@@ -24,6 +25,7 @@ public class LoanCardController {
             return repository.findByReason(reasonString);
         }
     }
+
 
     public void delete(Loan_Card loanCard) {
         repository.delete(loanCard);

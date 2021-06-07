@@ -2,6 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.login;
 
 import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.MainPage;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
@@ -25,21 +26,24 @@ public class LoginView extends VerticalLayout {
             setAlignItems(Alignment.CENTER);
             setJustifyContentMode(JustifyContentMode.CENTER);
 
-            TextField username = new TextField("Username");
-            PasswordField password = new PasswordField("Password");
+            TextField username = new TextField("Användarnamn");
+            PasswordField password = new PasswordField("Lösenord");
+            Button loginButton = new Button("Logga in", event -> {
+                try {
+                    authService.authenticate(username.getValue(), password.getValue());
+                    UI.getCurrent().navigate(MainPage.class);
+                } catch (AuthService.AuthException e) {
+                    Notification.show("Fel användarnamn och/eller lösenord.");
+                }
+            });
+
+            loginButton.addClickShortcut(Key.ENTER);
+
             add(
                     new H1("Jisho"),
                     username,
                     password,
-                    new Button("Login", event -> {
-
-                        try {
-                            authService.authenticate(username.getValue(), password.getValue());
-                            UI.getCurrent().navigate(MainPage.class);
-                        } catch (AuthService.AuthException e) {
-                            Notification.show("Wrong username and/or password.");
-                        }
-                    })
+                    loginButton
             );
         }
 }

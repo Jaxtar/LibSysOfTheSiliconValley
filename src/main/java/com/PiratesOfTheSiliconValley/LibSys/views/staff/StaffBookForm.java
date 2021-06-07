@@ -28,17 +28,17 @@ public class StaffBookForm extends FormLayout {
     private InventoryController inventoryController;
 
     TextField isbn = new TextField("ISBN");
-    TextField title = new TextField("Title");
-    TextField author = new TextField("Author");
-    ComboBox<Book.Language> language = new ComboBox<>("Language");
+    TextField title = new TextField("Titel");
+    TextField author = new TextField("Författare");
+    ComboBox<Book.Language> language = new ComboBox<>("Språk");
     ComboBox<Book.Format> format = new ComboBox<>("Format");
     ComboBox<Book.Genre> genre1 = new ComboBox<>("Genre");
     ComboBox<Book.Genre> genre2 = new ComboBox<>("Genre");
-    TextArea description = new TextArea("Description");
-    IntegerField pages = new IntegerField("Pages");
-    IntegerField publishingyear = new IntegerField("Publishing Year");
-    TextField publisher = new TextField("Publisher");
-    NumberField price = new NumberField("Price");
+    TextArea description = new TextArea("Beskrivning");
+    IntegerField pages = new IntegerField("Antal sidor");
+    IntegerField publishingyear = new IntegerField("Utgivningsår");
+    TextField publisher = new TextField("Utgivare");
+    NumberField price = new NumberField("Pris");
 
     Binder<Book> binder = new BeanValidationBinder<>(Book.class);
     Binder<Inventory> binder2 = new BeanValidationBinder<>(Inventory.class);
@@ -46,7 +46,7 @@ public class StaffBookForm extends FormLayout {
     Button save = new Button("Spara");
     Button delete = new Button("Radera");
     Button close = new Button("Avbryt");
-    Button inventory = new Button("Lägg till lager");
+    Button inventory = new Button("Lägg till i lager");
 
     public StaffBookForm(InventoryController inventoryController) {
         this.inventoryController = inventoryController;
@@ -61,39 +61,56 @@ public class StaffBookForm extends FormLayout {
         genre1.setItems(Book.Genre.values());
         genre2.setItems(Book.Genre.values());
 
+        add(createButtonsLayout(inventoryController), inventoryButtonsLayout(),
+            isbn, title, author, language, format,
+            genre1, genre2, description, pages,
+            publishingyear, publisher,  price);
 
-        add(createButtonsLayout(inventoryController),isbn, title, author,
-            language,  format, genre1, genre2, description,
-            pages, publishingyear, publisher,  price);
     }
 
 
     private HorizontalLayout createButtonsLayout(InventoryController inventoryController) {
         this.inventoryController = inventoryController;
         Dialog dialog = new Dialog();
-        dialog.add(new Text("Är du säkert att du vill radera boken från listan?"));
+        dialog.add(new Text("Är du säker på att du vill radera boken från listan?"));
         dialog.setCloseOnEsc(false);
         dialog.setCloseOnOutsideClick(false);
 
-        Button confirmButton = new Button("Confirm", event -> {
+        Button confirmButton = new Button("Ja", event -> {
             fireEvent(new DeleteEvent(this, book));
             dialog.close();
         });
         confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS
         );
-        Button avbrytButton = new Button("Avbryt", event ->
+        Button cancelButton = new Button("Avbryt", event ->
             dialog.close()
         );
 
-        dialog.add(new Div( confirmButton, avbrytButton));
+        dialog.add(new Div( confirmButton, cancelButton));
 
+        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
+        save.addClickShortcut(Key.ENTER);
+        close.addClickShortcut(Key.ESCAPE);
+
+        save.addClickListener(event -> validateAndSave());
+        delete.addClickListener(event -> dialog.open());
+        close.addClickListener(event -> fireEvent(new CloseEvent(this)));
+
+        save.setEnabled(false);
+
+        return new HorizontalLayout(save, delete, close);
+    }
+
+    private HorizontalLayout inventoryButtonsLayout() {
         Dialog dialog2 = new Dialog();
-        dialog2.add(new Text("Vill du lägga en exemplar av den här boken i bibliotekens inventarie?"));
+        dialog2.add(new Text("Vill du lägga till ett exemplar av den här boken i bibliotekets inventarium?"));
         dialog2.setCloseOnEsc(false);
         dialog2.setCloseOnOutsideClick(false);
 
-        Button confirmButton2 = new Button("Confirm", event -> {
+        Button confirmButton2 = new Button("Ja", event -> {
             saveInventory();
             UI.getCurrent()
                     .navigate(StaffInventoryView.class);
@@ -107,22 +124,15 @@ public class StaffBookForm extends FormLayout {
 
         dialog2.add(new Div(confirmButton2, avbryt2));
 
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
         close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         inventory.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
 
-        save.addClickShortcut(Key.ENTER);
         close.addClickShortcut(Key.ESCAPE);
 
-        save.addClickListener(event -> validateAndSave());
-        delete.addClickListener(event -> dialog.open());
         close.addClickListener(event -> fireEvent(new CloseEvent(this)));
         inventory.addClickListener(e -> dialog2.open());
 
-        save.setEnabled(false);
-
-        return new HorizontalLayout(save, delete, close, inventory);
+        return new HorizontalLayout(inventory);
     }
 
     private void validateAndSave() {

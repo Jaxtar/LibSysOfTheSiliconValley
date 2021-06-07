@@ -57,17 +57,24 @@ public class StaffBookView  extends VerticalLayout {
         grid.setSizeFull();
         grid.setColumns("title", "author", "language", "format", "pages", "price");
 
+        grid.getColumnByKey("title").setHeader("Titel");
+        grid.getColumnByKey("author").setHeader("Författare");
+        grid.getColumnByKey("language").setHeader("Språk");
+        grid.getColumnByKey("format").setHeader("Format");
+        grid.getColumnByKey("pages").setHeader("Antal sidor");
+        grid.getColumnByKey("price").setHeader("Pris");
+
         grid.asSingleSelect().addValueChangeListener(event ->
                 editBook(event.getValue()));
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by title...");
+        filterText.setPlaceholder("Sök titel...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addBookButton = new Button("Add Book");
+        Button addBookButton = new Button("Lägg till bok");
         addBookButton.addClickListener(click -> addBook());
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addBookButton);

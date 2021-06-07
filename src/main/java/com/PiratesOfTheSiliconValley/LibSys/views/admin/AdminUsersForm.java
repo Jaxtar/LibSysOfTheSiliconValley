@@ -26,20 +26,20 @@ public class AdminUsersForm extends FormLayout {
 
     private User user;
 
-    TextField personal_id_number = new TextField("Personal ID Number");
-    TextField firstname = new TextField("Firstname");
-    TextField lastname = new TextField("Lastname");
-    TextField phone = new TextField("Phone");
+    TextField personal_id_number = new TextField("Personnummer");
+    TextField firstname = new TextField("Förnamn");
+    TextField lastname = new TextField("Efternamn");
+    TextField phone = new TextField("Telefon");
     TextField email = new TextField("Mail");
-    ComboBox<Role> role = new ComboBox<>("Role");
-    TextField username = new TextField("Username");
-    PasswordField passwordHash = new PasswordField("Password");
+    ComboBox<Role> role = new ComboBox<>("Roll");
+    TextField username = new TextField("Användarnamn");
+    PasswordField passwordHash = new PasswordField("Lösenord");
 
     Binder<User> binder = new BeanValidationBinder<>(User.class);
 
-    Button save = new Button("Save");
-    Button delete = new Button("Delete");
-    Button close = new Button("Cancel");
+    Button save = new Button("Spara");
+    Button delete = new Button("Radera");
+    Button close = new Button("Avbryt");
 
 
     public AdminUsersForm() {
@@ -49,10 +49,10 @@ public class AdminUsersForm extends FormLayout {
         binder.bindInstanceFields(this);
         /**binder.forField(email)
                 .withValidator(new EmailValidator(
-                        "Mail adress stämmer inte"))
+                        "Mail-adress stämmer ej"))
                 .withValidator(
                         email -> email.endsWith("@jisho.com"),
-                        "Bara adress jisho.com kan användas")
+                        "Endast jisho.com-adress tillåten")
                 .bind(User::getEmail, User::setEmail);*/
 
         add(personal_id_number, firstname, lastname, phone, email, username, passwordHash, role,
@@ -99,7 +99,7 @@ public class AdminUsersForm extends FormLayout {
             e.printStackTrace();
         }catch (DataIntegrityViolationException e){
             e.printStackTrace();
-            Notification.show(" Användarnamn används redan, försök med en ny.",
+            Notification.show("Användarnamn används redan, försök med en ny.",
                     2000, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }
