@@ -26,11 +26,11 @@ public class StaffInventoryForm extends FormLayout {
     private DecommissionedController decommissionedController;
 
     TextField isbn = new TextField("ISBN");
-    TextField title = new TextField("Title");
-    TextField classification = new TextField("Classification");
-    ComboBox<Inventory.Condition> book_condition = new ComboBox<>("Condition");
+    TextField title = new TextField("Titel");
+    TextField classification = new TextField("Klassificering");
+    ComboBox<Inventory.Condition> book_condition = new ComboBox<>("Skick");
     ComboBox<Inventory.Status> status = new ComboBox<>("Status");
-    TextField reason = new TextField("Ange en anledning:");
+    TextField reason = new TextField("Ange orsak:");
 
     Binder<Inventory> binder = new BeanValidationBinder<>(Inventory.class);
     Binder<Decommissioned> binder2 = new BeanValidationBinder<>(Decommissioned.class);
@@ -58,12 +58,12 @@ public class StaffInventoryForm extends FormLayout {
         this.decommissionedController = decommissionedController;
         Dialog dialog = new Dialog();
         dialog.add(reason);
-        dialog.add(new Text("Är du säkert att du vill radera boken från lager?"));
+        dialog.add(new Text("Är du säker på att du vill radera boken från lagret?"));
         dialog.add(new VerticalLayout(reason));
         dialog.setCloseOnEsc(false);
         dialog.setCloseOnOutsideClick(false);
 
-        Button confirmButton = new Button("Confirm", event -> {
+        Button confirmButton = new Button("Ja", event -> {
             saveDecommissioned();
             UI.getCurrent()
                     .navigate(StaffDecommissionedView.class);

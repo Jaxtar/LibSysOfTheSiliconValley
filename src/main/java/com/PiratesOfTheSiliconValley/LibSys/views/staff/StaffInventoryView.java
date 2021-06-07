@@ -54,12 +54,19 @@ public class StaffInventoryView  extends VerticalLayout {
         grid.setSizeFull();
         grid.setColumns("isbn", "title", "classification", "book_condition", "status", "date_added");
 
+        grid.getColumnByKey("isbn").setHeader("ISBN");
+        grid.getColumnByKey("title").setHeader("Titel");
+        grid.getColumnByKey("classification").setHeader("Klassificering");
+        grid.getColumnByKey("book_condition").setHeader("Skick");
+        grid.getColumnByKey("status").setHeader("Status");
+        grid.getColumnByKey("date_added").setHeader("Tillagd").setAutoWidth(true);
+
         grid.asSingleSelect().addValueChangeListener(event ->
                 editInventory(event.getValue()));
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by title...");
+        filterText.setPlaceholder("Sök titel...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());

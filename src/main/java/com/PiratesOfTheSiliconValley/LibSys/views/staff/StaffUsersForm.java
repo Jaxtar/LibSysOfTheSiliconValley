@@ -24,19 +24,19 @@ public class StaffUsersForm extends FormLayout {
 
     private User user;
 
-    TextField personal_id_number = new TextField("Personal ID Number");
-    TextField firstname = new TextField("Firstname");
-    TextField lastname = new TextField("Lastname");
-    TextField phone = new TextField("Phone");
-    ComboBox<Role> role = new ComboBox<Role>("Role");
-    TextField username = new TextField("Username");
-    PasswordField passwordHash = new PasswordField("Password");
+    TextField personal_id_number = new TextField("Personnummer");
+    TextField firstname = new TextField("Förnamn");
+    TextField lastname = new TextField("Efternamn");
+    TextField phone = new TextField("Telefon");
+    ComboBox<Role> role = new ComboBox<Role>("Roll");
+    TextField username = new TextField("Användarnamn");
+    PasswordField passwordHash = new PasswordField("Lösenord");
 
     Binder<User> binder = new BeanValidationBinder<>(User.class);
 
-    Button save = new Button("Save");
-    Button delete = new Button("Delete");
-    Button close = new Button("Cancel");
+    Button save = new Button("Spara");
+    Button delete = new Button("Radera");
+    Button close = new Button("Avbryt");
 
 
     public StaffUsersForm() {

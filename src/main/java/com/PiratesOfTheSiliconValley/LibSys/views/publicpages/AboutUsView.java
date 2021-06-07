@@ -1,8 +1,5 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
-import com.PiratesOfTheSiliconValley.LibSys.backend.controller.UserController;
-import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
-import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -11,9 +8,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
-import java.util.Collections;
-import java.util.List;
 
 
 @Route(value = "/about", layout = Navbar.class)
@@ -31,7 +25,7 @@ public class AboutUsView extends VerticalLayout {
         textArea.setValue("""
                 På Jisho biblioteket finns skönlitteratur och facklitteratur inom olika ämnesområden,
                 samt Ljudbiblioteket med tal- och ljudböcker.
-                Vi har cirka 11 böcker och besöks dagligen av ungefär 1 besökare.
+                Vi har över 30 böcker och besöks dagligen av besökare.
                 Dessutom ordnar vi ett stort antal seminarium, så kom och hälsa på!""");
         Details component = new Details("Om biblioteket", textArea);
         add(component);
@@ -71,7 +65,7 @@ public class AboutUsView extends VerticalLayout {
         textArea3.setWidth("700px");
         textArea3.setValue("""
                 Aleksandra Apfelstrudel
-                Britt Marie Karlsson
+                Britt-Marie Karlsson
                 Svante Nilsson
                 Linda Eliasson""");
         Details component3 = new Details("Vi som jobbar här", textArea3);
@@ -91,7 +85,7 @@ public class AboutUsView extends VerticalLayout {
         textArea5.setValue("""
                 Telefonnummer:
                 
-                    Bibliotekens kundtjänst (mån-fre, kl 9-13)
+                    Bibliotekets kundtjänst (mån-fre, kl 9-13)
                     08-340 30 900
                     Jisho biblioteket
                     08-340 31 020

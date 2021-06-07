@@ -9,18 +9,18 @@ import java.time.LocalDateTime;
 public class Inventory {
 
     public enum Condition{
-        PERFEKT{ public String toString(){return "perfekt";}},
-        BRA{ public String toString(){return "bra";}},
-        SLITEN{ public String toString(){return "sliten";}},
-        TRASIG{ public String toString(){return "trasig";}}
+        PERFEKT{ public String toString(){return "Perfekt";}},
+        BRA{ public String toString(){return "Bra";}},
+        SLITEN{ public String toString(){return "Sliten";}},
+        TRASIG{ public String toString(){return "Trasig";}}
     }
 
     public enum Status{
-        INNE{ public String toString(){return "inne";}},
-        UTLÅNAD{ public String toString(){return "utlånad";}},
-        RESERVERAD{ public String toString(){return "reserverad";}},
-        STULEN{ public String toString(){return "stulen";}},
-        FÖRSVUNNEN{ public String toString(){return "försvunnen";}}
+        INNE{ public String toString(){return "Inne";}},
+        UTLÅNAD{ public String toString(){return "Utlånad";}},
+        RESERVERAD{ public String toString(){return "Reserverad";}},
+        STULEN{ public String toString(){return "Stulen";}},
+        FÖRSVUNNEN{ public String toString(){return "Försvunnen";}}
     }
 
     @Id
