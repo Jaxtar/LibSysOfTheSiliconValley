@@ -10,6 +10,8 @@ import com.PiratesOfTheSiliconValley.LibSys.views.admin.AdminUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffDecommissionedView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffInventoryView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanCardView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanPage;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffReturnPage;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
 
@@ -128,6 +130,8 @@ public class Navbar extends AppLayout {
             tabs.add(createTab("Seminarium", SeminarView.class));
             tabs.add(createTab("User List", StaffUsersView.class));
             tabs.add(createTab("Loan Card", StaffLoanCardView.class));
+            tabs.add(createTab("Utlåning", StaffLoanPage.class));
+            tabs.add(createTab("Lämna tillbaka", StaffReturnPage.class));
             tabs.add(createTab("Account", UserAccount.class));
             tabs.add(createTab("Logout", LogoutView.class));
         } else if (user != null && user.getRole().equals(Role.USER)){
