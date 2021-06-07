@@ -55,8 +55,6 @@ public class StaffUsersFormTest {
     void saveCorrectValues() {
         StaffUsersForm form = new StaffUsersForm(users);
         User user = new User();
-        //String saltPassword = RandomStringUtils.random(4);
-        //String password = DigestUtils.sha1Hex("2580" + saltPassword);
         form.setUser(user);
 
         form.personal_id_number.setValue("198409240987");
