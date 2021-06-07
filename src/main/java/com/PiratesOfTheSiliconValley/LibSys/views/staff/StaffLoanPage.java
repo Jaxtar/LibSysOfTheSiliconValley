@@ -2,6 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import java.time.LocalDateTime;
 
+import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.LoanController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Loan;
@@ -29,6 +30,7 @@ public class StaffLoanPage extends VerticalLayout{
     private LoanController loanController;
     private InventoryRepository inventoryRepo;
     private LoanCardRepository loanCardRepo;
+    private InventoryController invCont;
 
     IntegerField bookId = new IntegerField("Bokens identifikationsnummer");
     LocalDateTime loanDate = LocalDateTime.now();
@@ -38,10 +40,11 @@ public class StaffLoanPage extends VerticalLayout{
 
     Button loanButton = new Button("Låna");
 
-    public StaffLoanPage(LoanController loanController, InventoryRepository inventoryRepo, LoanCardRepository loanCardRepo){
+    public StaffLoanPage(LoanController loanController, InventoryController invCont, InventoryRepository inventoryRepo, LoanCardRepository loanCardRepo){
         this.loanController = loanController;
         this.inventoryRepo = inventoryRepo;
         this.loanCardRepo = loanCardRepo;
+        this.invCont = invCont;
 
         addClassName("loanPage");
         binder.bindInstanceFields(this);
@@ -74,7 +77,9 @@ public class StaffLoanPage extends VerticalLayout{
             loan.setCardId(cardId.getValue());
 
             loanController.save(loan);
-            inventoryRepo.findByBookID(bookId.getValue()).get(0).setStatus(Inventory.Status.UTLÅNAD);
+            Inventory inv = inventoryRepo.findByBookID(bookId.getValue()).get(0);
+            inv.setStatus(Inventory.Status.UTLÅNAD);
+            invCont.save(inv);
         
             Notification.show("Lånet är registrerat.", 
                                 1500,

@@ -10,18 +10,18 @@ import java.time.LocalDateTime;
 public class Inventory {
 
     public enum Condition{
-        PERFEKT{ public String toString(){return "perfekt";}},
-        BRA{ public String toString(){return "bra";}},
-        SLITEN{ public String toString(){return "sliten";}},
-        TRASIG{ public String toString(){return "trasig";}}
+        PERFEKT{ public String toString(){return "Perfekt";}},
+        BRA{ public String toString(){return "Bra";}},
+        SLITEN{ public String toString(){return "Sliten";}},
+        TRASIG{ public String toString(){return "Trasig";}}
     }
 
     public enum Status{
-        INNE{ public String toString(){return "inne";}},
-        UTLÅNAD{ public String toString(){return "utlånad";}},
-        RESERVERAD{ public String toString(){return "reserverad";}},
-        STULEN{ public String toString(){return "stulen";}},
-        //FÖRSVUNNEN{ public String toString(){return "försvunnen";}}
+        INNE{ public String toString(){return "Inne";}},
+        UTLÅNAD{ public String toString(){return "Utlånad";}},
+        RESERVERAD{ public String toString(){return "Reserverad";}},
+        STULEN{ public String toString(){return "Stulen";}},
+        FÖRSVUNNEN{ public String toString(){return "Försvunnen";}}
     }
 
     @Id
@@ -44,7 +44,7 @@ public class Inventory {
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Rutan får inte vara tom")
-    private Inventory.Condition condition;
+    private Inventory.Condition book_condition;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Rutan får inte vara tom")
@@ -58,7 +58,7 @@ public class Inventory {
         this.isbn = isbn;
         this.title = title;
         this.classification = classification;
-        this.condition = condition;
+        this.book_condition = condition;
         this.status = status;
         this.date_added = date_added;
     }
@@ -91,12 +91,12 @@ public class Inventory {
         this.classification = classification;
     }
 
-    public Condition getCondition() {
-        return condition;
+    public Condition getBook_Condition() {
+        return book_condition;
     }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
+    public void setBook_Condition(Condition condition) {
+        this.book_condition = condition;
     }
 
     public Status getStatus() {
