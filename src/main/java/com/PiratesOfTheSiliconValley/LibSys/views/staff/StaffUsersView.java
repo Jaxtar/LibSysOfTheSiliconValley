@@ -35,7 +35,7 @@ public class StaffUsersView extends VerticalLayout {
         configureGrid();
 
 
-        userForm = new StaffUsersForm();
+        userForm = new StaffUsersForm(userController.findAll());
         userForm.addListener(StaffUsersForm.SaveEvent.class, this::saveUser);
         userForm.addListener(StaffUsersForm.DeleteEvent.class, this::deleteUser);
         userForm.addListener(StaffUsersForm.CloseEvent.class, e -> closeEditor());

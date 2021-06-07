@@ -20,6 +20,8 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.List;
+
 public class StaffUsersForm extends FormLayout {
 
     private User user;
@@ -28,7 +30,7 @@ public class StaffUsersForm extends FormLayout {
     TextField firstname = new TextField("Firstname");
     TextField lastname = new TextField("Lastname");
     TextField phone = new TextField("Phone");
-    ComboBox<Role> role = new ComboBox<Role>("Role");
+    ComboBox<Role> role = new ComboBox<>("Role");
     TextField username = new TextField("Username");
     PasswordField passwordHash = new PasswordField("Password");
 
@@ -39,7 +41,7 @@ public class StaffUsersForm extends FormLayout {
     Button close = new Button("Cancel");
 
 
-    public StaffUsersForm() {
+    public StaffUsersForm(List<User> users) {
         addClassName("user-form");
         role.setItems(Role.USER);
 
