@@ -2,6 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
+
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -18,6 +19,7 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+
 import org.springframework.dao.DataIntegrityViolationException;
 
 public class StaffUsersForm extends FormLayout {
@@ -49,20 +51,6 @@ public class StaffUsersForm extends FormLayout {
                 createButtonsLayout());
     }
 
-    public static class Bean {
-        private Role field;
-
-        public Role getField() {
-
-            return field;
-        }
-
-        public void setField(Role field) {
-
-            this.field = field;
-        }
-    }
-
     private HorizontalLayout createButtonsLayout() {
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -81,6 +69,7 @@ public class StaffUsersForm extends FormLayout {
         return new HorizontalLayout(save, delete, close);
     }
 
+    //Checks if the user is valid, and if yes, saves it
     private void validateAndSave() {
         try {
             binder.writeBean(user);

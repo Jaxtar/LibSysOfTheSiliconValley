@@ -4,6 +4,7 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.controller.BookController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
@@ -18,7 +19,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "/staff/book", layout = Navbar.class)
-@PageTitle("Staffbook")
+@PageTitle("Böcker")
 @CssImport("./views/staffview/staffcommon.css")
 
 public class StaffBookView  extends VerticalLayout {
@@ -37,7 +38,7 @@ public class StaffBookView  extends VerticalLayout {
         setSizeFull();
         configureGrid();
 
-        staffBookForm = new StaffBookForm(inventoryController);
+        staffBookForm = new StaffBookForm(this.inventoryController);
         staffBookForm.addListener(StaffBookForm.SaveEvent.class, this::saveBook);
         staffBookForm.addListener(StaffBookForm.DeleteEvent.class, this::deleteBook);
         staffBookForm.addListener(StaffBookForm.CloseEvent.class, e -> closeEditor());

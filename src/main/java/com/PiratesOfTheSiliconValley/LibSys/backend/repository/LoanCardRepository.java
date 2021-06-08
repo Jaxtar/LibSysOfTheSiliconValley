@@ -1,6 +1,7 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.repository;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Loan_Card;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

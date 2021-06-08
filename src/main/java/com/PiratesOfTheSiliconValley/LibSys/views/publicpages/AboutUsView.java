@@ -9,7 +9,6 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-
 @Route(value = "/about", layout = Navbar.class)
 @PageTitle("Om oss")
 @CssImport("./views/mainview/main-page.css")
@@ -18,7 +17,6 @@ import com.vaadin.flow.router.Route;
 public class AboutUsView extends VerticalLayout {
 
     public AboutUsView() {
-
         TextArea textArea = new TextArea();
         textArea.setReadOnly(true);
         textArea.setWidth("700px");

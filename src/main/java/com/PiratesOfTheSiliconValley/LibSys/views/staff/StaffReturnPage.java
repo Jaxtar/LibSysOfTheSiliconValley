@@ -45,6 +45,7 @@ public class StaffReturnPage extends VerticalLayout {
         returnButton.addClickListener(e -> returnCheck());
 
         add(bookID, returnButton);
+        setAlignItems(Alignment.CENTER);
     }
 
     private void returnCheck() {
