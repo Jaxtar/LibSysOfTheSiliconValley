@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 @SpringBootTest
-class StaffBookFormTest {
+public class StaffBookFormTest {
 
     private List<Book> books;
     private Book book;
+    private InventoryController inventoryController;
 
     @Before
     public void setUpData(){
@@ -39,10 +40,11 @@ class StaffBookFormTest {
 
     }
 
+    //Test failed
     @Test
     public void formFieldsPopulated() {
 
-        StaffBookForm form = new StaffBookForm((InventoryController) books);
+        StaffBookForm form = new StaffBookForm(inventoryController, books);
         form.setBook(book);
 
         Assertions.assertEquals("9789175034508", form.isbn.getValue());
@@ -61,7 +63,7 @@ class StaffBookFormTest {
 
     @Test
     void saveCorrectValue() {
-        StaffBookForm form = new StaffBookForm((InventoryController) books);
+        StaffBookForm form = new StaffBookForm((inventoryController), books);
         Book book = new Book();
         form.setBook(book);
 
@@ -78,9 +80,7 @@ class StaffBookFormTest {
         form.price.setValue(71.0);
 
         AtomicReference<Book> savedBookRef = new AtomicReference<>(null);
-        form.addListener(StaffBookForm.SaveEvent.class, e ->{
-            savedBookRef.set(e.getBook());
-        });
+        form.addListener(StaffBookForm.SaveEvent.class, e -> savedBookRef.set(e.getBook()));
         form.save.click();
 
         Book savedBook = savedBookRef.get();

@@ -21,6 +21,7 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class StaffBookForm extends FormLayout {
 
@@ -48,11 +49,10 @@ public class StaffBookForm extends FormLayout {
     Button close = new Button("Avbryt");
     Button inventory = new Button("Lägg till lager");
 
-    public StaffBookForm(InventoryController inventoryController) {
+    public StaffBookForm(InventoryController inventoryController, List<Book> books) {
         this.inventoryController = inventoryController;
         addClassName("book-form");
         binder.bindInstanceFields(this);
-        binder.addValueChangeListener(e -> save.setEnabled(binder.isValid()));
 
         binder2.bindInstanceFields(this);
 
@@ -70,6 +70,50 @@ public class StaffBookForm extends FormLayout {
 
     private HorizontalLayout createButtonsLayout(InventoryController inventoryController) {
         this.inventoryController = inventoryController;
+
+        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        inventory.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+
+        save.addClickShortcut(Key.ENTER);
+        close.addClickShortcut(Key.ESCAPE);
+
+        save.addClickListener(event -> validateAndSave());
+        delete.addClickListener(event -> dialogCancel().open());
+        close.addClickListener(event -> fireEvent(new CloseEvent(this)));
+        inventory.addClickListener(e -> dialogInventary().open());
+
+        save.setEnabled(false);
+
+        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));  //
+
+        return new HorizontalLayout(save, delete, close, inventory);
+    }
+
+    private Dialog dialogInventary(){
+        Dialog dialog = new Dialog();
+        dialog.add(new Text("Vill du lägga en exemplar av den här boken i bibliotekens inventarie?"));
+        dialog.setCloseOnEsc(false);
+        dialog.setCloseOnOutsideClick(false);
+
+        Button confirmButton2 = new Button("Confirm", event -> {
+            saveInventory();
+            UI.getCurrent()
+                    .navigate(StaffInventoryView.class);
+            dialog.close();
+        });
+        confirmButton2.addThemeVariants(ButtonVariant.LUMO_SUCCESS
+        );
+        Button avbryt2 = new Button("Avbryt", event ->
+                dialog.close()
+        );
+
+        dialog.add(new Div(confirmButton2, avbryt2));
+        return dialog;
+    }
+
+    private Dialog dialogCancel(){
         Dialog dialog = new Dialog();
         dialog.add(new Text("Är du säkert att du vill radera boken från listan?"));
         dialog.setCloseOnEsc(false);
@@ -82,47 +126,11 @@ public class StaffBookForm extends FormLayout {
         confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS
         );
         Button avbrytButton = new Button("Avbryt", event ->
-            dialog.close()
+                dialog.close()
         );
 
         dialog.add(new Div( confirmButton, avbrytButton));
-
-
-        Dialog dialog2 = new Dialog();
-        dialog2.add(new Text("Vill du lägga en exemplar av den här boken i bibliotekens inventarie?"));
-        dialog2.setCloseOnEsc(false);
-        dialog2.setCloseOnOutsideClick(false);
-
-        Button confirmButton2 = new Button("Confirm", event -> {
-            saveInventory();
-            UI.getCurrent()
-                    .navigate(StaffInventoryView.class);
-            dialog2.close();
-        });
-        confirmButton2.addThemeVariants(ButtonVariant.LUMO_SUCCESS
-        );
-        Button avbryt2 = new Button("Avbryt", event ->
-                dialog2.close()
-        );
-
-        dialog2.add(new Div(confirmButton2, avbryt2));
-
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-        inventory.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
-
-        save.addClickShortcut(Key.ENTER);
-        close.addClickShortcut(Key.ESCAPE);
-
-        save.addClickListener(event -> validateAndSave());
-        delete.addClickListener(event -> dialog.open());
-        close.addClickListener(event -> fireEvent(new CloseEvent(this)));
-        inventory.addClickListener(e -> dialog2.open());
-
-        save.setEnabled(false);
-
-        return new HorizontalLayout(save, delete, close, inventory);
+        return dialog;
     }
 
     private void validateAndSave() {

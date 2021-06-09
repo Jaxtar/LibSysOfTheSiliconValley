@@ -37,7 +37,7 @@ public class StaffBookView  extends VerticalLayout {
         setSizeFull();
         configureGrid();
 
-        staffBookForm = new StaffBookForm(inventoryController);
+        staffBookForm = new StaffBookForm(inventoryController, bookController.findAll());
         staffBookForm.addListener(StaffBookForm.SaveEvent.class, this::saveBook);
         staffBookForm.addListener(StaffBookForm.DeleteEvent.class, this::deleteBook);
         staffBookForm.addListener(StaffBookForm.CloseEvent.class, e -> closeEditor());

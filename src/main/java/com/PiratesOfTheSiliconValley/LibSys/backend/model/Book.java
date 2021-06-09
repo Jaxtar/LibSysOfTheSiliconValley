@@ -40,15 +40,17 @@ public class Book {
     }
 
     @Id
-    private String isbn = "";
+    @NotNull
+    @NotEmpty
+    private String isbn;
 
     @NotNull
     @NotEmpty(message = "Rutan får inte vara tom")
-    private String title = "";
+    private String title;
 
     @NotNull
     @NotEmpty(message = "Rutan får inte vara tom")
-    private String author = "";
+    private String author;
 
     @Enumerated(EnumType.STRING)
     private Book.Language language;
@@ -64,7 +66,7 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private Book.Genre genre2;
 
-    private String description = "";
+    private String description;
 
     @NotNull
     private Integer pages;
@@ -73,7 +75,7 @@ public class Book {
 
     @NotNull
     @NotEmpty(message = "Rutan får inte vara tom")
-    private String publisher = "";
+    private String publisher;
 
     private Double price;
 
