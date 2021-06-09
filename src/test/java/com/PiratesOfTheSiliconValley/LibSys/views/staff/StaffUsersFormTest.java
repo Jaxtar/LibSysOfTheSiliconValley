@@ -3,9 +3,9 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -42,19 +42,19 @@ public class StaffUsersFormTest {
         StaffUsersForm form = new StaffUsersForm(users);
         form.setUser(user);
 
-        Assertions.assertEquals("195809072345", form.personal_id_number.getValue());
-        Assertions.assertEquals("Walter", form.firstname.getValue());
-        Assertions.assertEquals("White", form.lastname.getValue());
-        Assertions.assertEquals("0736244054", form.phone.getValue());
-        Assertions.assertEquals("USER", form.role.getValue());
-        Assertions.assertEquals("Heisenberg", form.username.getValue());
-        Assertions.assertEquals("1234", form.passwordHash.getValue());
+        String password = DigestUtils.sha1Hex("1234" + user.getPasswordSalt());
+        Assert.assertEquals("195809072345", form.personal_id_number.getValue());
+        Assert.assertEquals("Walter", form.firstname.getValue());
+        Assert.assertEquals("White", form.lastname.getValue());
+        Assert.assertEquals("0736244054", form.phone.getValue());
+        Assert.assertEquals("USER", form.role.getValue().toString());
+        Assert.assertEquals("Heisenberg", form.username.getValue());
+        Assert.assertEquals(password, form.passwordHash.getValue());
     }
 
     @Test
-    void saveCorrectValues() {
+    public void saveCorrectValues() {
         StaffUsersForm form = new StaffUsersForm(users);
-        User user = new User();
         form.setUser(user);
 
         form.personal_id_number.setValue("198409240987");
@@ -67,22 +67,19 @@ public class StaffUsersFormTest {
         form.passwordHash.setValue("2580");
 
         AtomicReference<User> savedUserRef = new AtomicReference<>(null);
-        form.addListener(StaffUsersForm.SaveEvent.class, e ->{
-            savedUserRef.set(e.getUser());
-        });
+        form.addListener(StaffUsersForm.SaveEvent.class, e -> savedUserRef.set(e.getUser()));
         form.save.click();
 
         User savedUser = savedUserRef.get();
         String password = DigestUtils.sha1Hex("2580" + savedUser.getPasswordSalt());
 
-        Assertions.assertEquals("198409240987", savedUser.getPersonal_id_number());
-        Assertions.assertEquals("Jesse", savedUser.getFirstname());
-        Assertions.assertEquals("Pinkman", savedUser.getLastname());
-        Assertions.assertEquals("0746746234", savedUser.getPhone());
-        Assertions.assertEquals(Role.USER, savedUser.getRole());
-        Assertions.assertEquals("Cap'n Cook", savedUser.getUsername());
-        Assertions.assertEquals(password, savedUser.getPasswordHash());
-
+        Assert.assertEquals("198409240987", savedUser.getPersonal_id_number());
+        Assert.assertEquals("Jesse", savedUser.getFirstname());
+        Assert.assertEquals("Pinkman", savedUser.getLastname());
+        Assert.assertEquals("0746746234", savedUser.getPhone());
+        Assert.assertEquals(Role.USER, savedUser.getRole());
+        Assert.assertEquals("Cap'n Cook", savedUser.getUsername());
+        Assert.assertEquals(password, savedUser.getPasswordHash());
 
     }
 }

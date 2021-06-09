@@ -2,13 +2,14 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
 @SpringBootTest
@@ -40,31 +41,28 @@ public class StaffBookFormTest {
 
     }
 
-    //Test failed
     @Test
     public void formFieldsPopulated() {
-
         StaffBookForm form = new StaffBookForm(inventoryController, books);
         form.setBook(book);
 
-        Assertions.assertEquals("9789175034508", form.isbn.getValue());
-        Assertions.assertEquals("Offer utan ansikte", form.title.getValue());
-        Assertions.assertEquals("Stefan Ahnhem", form.author.getValue());
-        Assertions.assertEquals("SVENSKA", form.language.getValue());
-        Assertions.assertEquals("POCKET", form.format.getValue());
-        Assertions.assertEquals("FIKTION", form.genre1.getValue());
-        Assertions.assertEquals("En träslöjdslärare hittas brutalt mördad i sin slöjdsal.....",
+        Assert.assertEquals("9789175034508", form.isbn.getValue());
+        Assert.assertEquals("Offer utan ansikte", form.title.getValue());
+        Assert.assertEquals("Stefan Ahnhem", form.author.getValue());
+        Assert.assertEquals("SVENSKA", form.language.getValue().toString().toUpperCase(Locale.ROOT));
+        Assert.assertEquals("POCKET", form.format.getValue().toString().toUpperCase(Locale.ROOT));
+        Assert.assertEquals("FIKTION", form.genre1.getValue().toString().toUpperCase(Locale.ROOT));
+        Assert.assertEquals("En träslöjdslärare hittas brutalt mördad i sin slöjdsal.....",
                 form.description.getValue());
-        Assertions.assertEquals(590, form.pages.getValue());
-        Assertions.assertEquals(2014, form.publishingyear.getValue());
-        Assertions.assertEquals("Månpocket", form.publisher.getValue());
-        Assertions.assertEquals(69.0, form.price.getValue());
+        Assert.assertEquals("590", form.pages.getValue().toString());
+        Assert.assertEquals("2014", form.publishingyear.getValue().toString());
+        Assert.assertEquals("Månpocket", form.publisher.getValue());
+        Assert.assertEquals("69.0", form.price.getValue().toString());
     }
 
     @Test
-    void saveCorrectValue() {
+    public void saveCorrectValue() {
         StaffBookForm form = new StaffBookForm((inventoryController), books);
-        Book book = new Book();
         form.setBook(book);
 
         form.isbn.setValue("9789146218807");
@@ -85,17 +83,17 @@ public class StaffBookFormTest {
 
         Book savedBook = savedBookRef.get();
 
-        Assertions.assertEquals("9789146218807", savedBook.getIsbn());
-        Assertions.assertEquals("Tusen strålande solar", savedBook.getTitle());
-        Assertions.assertEquals("Khaled Hosseini", savedBook.getAuthor());
-        Assertions.assertEquals(Book.Language.SVENSKA, savedBook.getLanguage());
-        Assertions.assertEquals(Book.Format.POCKET, savedBook.getFormat());
-        Assertions.assertEquals(Book.Genre.SKÖNLITTERATUR, savedBook.getGenre1());
-        Assertions.assertEquals("Mariam är bara femton år gammal, fattig och utan utbildning...", savedBook.getDescription());
-        Assertions.assertEquals(406, savedBook.getPages());
-        Assertions.assertEquals(2007, savedBook.getPublishingyear());
-        Assertions.assertEquals("Wahlström & Widstrand", savedBook.getPublisher());
-        Assertions.assertEquals(71.0, savedBook.getPrice());
+        Assert.assertEquals("9789146218807", savedBook.getIsbn());
+        Assert.assertEquals("Tusen strålande solar", savedBook.getTitle());
+        Assert.assertEquals("Khaled Hosseini", savedBook.getAuthor());
+        Assert.assertEquals(Book.Language.SVENSKA, savedBook.getLanguage());
+        Assert.assertEquals(Book.Format.POCKET, savedBook.getFormat());
+        Assert.assertEquals(Book.Genre.SKÖNLITTERATUR, savedBook.getGenre1());
+        Assert.assertEquals("Mariam är bara femton år gammal, fattig och utan utbildning...", savedBook.getDescription());
+        Assert.assertEquals("406", savedBook.getPages().toString());
+        Assert.assertEquals("2007", savedBook.getPublishingyear().toString());
+        Assert.assertEquals("Wahlström & Widstrand", savedBook.getPublisher());
+        Assert.assertEquals("71.0", savedBook.getPrice().toString());
 
 
     }

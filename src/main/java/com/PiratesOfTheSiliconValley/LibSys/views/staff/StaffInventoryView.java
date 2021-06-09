@@ -53,6 +53,7 @@ public class StaffInventoryView  extends VerticalLayout {
         addClassName("inventory-grid");
         grid.setSizeFull();
         grid.setColumns("isbn", "title", "classification", "book_condition", "status", "date_added");
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event ->
                 editInventory(event.getValue()));
