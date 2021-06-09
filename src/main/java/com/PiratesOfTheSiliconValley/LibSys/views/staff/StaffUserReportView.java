@@ -27,6 +27,7 @@ public class StaffUserReportView extends VerticalLayout {
 
     private TextField filterText = new TextField();
 
+
     User user = new User();
 
     public StaffUserReportView(LoanController loanController) {
@@ -60,8 +61,11 @@ public class StaffUserReportView extends VerticalLayout {
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
+        filterText.setReadOnly(true);
+        filterText.setValue("Sök ej tillgängligt");
 
-        Button returnToSearchButton = new Button("Sök på ny användare");
+
+        Button returnToSearchButton = new Button("Rapport på annan användare");
         returnToSearchButton.addClickListener(click -> {
                     UI.getCurrent()
                             .navigate(StaffUserReportSearch.class);
@@ -73,7 +77,7 @@ public class StaffUserReportView extends VerticalLayout {
     }
 
     void updateList() {
-       // grid.setItems(loanController.findByCardId(user.getCard_id()));
+       //grid.setItems(loanController.findByCardId(user.getCard_id()));
         grid.setItems(loanController.findAll());
     }
 
