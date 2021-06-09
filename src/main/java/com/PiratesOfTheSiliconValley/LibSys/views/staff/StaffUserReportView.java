@@ -11,6 +11,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
@@ -25,8 +26,7 @@ public class StaffUserReportView extends VerticalLayout {
 
     private Grid<Loan> grid = new Grid<>(Loan.class);
 
-    private TextField filterText = new TextField();
-
+    private IntegerField filterText = new IntegerField();
 
     User user = new User();
 
@@ -48,21 +48,22 @@ public class StaffUserReportView extends VerticalLayout {
     private void configureGrid() {
         addClassName("user-grid");
         grid.setSizeFull();
-        grid.setColumns("cardId", "bookId");
+        grid.setColumns("cardId", "bookId", "loanDate", "returnDate");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.getColumnByKey("cardId").setHeader("Kort-ID");
         grid.getColumnByKey("bookId").setHeader("Bok-ID");
-
+        grid.getColumnByKey("loanDate").setHeader("Lånad");
+        grid.getColumnByKey("returnDate").setHeader("Återlämnad");
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Sök bok...");
+        filterText.setPlaceholder("Sök Kort-ID...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
-        filterText.setReadOnly(true);
-        filterText.setValue("Sök ej tillgängligt");
+        //filterText.setReadOnly(true);
+        //filterText.setValue("Sök ej tillgängligt");
 
 
         Button returnToSearchButton = new Button("Rapport på annan användare");
@@ -78,7 +79,7 @@ public class StaffUserReportView extends VerticalLayout {
 
     void updateList() {
        //grid.setItems(loanController.findByCardId(user.getCard_id()));
-        grid.setItems(loanController.findAll());
+        grid.setItems(loanController.findAll(filterText.getValue()));
     }
 
 

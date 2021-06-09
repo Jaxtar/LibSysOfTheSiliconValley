@@ -5,14 +5,8 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
 import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
 import com.PiratesOfTheSiliconValley.LibSys.views.logout.LogoutView;
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.*;
 import com.PiratesOfTheSiliconValley.LibSys.views.admin.AdminUsersView;
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffDecommissionedView;
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffInventoryView;
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanCardView;
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanPage;
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffReturnPage;
-import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
 
 import com.vaadin.flow.component.Component;
@@ -130,6 +124,7 @@ public class Navbar extends AppLayout {
             tabs.add(createTab("Seminarium", SeminarView.class));
             tabs.add(createTab("Utlåning", StaffLoanPage.class));
             tabs.add(createTab("Lämna tillbaka", StaffReturnPage.class));
+            tabs.add(createTab("Lånat av användare", StaffUserReportSearch.class));
             tabs.add(createTab("Användare", StaffUsersView.class));
             tabs.add(createTab("Lånekort", StaffLoanCardView.class));
             tabs.add(createTab("Konto", UserAccount.class));

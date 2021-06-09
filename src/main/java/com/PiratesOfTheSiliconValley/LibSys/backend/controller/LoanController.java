@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Loan;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.LoanRepository;
 
@@ -20,6 +21,14 @@ public class LoanController {
 
     public List<Loan> findAll() {
         return loanRepository.findAll();
+    }
+
+    public List<Loan> findAll(Integer integerFilter) {
+        if (integerFilter == null) {
+            return loanRepository.findAll();
+        } else {
+            return loanRepository.findByCardId(integerFilter);
+        }
     }
 
     public void delete(Loan loan) {

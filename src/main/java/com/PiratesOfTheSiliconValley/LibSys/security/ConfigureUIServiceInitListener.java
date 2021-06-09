@@ -39,7 +39,9 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
                 || StaffLoanCardView.class.equals(event.getNavigationTarget())
                 || StaffLoanPage.class.equals(event.getNavigationTarget())
                 || StaffReturnPage.class.equals(event.getNavigationTarget())
-                )
+                || StaffUserReportSearch.class.equals(event.getNavigationTarget())
+                || StaffUserReportView.class.equals(event.getNavigationTarget())
+        )
                 && (user == null || user.getRole().equals(Role.USER))) {
             event.rerouteTo(LoginView.class);
         }
