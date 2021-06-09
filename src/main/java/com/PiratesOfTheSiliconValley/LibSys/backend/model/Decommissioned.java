@@ -1,6 +1,11 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -12,10 +17,6 @@ public class Decommissioned {
     @Id
     private Integer bookID;
 
-    public Integer getBookID() {
-            return bookID;
-        }
-
     @NotNull
     @NotEmpty
     private String book_isbn;
@@ -25,23 +26,21 @@ public class Decommissioned {
 
     private String classification;
 
-    @NotNull()
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Inventory.Condition book_condition;
 
-    @NotNull()
+    @NotNull
     private LocalDateTime date_added;
 
-    @NotNull()
+    @NotNull
     private LocalDateTime date_removed;
 
-    @NotNull()
+    @NotNull
     private String reason;
 
-    public Decommissioned(){
 
-    }
-
+    //Getters and setters
     public void setBookID(Integer bookID) {
         this.bookID = bookID;
     }
@@ -100,5 +99,9 @@ public class Decommissioned {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+    
+    public Integer getBookID() {
+        return bookID;
     }
 }

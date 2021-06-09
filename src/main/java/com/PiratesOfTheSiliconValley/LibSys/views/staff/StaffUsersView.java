@@ -4,6 +4,7 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.controller.UserController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
@@ -18,7 +19,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "/staff/users", layout = Navbar.class)
-@PageTitle("Users")
+@PageTitle("Användare")
 @CssImport("./views/staffview/staffcommon.css")
 public class StaffUsersView extends VerticalLayout {
 
@@ -30,16 +31,15 @@ public class StaffUsersView extends VerticalLayout {
 
     public StaffUsersView(UserController userController) {
         this.userController = userController;
+
         addClassName("list-view");
         setSizeFull();
         configureGrid();
-
 
         userForm = new StaffUsersForm();
         userForm.addListener(StaffUsersForm.SaveEvent.class, this::saveUser);
         userForm.addListener(StaffUsersForm.DeleteEvent.class, this::deleteUser);
         userForm.addListener(StaffUsersForm.CloseEvent.class, e -> closeEditor());
-
 
         Div content = new Div(grid, userForm);
         content.addClassName("content");

@@ -1,6 +1,12 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -9,27 +15,23 @@ import java.time.LocalDateTime;
 public class Inventory {
 
     public enum Condition{
-        PERFEKT{ public String toString(){return "Perfekt";}},
-        BRA{ public String toString(){return "Bra";}},
-        SLITEN{ public String toString(){return "Sliten";}},
-        TRASIG{ public String toString(){return "Trasig";}}
+        PERFEKT{            public String toString(){return "Perfekt";}},
+        BRA{                public String toString(){return "Bra";}},
+        SLITEN{             public String toString(){return "Sliten";}},
+        TRASIG{             public String toString(){return "Trasig";}}
     }
 
     public enum Status{
-        INNE{ public String toString(){return "Inne";}},
-        UTLÅNAD{ public String toString(){return "Utlånad";}},
-        RESERVERAD{ public String toString(){return "Reserverad";}},
-        STULEN{ public String toString(){return "Stulen";}},
-        FÖRSVUNNEN{ public String toString(){return "Försvunnen";}}
+        INNE{               public String toString(){return "Inne";}},
+        UTLÅNAD{            public String toString(){return "Utlånad";}},
+        RESERVERAD{         public String toString(){return "Reserverad";}},
+        STULEN{             public String toString(){return "Stulen";}},
+        FÖRSVUNNEN{         public String toString(){return "Försvunnen";}}
     }
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer bookID;
-
-    public Integer getBookID() {
-        return bookID;
-    }
 
     @NotNull
     private String isbn;
@@ -51,8 +53,10 @@ public class Inventory {
     @NotNull()
     private LocalDateTime date_added;
 
-    public Inventory(){
-
+    
+    //Getters and setters
+    public Integer getBookID() {
+        return bookID;
     }
 
     public String getIsbn() {

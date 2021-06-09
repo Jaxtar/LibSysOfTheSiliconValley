@@ -62,11 +62,15 @@ public class StaffLoanPage extends VerticalLayout{
     }
 
     private void save(){
-        if(loanCardRepo.findByCardId(cardId.getValue()).get(0).getStatus() == Loan_Card.Status.DISABLED){
+        //Är kortet avstängt?
+        if(loanCardRepo.findByCardId(cardId.getValue()) != null
+            && loanCardRepo.findByCardId(cardId.getValue()).get(0).getStatus() == Loan_Card.Status.DISABLED){
             Notification.show("Lånekortet är spärrat",
                                 1500,
                                 Notification.Position.MIDDLE).addThemeVariants(NotificationVariant.LUMO_ERROR);
-        } else if (inventoryRepo.findByBookID(bookId.getValue()).get(0).getStatus() != Inventory.Status.INNE){
+        //Eller är den inte inne?
+        } else if (inventoryRepo.findByBookID(bookId.getValue()) != null
+                    && inventoryRepo.findByBookID(bookId.getValue()).get(0).getStatus() != Inventory.Status.INNE){
             Notification.show("Boken är inte inne, om du ändå håller i den kontakta biblotikarien",
                                 1500,
                                 Notification.Position.MIDDLE).addThemeVariants(NotificationVariant.LUMO_ERROR);

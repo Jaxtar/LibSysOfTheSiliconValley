@@ -3,7 +3,11 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
-import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.ComponentEvent;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -40,8 +44,7 @@ public class StaffBookForm extends FormLayout {
     TextField publisher = new TextField("Utgivare");
     NumberField price = new NumberField("Pris");
 
-    Binder<Book> binder = new BeanValidationBinder<>(Book.class);
-    Binder<Inventory> binder2 = new BeanValidationBinder<>(Inventory.class);
+    Binder<Book> bookBinder = new BeanValidationBinder<>(Book.class);
 
     Button save = new Button("Spara");
     Button delete = new Button("Radera");
@@ -51,10 +54,8 @@ public class StaffBookForm extends FormLayout {
     public StaffBookForm(InventoryController inventoryController) {
         this.inventoryController = inventoryController;
         addClassName("book-form");
-        binder.bindInstanceFields(this);
-        binder.addValueChangeListener(e -> save.setEnabled(binder.isValid()));
-
-        binder2.bindInstanceFields(this);
+        bookBinder.bindInstanceFields(this);
+        bookBinder.addValueChangeListener(e -> save.setEnabled(bookBinder.isValid()));
 
         language.setItems(Book.Language.values());
         format.setItems(Book.Format.values());
@@ -80,13 +81,13 @@ public class StaffBookForm extends FormLayout {
             fireEvent(new DeleteEvent(this, book));
             dialog.close();
         });
-        confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS
-        );
-        Button cancelButton = new Button("Avbryt", event ->
-            dialog.close()
-        );
 
-        dialog.add(new Div( confirmButton, cancelButton));
+        confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+
+        Button cancelButton = new Button("Avbryt", event ->
+            dialog.close());
+
+        dialog.add(new Div(confirmButton, cancelButton));
 
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -116,11 +117,11 @@ public class StaffBookForm extends FormLayout {
                     .navigate(StaffInventoryView.class);
             dialog2.close();
         });
-        confirmButton2.addThemeVariants(ButtonVariant.LUMO_SUCCESS
-        );
+        
+        confirmButton2.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+
         Button avbryt2 = new Button("Avbryt", event ->
-                dialog2.close()
-        );
+                dialog2.close());
 
         dialog2.add(new Div(confirmButton2, avbryt2));
 
@@ -137,7 +138,7 @@ public class StaffBookForm extends FormLayout {
 
     private void validateAndSave() {
         try {
-            binder.writeBean(book);
+            bookBinder.writeBean(book);
             fireEvent(new SaveEvent(this, book));
         } catch (ValidationException e) {
             e.printStackTrace();
@@ -156,7 +157,7 @@ public class StaffBookForm extends FormLayout {
 
     public void setBook(Book book) {
         this.book = book;
-        binder.readBean(book);
+        bookBinder.readBean(book);
     }
 
 

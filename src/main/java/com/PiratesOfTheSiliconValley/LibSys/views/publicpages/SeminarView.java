@@ -13,10 +13,6 @@ import com.vaadin.flow.router.Route;
 @Tag("item-view")
 @JsModule("./views/mainview/main-page.ts")
 public class SeminarView extends LitTemplate {
-
-    // This is the Java companion file of a design
-    // You can find the design file inside /frontend/views/
-
     public SeminarView() {
     }
 }

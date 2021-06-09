@@ -2,6 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.backend.repository.BookRepository;
+
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -34,7 +35,6 @@ public class BookView extends VerticalLayout implements HasUrlParameter<String>{
 
     public BookView(BookRepository repo){
         this.repo = repo;
-
         this.image = new Image("images/books/bookNotFound.png", "Book Image");
         this.title = new H1();
         this.importantInfo = new H3();
@@ -42,6 +42,7 @@ public class BookView extends VerticalLayout implements HasUrlParameter<String>{
         this.remainingInfo = new H5();
         
         add(image, title, importantInfo, description, remainingInfo);
+        setAlignItems(Alignment.CENTER);
     }
 
     @Override
@@ -54,9 +55,9 @@ public class BookView extends VerticalLayout implements HasUrlParameter<String>{
         book = repo.findByIsbn(isbn).get(0);
     }
 
+    //Sets the book info
     private void createView(){
         String path = String.format("images/books/%s.png", book.getIsbn());
-        
         image.setSrc(path);
         image.setMaxHeight("20em");
 
@@ -77,6 +78,7 @@ public class BookView extends VerticalLayout implements HasUrlParameter<String>{
                                             Format: %s
                                             ISBN: %s
                                             """,
+                                            //Ternary operator for setting genre(s)
                                             book.getGenre2() == null  
                                                                     ? "Genre: " + book.getGenre1() 
                                                                     : String.format("Genrer: %s, %s", book.getGenre1(), book.getGenre2()),
@@ -84,6 +86,5 @@ public class BookView extends VerticalLayout implements HasUrlParameter<String>{
                                             book.getFormat(),
                                             book.getIsbn()));
         remainingInfo.addClassName("info");
-        
     }
 }
