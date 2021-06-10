@@ -13,7 +13,7 @@ import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -27,7 +27,7 @@ public class StaffLoanCardView extends VerticalLayout {
     private LoanCardController loanCardController;
 
     private Grid<Loan_Card> grid = new Grid<>(Loan_Card.class);
-    private TextField filterText = new TextField();
+    private IntegerField filterField = new IntegerField();
 
     public StaffLoanCardView(LoanCardController loanCardController) {
         this.loanCardController = loanCardController;
@@ -83,12 +83,12 @@ public class StaffLoanCardView extends VerticalLayout {
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Sök på orsak...");
-        filterText.setClearButtonVisible(true);
-        filterText.setValueChangeMode(ValueChangeMode.LAZY);
-        filterText.addValueChangeListener(e -> updateList());
+        filterField.setPlaceholder("Sök Kort-ID...");
+        filterField.setClearButtonVisible(true);
+        filterField.setValueChangeMode(ValueChangeMode.LAZY);
+        filterField.addValueChangeListener(e -> updateList());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText);
+        HorizontalLayout toolbar = new HorizontalLayout(filterField);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
@@ -147,6 +147,6 @@ public class StaffLoanCardView extends VerticalLayout {
     }
 
     private void updateList() {
-        grid.setItems(loanCardController.findAll(filterText.getValue()));
+        grid.setItems(loanCardController.findAll(filterField.getValue()));
     }
 }

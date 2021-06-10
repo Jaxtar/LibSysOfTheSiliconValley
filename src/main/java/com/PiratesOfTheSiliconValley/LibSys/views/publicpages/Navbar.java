@@ -117,6 +117,7 @@ public class Navbar extends AppLayout {
             tabs.add(createTab("Inventarium", StaffInventoryView.class));
             tabs.add(createTab("Obrukligt arkiv", StaffDecommissionedView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
+            tabs.add(createTab("Lånat av användare", StaffUserReportSearch.class));
             tabs.add(createTab( "Användare", AdminUsersView.class));
             tabs.add(createTab("Lånekort", StaffLoanCardView.class));
             tabs.add(createTab( "Logga ut", LogoutView.class));

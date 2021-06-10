@@ -25,11 +25,11 @@ public class LoanCardController {
     }
 
     //Finds all the loan cards with the given search term
-    public List<Loan_Card> findAll(String reasonString){
-        if (reasonString == null || reasonString.isEmpty()){
+    public List<Loan_Card> findAll(Integer integerFilter) {
+        if (integerFilter == null) {
             return repository.findAll();
         } else {
-            return repository.findByReason(reasonString);
+            return repository.findByCardId(integerFilter);
         }
     }
 
