@@ -24,6 +24,15 @@ public class LoanController {
         return loanRepository.findAll();
     }
 
+    //Findsd all the loans given the card id
+    public List<Loan> findAll(Integer integerFilter) {
+        if (integerFilter == null) {
+            return loanRepository.findAll();
+        } else {
+            return loanRepository.findByCardId(integerFilter);
+        }
+    }
+
     //Removes a loan
     public void delete(Loan loan) {
         loanRepository.delete(loan);

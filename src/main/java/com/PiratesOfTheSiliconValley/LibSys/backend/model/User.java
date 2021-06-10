@@ -52,12 +52,19 @@ public class User {
     @Email
     private String email = "";
 
+    private Integer card_id;
+
+
     //Getters and setters
     public Integer getUserID() {
         return userID;
     }
     public boolean checkPassword(String password) {
         return DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash);
+    }
+
+    public Integer getCard_id() {
+        return card_id;
     }
 
     public String getUsername() {
