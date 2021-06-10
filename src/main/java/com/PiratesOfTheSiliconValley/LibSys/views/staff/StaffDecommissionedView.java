@@ -3,6 +3,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.DecommissionedController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Decommissioned;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
+
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -13,7 +14,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "/staff/decommissioned", layout = Navbar.class)
-@PageTitle("StaffDecommissioned")
+@PageTitle("Ur bruk")
 @CssImport("./views/staffview/staffcommon.css")
 public class StaffDecommissionedView extends VerticalLayout {
 
@@ -36,7 +37,6 @@ public class StaffDecommissionedView extends VerticalLayout {
         addClassName("decommissioned-grid");
         grid.setSizeFull();
         grid.setColumns("book_isbn", "title", "classification", "book_condition", "date_added", "date_removed", "reason");
-
         grid.getColumnByKey("book_isbn").setHeader("ISBN");
         grid.getColumnByKey("title").setHeader("Titel");
         grid.getColumnByKey("classification").setHeader("Klassificering");

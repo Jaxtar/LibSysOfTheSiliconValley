@@ -1,6 +1,9 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -40,15 +43,17 @@ public class Book {
     }
 
     @Id
-    private String isbn = "";
+    @NotNull
+    @NotEmpty
+    private String isbn;
 
     @NotNull
     @NotEmpty(message = "Rutan får inte vara tom")
-    private String title = "";
+    private String title;
 
     @NotNull
     @NotEmpty(message = "Rutan får inte vara tom")
-    private String author = "";
+    private String author;
 
     @Enumerated(EnumType.STRING)
     private Book.Language language;
@@ -64,7 +69,7 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private Book.Genre genre2;
 
-    private String description = "";
+    private String description;
 
     @NotNull
     private Integer pages;
@@ -73,32 +78,16 @@ public class Book {
 
     @NotNull
     @NotEmpty(message = "Rutan får inte vara tom")
-    private String publisher = "";
+    private String publisher;
 
     private Double price;
 
-
-    public Book(String isbn, String title, String author, Book.Language language,
-                Book.Format format, Book.Genre genre1, Book.Genre genre2, String description,
-                Integer pages, Integer publishingyear, String publisher, Double price) {
-        this.isbn = isbn;
-        this.title = title;
-        this.author = author;
-        this.language = language;
-        this.format = format;
-        this.genre1 = genre1;
-        this.genre2 = genre2;
-        this.description = description;
-        this.pages = pages;
-        this.publishingyear = publishingyear;
-        this.publisher = publisher;
-        this.price = price;
+    @Override
+    public String toString() {
+        return title + " av " + author;
     }
 
-    public Book(){
-        
-    }
-
+    //Getters and setters
     public String getIsbn() {
         return isbn;
     }
@@ -195,10 +184,7 @@ public class Book {
         this.price = price;
     }
   
-    @Override
-    public String toString() {
-        return title + " av " + author;
-    }
+    
 
 }
 

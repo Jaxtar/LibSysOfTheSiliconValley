@@ -22,7 +22,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .requestCache()
                 .and().authorizeRequests()
-
                 .and().formLogin()
                 .loginPage(LOGIN_URL).permitAll()
                 .loginProcessingUrl(LOGIN_PROCESSING_URL)

@@ -2,6 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.admin;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
+
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -17,8 +18,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
-import com.vaadin.flow.data.validator.EmailValidator;
+//import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.shared.Registration;
+
 import org.springframework.dao.DataIntegrityViolationException;
 
 
@@ -47,30 +49,17 @@ public class AdminUsersForm extends FormLayout {
         role.setItems(Role.values());
 
         binder.bindInstanceFields(this);
-        /**binder.forField(email)
+        /*
+        binder.forField(email)
                 .withValidator(new EmailValidator(
-                        "Mail-adress stämmer ej"))
-                .withValidator(
-                        email -> email.endsWith("@jisho.com"),
-                        "Endast jisho.com-adress tillåten")
-                .bind(User::getEmail, User::setEmail);*/
+                                    "Mail-adress stämmer ej"))
+                .withValidator(email -> email.endsWith("@jisho.com"),
+                                    "Endast jisho.com-adress tillåten")
+                .bind(User::getEmail, User::setEmail);
+        */
 
         add(personal_id_number, firstname, lastname, phone, email, username, passwordHash, role,
-                createButtonsLayout());
-    }
-
-    public static class Bean {
-        private Role field;
-
-        public Role getField() {
-
-            return field;
-        }
-
-        public void setField(Role field) {
-
-            this.field = field;
-        }
+            createButtonsLayout());
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -91,10 +80,11 @@ public class AdminUsersForm extends FormLayout {
         return new HorizontalLayout(save, delete, close);
     }
 
+    //Validerar användaren och sparar den är tillåten
     private void validateAndSave() {
         try {
             binder.writeBean(user);
-           fireEvent(new SaveEvent(this, user));
+            fireEvent(new SaveEvent(this, user));
         } catch (ValidationException e) {
             e.printStackTrace();
         }catch (DataIntegrityViolationException e){
@@ -135,7 +125,6 @@ public class AdminUsersForm extends FormLayout {
             Notification.show(user.getFirstname() + " " + user.getLastname() + " har raderats från lista.",
                     1500, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
-
     }
 
     public static class CloseEvent extends AdminUserFormEvent {

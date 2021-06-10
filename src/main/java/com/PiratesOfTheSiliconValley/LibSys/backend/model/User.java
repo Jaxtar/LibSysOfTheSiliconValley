@@ -3,7 +3,14 @@ package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,10 +22,6 @@ public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer userID;
-
-    public Integer getUserID() {
-        return userID;
-    }
 
     @NotNull
     @NotEmpty(message = "Rutan får inte vara tom")
@@ -51,9 +54,11 @@ public class User {
 
     private Integer card_id;
 
-    public User() {
-    }
 
+    //Getters and setters
+    public Integer getUserID() {
+        return userID;
+    }
     public boolean checkPassword(String password) {
         return DigestUtils.sha1Hex(password + passwordSalt).equals(passwordHash);
     }

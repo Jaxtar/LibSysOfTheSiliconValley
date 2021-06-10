@@ -4,6 +4,7 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.controller.UserController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
@@ -16,30 +17,34 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope("prototype")
 @Route(value = "/staff/users", layout = Navbar.class)
-@PageTitle("Users")
+@PageTitle("Användare")
 @CssImport("./views/staffview/staffcommon.css")
 public class StaffUsersView extends VerticalLayout {
 
-    private UserController userController;
-    private StaffUsersForm userForm;
+    UserController userController;
+    StaffUsersForm userForm;
 
-    private Grid<User> grid = new Grid<>(User.class);
-    private TextField filterText = new TextField();
+    Grid<User> grid = new Grid<>(User.class);
+    TextField filterText = new TextField();
 
     public StaffUsersView(UserController userController) {
         this.userController = userController;
+
         addClassName("list-view");
         setSizeFull();
         configureGrid();
 
+        userForm = new StaffUsersForm(userController.findAll());
 
-        userForm = new StaffUsersForm();
         userForm.addListener(StaffUsersForm.SaveEvent.class, this::saveUser);
         userForm.addListener(StaffUsersForm.DeleteEvent.class, this::deleteUser);
         userForm.addListener(StaffUsersForm.CloseEvent.class, e -> closeEditor());
-
 
         Div content = new Div(grid, userForm);
         content.addClassName("content");

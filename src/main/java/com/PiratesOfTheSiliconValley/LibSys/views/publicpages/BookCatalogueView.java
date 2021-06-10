@@ -2,7 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.BookController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
-import com.PiratesOfTheSiliconValley.LibSys.backend.repository.BookRepository;
+
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -19,6 +19,7 @@ import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
 import org.apache.commons.lang3.StringUtils;
 
 @Route(value = "/bookcatalogue", layout = Navbar.class)
@@ -31,9 +32,7 @@ public class BookCatalogueView extends LitTemplate {
 
     @Id("mygrid")
     private GridPro<Book> grid;
-    private TextField filter = new TextField();
     private BookController bookController;
-    private BookRepository bookRepository;
 
     ListDataProvider <Book> dataProvider;
 
@@ -45,10 +44,8 @@ public class BookCatalogueView extends LitTemplate {
     private Grid.Column<Book> formatColumn;
     private Grid.Column<Book> publishingYearColumn;
 
-    public BookCatalogueView(BookController bookController,
-                             BookRepository bookRepository) {
+    public BookCatalogueView(BookController bookController) {
         this.bookController = bookController;
-        this.bookRepository = bookRepository;
         createGrid();
     }
 
@@ -71,40 +68,12 @@ public class BookCatalogueView extends LitTemplate {
     }
 
     private void addColumnsToGrid() {
-        createTitleColumn();
-        createAuthorColumn();
-        createLanguageColumn();
-        createFormatColumn();
-        createGenre1Column();
-        createGenre2Column();
-        createPublishingYearColumn();
-    }
-
-    private void createTitleColumn() {
         titleColumn = grid.addColumn(Book::getTitle, "title").setHeader("Titel").setWidth("330px").setFlexGrow(0);
-    }
-
-    private void createAuthorColumn() {
         authorColumn = grid.addColumn(Book::getAuthor, "author").setHeader("Författare").setWidth("250px").setFlexGrow(0);
-    }
-
-    private void createLanguageColumn() {
         languageColumn = grid.addColumn(Book::getLanguage, "language").setHeader("Språk").setWidth("180px").setFlexGrow(0);
-    }
-
-    private void createFormatColumn() {
         formatColumn = grid.addColumn(Book::getFormat, "format").setHeader("Format").setWidth("180px").setFlexGrow(0);
-    }
-
-    private void createGenre1Column() {
         genre1Column = grid.addColumn(Book::getGenre1, "genre1").setHeader("Genre").setWidth("250px").setFlexGrow(0);
-    }
-
-    private void createGenre2Column() {
         genre2Column = grid.addColumn(Book::getGenre2, "genre2").setHeader("Genre").setWidth("250px").setFlexGrow(0);
-    }
-
-    private void createPublishingYearColumn() {
         publishingYearColumn = grid.addColumn(Book::getPublishingyear, "publishingyear").setHeader("Utgivningsår").setWidth("200px").setFlexGrow(0);
     }
 
@@ -128,7 +97,6 @@ public class BookCatalogueView extends LitTemplate {
         authorFilter.addValueChangeListener(event -> dataProvider
                 .addFilter(book -> StringUtils.containsIgnoreCase(book.getAuthor(), authorFilter.getValue())));
         filterRow.getCell(authorColumn).setComponent(authorFilter);
-
 
         ComboBox<Book.Language> languageFilter = new ComboBox<>();
         languageFilter.setItems(Book.Language.values());
@@ -166,7 +134,6 @@ public class BookCatalogueView extends LitTemplate {
                 event -> dataProvider.addFilter(book -> areFormatEqual(book, formatFilter)));
         filterRow.getCell(formatColumn).setComponent(formatFilter);
 
-
         TextField publishingYearFilter = new TextField();
         publishingYearFilter.setPlaceholder("Sök år");
         publishingYearFilter.setClearButtonVisible(true);
@@ -177,7 +144,7 @@ public class BookCatalogueView extends LitTemplate {
         filterRow.getCell(publishingYearColumn).setComponent(publishingYearFilter);
     }
 
-
+    //Enum checkers
     private boolean areLanguageEqual(Book book, ComboBox<Book.Language> languageFilter) {
         if (languageFilter.getValue() != null) {
             return book.getLanguage().toString().equals(languageFilter.getValue().toString());

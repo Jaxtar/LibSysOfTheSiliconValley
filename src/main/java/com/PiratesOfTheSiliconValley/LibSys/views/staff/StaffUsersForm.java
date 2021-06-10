@@ -2,6 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
+
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -18,7 +19,10 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.List;
 
 public class StaffUsersForm extends FormLayout {
 
@@ -39,7 +43,7 @@ public class StaffUsersForm extends FormLayout {
     Button close = new Button("Avbryt");
 
 
-    public StaffUsersForm() {
+    public StaffUsersForm(List<User> users) {
         addClassName("user-form");
         role.setItems(Role.USER);
 
@@ -47,20 +51,6 @@ public class StaffUsersForm extends FormLayout {
 
         add(personal_id_number, firstname, lastname, phone, username, passwordHash, role,
                 createButtonsLayout());
-    }
-
-    public static class Bean {
-        private Role field;
-
-        public Role getField() {
-
-            return field;
-        }
-
-        public void setField(Role field) {
-
-            this.field = field;
-        }
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -81,6 +71,7 @@ public class StaffUsersForm extends FormLayout {
         return new HorizontalLayout(save, delete, close);
     }
 
+    //Checks if the user is valid, and if yes, saves it
     private void validateAndSave() {
         try {
             binder.writeBean(user);

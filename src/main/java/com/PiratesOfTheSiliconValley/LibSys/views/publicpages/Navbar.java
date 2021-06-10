@@ -2,7 +2,6 @@ package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
-import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
 import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
 import com.PiratesOfTheSiliconValley.LibSys.views.logout.LogoutView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.*;
@@ -47,8 +46,6 @@ public class Navbar extends AppLayout {
 
     private Tabs menu;
     private H1 viewTitle;
-    private AuthService authService;
-
 
     public Navbar() {
         menu = new Tabs();
@@ -58,6 +55,7 @@ public class Navbar extends AppLayout {
         addToDrawer(createDrawerContent(menu));
     }
 
+    //Creates the header elements
     private Component createHeaderContent() {
         HorizontalLayout layout = new HorizontalLayout();
         layout.setId("header");
@@ -72,6 +70,7 @@ public class Navbar extends AppLayout {
         return layout;
     }
 
+    //Adds an avatar image
     private Component avatar(){
         VerticalLayout avatar = new VerticalLayout();
         avatar.add(new Avatar());
@@ -79,6 +78,7 @@ public class Navbar extends AppLayout {
         return avatar;
     }
 
+    //Creates the drawer elements
     private Component createDrawerContent(Tabs menu) {
         VerticalLayout layout = new VerticalLayout();
         layout.setSizeFull();
@@ -95,6 +95,7 @@ public class Navbar extends AppLayout {
         return layout;
     }
 
+    //Creates the navbar
     private void createMenu() {
         menu.setOrientation(Tabs.Orientation.VERTICAL);
         menu.addThemeVariants(TabsVariant.LUMO_MINIMAL);
@@ -102,6 +103,7 @@ public class Navbar extends AppLayout {
         menu.add(createMenuItems());
     }
 
+    //Creates all the drawer tabs
     private Component[] createMenuItems() {
         User user = VaadinSession.getCurrent().getAttribute(User.class);
 
@@ -109,6 +111,7 @@ public class Navbar extends AppLayout {
         
         tabs.add(createTab("Huvudsida", MainPage.class));
         
+        //Gets different tabs depending on the user's security clearance
         if (user != null && user.getRole().equals(Role.ADMIN)) {
             tabs.add(createTab("Böcker", StaffBookView.class));
             tabs.add(createTab("Inventarium", StaffInventoryView.class));
