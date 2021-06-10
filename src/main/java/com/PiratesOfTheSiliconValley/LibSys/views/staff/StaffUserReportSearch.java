@@ -1,11 +1,10 @@
 package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
-import com.PiratesOfTheSiliconValley.LibSys.backend.controller.LoanController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.UserController;
-import com.PiratesOfTheSiliconValley.LibSys.backend.model.Loan;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
+
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -28,11 +27,7 @@ public class StaffUserReportSearch extends VerticalLayout {
 
     private UserController userController;
 
-    private LoanController loanController;
-
     private Grid<User> grid = new Grid<>(User.class);
-
-    private Grid<Loan> gridLoan = new Grid<>(Loan.class);
 
     private TextField filterText = new TextField();
 

@@ -11,6 +11,8 @@ import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffInventoryView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanCardView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanPage;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffReturnPage;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUserReportSearch;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUserReportView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUsersView;
 
 import com.vaadin.flow.component.UI;

@@ -71,6 +71,36 @@ public class StaffBookForm extends FormLayout {
 
     }
 
+    private HorizontalLayout inventoryButtonsLayout() {
+        Dialog dialog2 = new Dialog();
+        dialog2.add(new Text("Vill du lägga till ett exemplar av den här boken i bibliotekets inventarium?"));
+        dialog2.setCloseOnEsc(false);
+        dialog2.setCloseOnOutsideClick(false);
+
+        Button confirmButton2 = new Button("Ja", event -> {
+            saveInventory();
+            UI.getCurrent()
+                    .navigate(StaffInventoryView.class);
+            dialog2.close();
+        });
+        confirmButton2.addThemeVariants(ButtonVariant.LUMO_SUCCESS
+        );
+        Button avbryt2 = new Button("Avbryt", event ->
+                dialog2.close()
+        );
+
+        dialog2.add(new Div(confirmButton2, avbryt2));
+
+        close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        inventory.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+
+        close.addClickShortcut(Key.ESCAPE);
+
+        close.addClickListener(event -> fireEvent(new CloseEvent(this)));
+        inventory.addClickListener(e -> dialog2.open());
+
+        return new HorizontalLayout(inventory);
+    }
 
     private HorizontalLayout createButtonsLayout(InventoryController inventoryController) {
         this.inventoryController = inventoryController;
@@ -91,7 +121,7 @@ public class StaffBookForm extends FormLayout {
 
         save.setEnabled(false);
 
-        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));  //
+        bookBinder.addStatusChangeListener(e -> save.setEnabled(bookBinder.isValid()));  //
 
         return new HorizontalLayout(save, delete, close, inventory);
     }
