@@ -4,6 +4,7 @@ import com.PiratesOfTheSiliconValley.LibSys.backend.controller.DecommissionedCon
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
+
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -17,7 +18,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "/staff/inventory", layout = Navbar.class)
-@PageTitle("StaffInventory")
+@PageTitle("Inventarie")
 @CssImport("./views/staffview/staffcommon.css")
 public class StaffInventoryView  extends VerticalLayout {
 
@@ -31,11 +32,12 @@ public class StaffInventoryView  extends VerticalLayout {
     public StaffInventoryView(InventoryController inventoryController, DecommissionedController decommissionedController){
         this.inventoryController = inventoryController;
         this.decommissionedController = decommissionedController;
+
         addClassName("list-view");
         setSizeFull();
         configureGrid();
 
-        staffInventoryForm = new StaffInventoryForm(decommissionedController);
+        staffInventoryForm = new StaffInventoryForm(this.decommissionedController);
         staffInventoryForm.addListener(StaffInventoryForm.SaveEvent.class, this::saveInventory);
         staffInventoryForm.addListener(StaffInventoryForm.CloseEvent.class, e -> closeEditor());
         staffInventoryForm.setMinWidth("20em");
@@ -55,12 +57,19 @@ public class StaffInventoryView  extends VerticalLayout {
         grid.setColumns("isbn", "title", "classification", "book_condition", "status", "date_added");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
+        grid.getColumnByKey("isbn").setHeader("ISBN");
+        grid.getColumnByKey("title").setHeader("Titel");
+        grid.getColumnByKey("classification").setHeader("Klassificering");
+        grid.getColumnByKey("book_condition").setHeader("Skick");
+        grid.getColumnByKey("status").setHeader("Status");
+        grid.getColumnByKey("date_added").setHeader("Tillagd").setAutoWidth(true);
+
         grid.asSingleSelect().addValueChangeListener(event ->
                 editInventory(event.getValue()));
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by title...");
+        filterText.setPlaceholder("Sök titel...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());

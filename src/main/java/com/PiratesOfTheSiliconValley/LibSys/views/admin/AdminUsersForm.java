@@ -2,6 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.admin;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
+
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -17,8 +18,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
-import com.vaadin.flow.data.validator.EmailValidator;
+//import com.vaadin.flow.data.validator.EmailValidator;
 import com.vaadin.flow.shared.Registration;
+
 import org.springframework.dao.DataIntegrityViolationException;
 
 
@@ -26,20 +28,20 @@ public class AdminUsersForm extends FormLayout {
 
     private User user;
 
-    TextField personal_id_number = new TextField("Personal ID Number");
-    TextField firstname = new TextField("Firstname");
-    TextField lastname = new TextField("Lastname");
-    TextField phone = new TextField("Phone");
+    TextField personal_id_number = new TextField("Personnummer");
+    TextField firstname = new TextField("Förnamn");
+    TextField lastname = new TextField("Efternamn");
+    TextField phone = new TextField("Telefon");
     TextField email = new TextField("Mail");
-    ComboBox<Role> role = new ComboBox<>("Role");
-    TextField username = new TextField("Username");
-    PasswordField passwordHash = new PasswordField("Password");
+    ComboBox<Role> role = new ComboBox<>("Roll");
+    TextField username = new TextField("Användarnamn");
+    PasswordField passwordHash = new PasswordField("Lösenord");
 
     Binder<User> binder = new BeanValidationBinder<>(User.class);
 
-    Button save = new Button("Save");
-    Button delete = new Button("Delete");
-    Button close = new Button("Cancel");
+    Button save = new Button("Spara");
+    Button delete = new Button("Radera");
+    Button close = new Button("Avbryt");
 
 
     public AdminUsersForm() {
@@ -47,30 +49,17 @@ public class AdminUsersForm extends FormLayout {
         role.setItems(Role.values());
 
         binder.bindInstanceFields(this);
-        /**binder.forField(email)
+        /*
+        binder.forField(email)
                 .withValidator(new EmailValidator(
-                        "Mail adress stämmer inte"))
-                .withValidator(
-                        email -> email.endsWith("@jisho.com"),
-                        "Bara adress jisho.com kan användas")
-                .bind(User::getEmail, User::setEmail);*/
+                                    "Mail-adress stämmer ej"))
+                .withValidator(email -> email.endsWith("@jisho.com"),
+                                    "Endast jisho.com-adress tillåten")
+                .bind(User::getEmail, User::setEmail);
+        */
 
         add(personal_id_number, firstname, lastname, phone, email, username, passwordHash, role,
-                createButtonsLayout());
-    }
-
-    public static class Bean {
-        private Role field;
-
-        public Role getField() {
-
-            return field;
-        }
-
-        public void setField(Role field) {
-
-            this.field = field;
-        }
+            createButtonsLayout());
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -91,15 +80,16 @@ public class AdminUsersForm extends FormLayout {
         return new HorizontalLayout(save, delete, close);
     }
 
+    //Validerar användaren och sparar den är tillåten
     private void validateAndSave() {
         try {
             binder.writeBean(user);
-           fireEvent(new SaveEvent(this, user));
+            fireEvent(new SaveEvent(this, user));
         } catch (ValidationException e) {
             e.printStackTrace();
         }catch (DataIntegrityViolationException e){
             e.printStackTrace();
-            Notification.show(" Användarnamn används redan, försök med en ny.",
+            Notification.show("Användarnamn används redan, försök med en ny.",
                     2000, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
     }
@@ -135,7 +125,6 @@ public class AdminUsersForm extends FormLayout {
             Notification.show(user.getFirstname() + " " + user.getLastname() + " har raderats från lista.",
                     1500, Notification.Position.MIDDLE ).addThemeVariants(NotificationVariant.LUMO_ERROR);
         }
-
     }
 
     public static class CloseEvent extends AdminUserFormEvent {

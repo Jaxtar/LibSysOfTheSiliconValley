@@ -8,16 +8,12 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-
 @Route(value = "/hours", layout = Navbar.class)
 @PageTitle("Öppettider")
 @CssImport("./views/mainview/main-page.css")
 @Tag("item-view")
 @JsModule("./views/mainview/main-page.ts")
 public class OpenHoursView extends VerticalLayout {
-
-    // This is the Java companion file of a design
-    // You can find the design file inside /frontend/views/
     public OpenHoursView() {
 
         TextArea area = new TextArea();

@@ -3,7 +3,11 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.InventoryController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Book;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
-import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.ComponentEvent;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -29,47 +33,48 @@ public class StaffBookForm extends FormLayout {
     private InventoryController inventoryController;
 
     TextField isbn = new TextField("ISBN");
-    TextField title = new TextField("Title");
-    TextField author = new TextField("Author");
-    ComboBox<Book.Language> language = new ComboBox<>("Language");
+    TextField title = new TextField("Titel");
+    TextField author = new TextField("Författare");
+    ComboBox<Book.Language> language = new ComboBox<>("Språk");
     ComboBox<Book.Format> format = new ComboBox<>("Format");
     ComboBox<Book.Genre> genre1 = new ComboBox<>("Genre");
     ComboBox<Book.Genre> genre2 = new ComboBox<>("Genre");
-    TextArea description = new TextArea("Description");
-    IntegerField pages = new IntegerField("Pages");
-    IntegerField publishingyear = new IntegerField("Publishing Year");
-    TextField publisher = new TextField("Publisher");
-    NumberField price = new NumberField("Price");
+    TextArea description = new TextArea("Beskrivning");
+    IntegerField pages = new IntegerField("Antal sidor");
+    IntegerField publishingyear = new IntegerField("Utgivningsår");
+    TextField publisher = new TextField("Utgivare");
+    NumberField price = new NumberField("Pris");
 
-    Binder<Book> binder = new BeanValidationBinder<>(Book.class);
-    Binder<Inventory> binder2 = new BeanValidationBinder<>(Inventory.class);
+    Binder<Book> bookBinder = new BeanValidationBinder<>(Book.class);
 
     Button save = new Button("Spara");
     Button delete = new Button("Radera");
     Button close = new Button("Avbryt");
-    Button inventory = new Button("Lägg till lager");
+    Button inventory = new Button("Lägg till i lager");
 
     public StaffBookForm(InventoryController inventoryController, List<Book> books) {
         this.inventoryController = inventoryController;
         addClassName("book-form");
-        binder.bindInstanceFields(this);
 
-        binder2.bindInstanceFields(this);
+        bookBinder.bindInstanceFields(this);
+        bookBinder.addValueChangeListener(e -> save.setEnabled(bookBinder.isValid()));
 
         language.setItems(Book.Language.values());
         format.setItems(Book.Format.values());
         genre1.setItems(Book.Genre.values());
         genre2.setItems(Book.Genre.values());
 
+        add(createButtonsLayout(inventoryController), inventoryButtonsLayout(),
+            isbn, title, author, language, format,
+            genre1, genre2, description, pages,
+            publishingyear, publisher,  price);
 
-        add(createButtonsLayout(inventoryController),isbn, title, author,
-            language,  format, genre1, genre2, description,
-            pages, publishingyear, publisher,  price);
     }
 
 
     private HorizontalLayout createButtonsLayout(InventoryController inventoryController) {
         this.inventoryController = inventoryController;
+
 
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -97,14 +102,15 @@ public class StaffBookForm extends FormLayout {
         dialog.setCloseOnEsc(false);
         dialog.setCloseOnOutsideClick(false);
 
-        Button confirmButton2 = new Button("Confirm", event -> {
+        Button confirmButton2 = new Button("Ja", event -> {
             saveInventory();
             UI.getCurrent()
                     .navigate(StaffInventoryView.class);
             dialog.close();
         });
-        confirmButton2.addThemeVariants(ButtonVariant.LUMO_SUCCESS
-        );
+        
+        confirmButton2.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+
         Button avbryt2 = new Button("Avbryt", event ->
                 dialog.close()
         );
@@ -135,7 +141,7 @@ public class StaffBookForm extends FormLayout {
 
     private void validateAndSave() {
         try {
-            binder.writeBean(book);
+            bookBinder.writeBean(book);
             fireEvent(new SaveEvent(this, book));
         } catch (ValidationException e) {
             e.printStackTrace();
@@ -154,7 +160,7 @@ public class StaffBookForm extends FormLayout {
 
     public void setBook(Book book) {
         this.book = book;
-        binder.readBean(book);
+        bookBinder.readBean(book);
     }
 
 

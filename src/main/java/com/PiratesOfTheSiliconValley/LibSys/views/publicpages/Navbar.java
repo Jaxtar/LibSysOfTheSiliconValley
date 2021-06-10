@@ -2,7 +2,6 @@ package com.PiratesOfTheSiliconValley.LibSys.views.publicpages;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
-import com.PiratesOfTheSiliconValley.LibSys.security.AuthService;
 import com.PiratesOfTheSiliconValley.LibSys.views.login.LoginView;
 import com.PiratesOfTheSiliconValley.LibSys.views.logout.LogoutView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffBookView;
@@ -10,6 +9,8 @@ import com.PiratesOfTheSiliconValley.LibSys.views.admin.AdminUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffDecommissionedView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffInventoryView;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanCardView;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffLoanPage;
+import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffReturnPage;
 import com.PiratesOfTheSiliconValley.LibSys.views.staff.StaffUsersView;
 import com.PiratesOfTheSiliconValley.LibSys.views.user.UserAccount;
 
@@ -51,8 +52,6 @@ public class Navbar extends AppLayout {
 
     private Tabs menu;
     private H1 viewTitle;
-    private AuthService authService;
-
 
     public Navbar() {
         menu = new Tabs();
@@ -62,6 +61,7 @@ public class Navbar extends AppLayout {
         addToDrawer(createDrawerContent(menu));
     }
 
+    //Creates the header elements
     private Component createHeaderContent() {
         HorizontalLayout layout = new HorizontalLayout();
         layout.setId("header");
@@ -76,6 +76,7 @@ public class Navbar extends AppLayout {
         return layout;
     }
 
+    //Adds an avatar image
     private Component avatar(){
         VerticalLayout avatar = new VerticalLayout();
         avatar.add(new Avatar());
@@ -83,6 +84,7 @@ public class Navbar extends AppLayout {
         return avatar;
     }
 
+    //Creates the drawer elements
     private Component createDrawerContent(Tabs menu) {
         VerticalLayout layout = new VerticalLayout();
         layout.setSizeFull();
@@ -99,6 +101,7 @@ public class Navbar extends AppLayout {
         return layout;
     }
 
+    //Creates the navbar
     private void createMenu() {
         menu.setOrientation(Tabs.Orientation.VERTICAL);
         menu.addThemeVariants(TabsVariant.LUMO_MINIMAL);
@@ -106,6 +109,7 @@ public class Navbar extends AppLayout {
         menu.add(createMenuItems());
     }
 
+    //Creates all the drawer tabs
     private Component[] createMenuItems() {
         User user = VaadinSession.getCurrent().getAttribute(User.class);
 
@@ -113,36 +117,39 @@ public class Navbar extends AppLayout {
         
         tabs.add(createTab("Huvudsida", MainPage.class));
         
+        //Gets different tabs depending on the user's security clearance
         if (user != null && user.getRole().equals(Role.ADMIN)) {
-            tabs.add(createTab("Books", StaffBookView.class));
-            tabs.add(createTab("Inventory", StaffInventoryView.class));
-            tabs.add(createTab("Decommissioned", StaffDecommissionedView.class));
+            tabs.add(createTab("Böcker", StaffBookView.class));
+            tabs.add(createTab("Inventarium", StaffInventoryView.class));
+            tabs.add(createTab("Obrukligt arkiv", StaffDecommissionedView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
-            tabs.add(createTab( "User List", AdminUsersView.class));
-            tabs.add(createTab("Loan Card", StaffLoanCardView.class));
-            tabs.add(createTab( "Logout", LogoutView.class));
+            tabs.add(createTab( "Användare", AdminUsersView.class));
+            tabs.add(createTab("Lånekort", StaffLoanCardView.class));
+            tabs.add(createTab( "Logga ut", LogoutView.class));
         } else if (user != null && user.getRole().equals(Role.STAFF)){
-            tabs.add(createTab("Books", StaffBookView.class));
-            tabs.add(createTab("Inventory", StaffInventoryView.class));
-            tabs.add(createTab("Decommissioned", StaffDecommissionedView.class));
+            tabs.add(createTab("Böcker", StaffBookView.class));
+            tabs.add(createTab("Inventarium", StaffInventoryView.class));
+            tabs.add(createTab("Obrukligt arkiv", StaffDecommissionedView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
-            tabs.add(createTab("User List", StaffUsersView.class));
-            tabs.add(createTab("Loan Card", StaffLoanCardView.class));
-            tabs.add(createTab("Account", UserAccount.class));
-            tabs.add(createTab("Logout", LogoutView.class));
+            tabs.add(createTab("Utlåning", StaffLoanPage.class));
+            tabs.add(createTab("Lämna tillbaka", StaffReturnPage.class));
+            tabs.add(createTab("Användare", StaffUsersView.class));
+            tabs.add(createTab("Lånekort", StaffLoanCardView.class));
+            tabs.add(createTab("Konto", UserAccount.class));
+            tabs.add(createTab("Logga ut", LogoutView.class));
         } else if (user != null && user.getRole().equals(Role.USER)){
-            tabs.add(createTab("Boklista", BookCatalogueView.class));
+            tabs.add(createTab("Böcker", BookCatalogueView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
             tabs.add(createTab("Öppettider", OpenHoursView.class));
             tabs.add(createTab("Om oss", AboutUsView.class));
-            tabs.add(createTab("Account", UserAccount.class));
-            tabs.add(createTab("Logout", LogoutView.class));
+            tabs.add(createTab("Konto", UserAccount.class));
+            tabs.add(createTab("Logga ut", LogoutView.class));
         } else  {
-            tabs.add(createTab("Boklista", BookCatalogueView.class));
+            tabs.add(createTab("Böcker", BookCatalogueView.class));
             tabs.add(createTab("Seminarium", SeminarView.class));
             tabs.add(createTab("Öppettider", OpenHoursView.class));
             tabs.add(createTab("Om oss", AboutUsView.class));
-            tabs.add(createTab("Login", LoginView.class));
+            tabs.add(createTab("Logga in", LoginView.class));
         }
 
         return tabs.toArray(Component[]::new);

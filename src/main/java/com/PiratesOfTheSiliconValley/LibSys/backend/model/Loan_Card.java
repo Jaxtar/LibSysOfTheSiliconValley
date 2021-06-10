@@ -1,31 +1,27 @@
 package com.PiratesOfTheSiliconValley.LibSys.backend.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Loan_Card {
 
     public enum Status{
-        DISABLED{
-            public String toString(){
-                return "Spärrad"; }
-        },
-
-        ENABLED{
-            public String toString(){
-                return "Aktiverad";}
-        }
+        DISABLED{           public String toString(){return "Spärrad"; }},
+        ENABLED{            public String toString(){return "Aktiverad";}}
     }
 
     public enum Reason{
-        LATE{             public String toString(){return "Många sena böcker";}},
-        LOST{          public String toString(){return "Många försvunna böcker";}},
-        THEFT{          public String toString(){return "Stöld";}}
+        LATE{               public String toString(){return "Många sena böcker";}},
+        LOST{               public String toString(){return "Många försvunna böcker";}},
+        THEFT{              public String toString(){return "Stöld";}}
     }
 
     @Id
-    private Integer card_id;
+    private Integer cardId;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Rutan får inte vara tom")
@@ -34,21 +30,18 @@ public class Loan_Card {
     @Enumerated(EnumType.STRING)
     private Loan_Card.Reason reason;
 
-    public Loan_Card(Integer card_id, Loan_Card.Status status, Loan_Card.Reason reason) {
-        this.card_id = card_id;
-        this.status = status;
-        this.reason = reason;
+    @Override
+    public String toString() {
+        return "Kort " + cardId + " " + status;
     }
 
-    public Loan_Card(){
-    }
-
+    //Getters and setters
     public Integer getCard_id() {
-        return card_id;
+        return cardId;
     }
 
     public void setCard_id(Integer card_id) {
-        this.card_id = card_id;
+        this.cardId = card_id;
     }
 
     public Status getStatus() {
@@ -65,10 +58,5 @@ public class Loan_Card {
 
     public void setReason(Reason reason) {
         this.reason = reason;
-    }
-
-    @Override
-    public String toString() {
-        return "Kort " + card_id + " " + status;
     }
 }

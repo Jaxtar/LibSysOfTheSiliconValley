@@ -3,7 +3,12 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.DecommissionedController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Decommissioned;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Inventory;
-import com.vaadin.flow.component.*;
+
+import com.vaadin.flow.component.ComponentEvent;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -26,14 +31,13 @@ public class StaffInventoryForm extends FormLayout {
     private DecommissionedController decommissionedController;
 
     TextField isbn = new TextField("ISBN");
-    TextField title = new TextField("Title");
-    TextField classification = new TextField("Classification");
-    ComboBox<Inventory.Condition> book_condition = new ComboBox<>("Condition");
+    TextField title = new TextField("Titel");
+    TextField classification = new TextField("Klassificering");
+    ComboBox<Inventory.Condition> book_condition = new ComboBox<>("Skick");
     ComboBox<Inventory.Status> status = new ComboBox<>("Status");
-    TextField reason = new TextField("Ange en anledning:");
+    TextField reason = new TextField("Ange orsak:");
 
     Binder<Inventory> binder = new BeanValidationBinder<>(Inventory.class);
-    Binder<Decommissioned> binder2 = new BeanValidationBinder<>(Decommissioned.class);
 
     Button save = new Button("Spara");
     Button close = new Button("Avbryt");
@@ -45,38 +49,35 @@ public class StaffInventoryForm extends FormLayout {
         binder.bindInstanceFields(this);
         binder.addValueChangeListener(e -> save.setEnabled(binder.isValid()));
 
-        binder2.bindInstanceFields(this);
-
         book_condition.setItems(Inventory.Condition.values());
         status.setItems(Inventory.Status.values());
 
 
-        add(createButtonsLayout(decommissionedController), isbn, title, classification, book_condition, status);
+        add(createButtonsLayout(this.decommissionedController), 
+            isbn, title, classification, book_condition, status);
     }
 
     private HorizontalLayout createButtonsLayout(DecommissionedController decommissionedController) {
         this.decommissionedController = decommissionedController;
         Dialog dialog = new Dialog();
         dialog.add(reason);
-        dialog.add(new Text("Är du säkert att du vill radera boken från lager?"));
+        dialog.add(new Text("Är du säker på att du vill radera boken från lagret?"));
         dialog.add(new VerticalLayout(reason));
         dialog.setCloseOnEsc(false);
         dialog.setCloseOnOutsideClick(false);
 
-        Button confirmButton = new Button("Confirm", event -> {
+        Button confirmButton = new Button("Ja", event -> {
             saveDecommissioned();
             UI.getCurrent()
                     .navigate(StaffDecommissionedView.class);
             dialog.close();
         });
-        confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS
-        );
-        Button avbrytButton = new Button("Avbryt", event ->
-            dialog.close()
-        );
+
+        confirmButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+
+        Button avbrytButton = new Button("Avbryt", event -> dialog.close());
 
         dialog.add(new Div( confirmButton, avbrytButton));
-
 
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
@@ -120,6 +121,8 @@ public class StaffInventoryForm extends FormLayout {
         this.inventory = inventory;
         binder.readBean(inventory);
     }
+
+    
     public static abstract class StaffInventoryFormEvent extends ComponentEvent<StaffInventoryForm> {
         private Inventory inventory;
 

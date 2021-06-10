@@ -3,11 +3,13 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 import com.PiratesOfTheSiliconValley.LibSys.backend.controller.LoanCardController;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Loan_Card;
 import com.PiratesOfTheSiliconValley.LibSys.views.publicpages.Navbar;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
@@ -17,7 +19,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "/staff/loancard", layout = Navbar.class)
-@PageTitle("LoanCard")
+@PageTitle("Lånekort")
 @CssImport("./views/staffview/staffcommon.css")
 
 public class StaffLoanCardView extends VerticalLayout {
@@ -29,6 +31,7 @@ public class StaffLoanCardView extends VerticalLayout {
 
     public StaffLoanCardView(LoanCardController loanCardController) {
         this.loanCardController = loanCardController;
+
         addClassName("list-view");
         setSizeFull();
         configureGrid();
@@ -45,6 +48,10 @@ public class StaffLoanCardView extends VerticalLayout {
         addClassName("loancard-grid");
         grid.setSizeFull();
         grid.setColumns("card_id", "status", "reason");
+
+        grid.getColumnByKey("card_id").setHeader("Kort ID");
+        grid.getColumnByKey("status").setHeader("Status");
+        grid.getColumnByKey("reason").setHeader("Orsak");
 
         grid.addComponentColumn(loanCard -> {
             Button enable = new Button("Aktivera");
@@ -76,7 +83,7 @@ public class StaffLoanCardView extends VerticalLayout {
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by Reason...");
+        filterText.setPlaceholder("Sök på orsak...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
@@ -86,54 +93,54 @@ public class StaffLoanCardView extends VerticalLayout {
         return toolbar;
     }
 
+    //Enables the loan card
     private void enableCard(Loan_Card loanCard) {
-        Notification errorNotification = new Notification();
-        Notification statusNotification = new Notification();
-
-        if (loanCard != null || loanCard.getStatus().equals(Loan_Card.Status.DISABLED)) {
+        if (loanCard != null && loanCard.getStatus().equals(Loan_Card.Status.DISABLED)) {
             loanCard.setStatus(Loan_Card.Status.ENABLED);
             loanCard.setReason(null);
-            statusNotification.show("Kort " + loanCard.getCard_id() + " är " + loanCard.getStatus());
-            statusNotification.setDuration(500);
+            Notification.show("Kort " + loanCard.getCard_id() + " är " + loanCard.getStatus(), 
+                                1500, 
+                                Position.MIDDLE);
             loanCardController.save(loanCard);
             updateList();
         } else {
-            errorNotification.show("Något gick fel! Försök igen.");
-            errorNotification.setDuration(500);
+            Notification.show("Något gick fel! Försök igen.");
             System.out.println("Error (enableCard)");
             System.out.println("LoanCard Status: " + loanCard);
             System.out.println("Reason DBValue: " + loanCard.getReason());
         }
     }
 
+    //Disables the loan card
     private void disableCard(Loan_Card loanCard) {
         RadioButtonGroup<Loan_Card.Reason> reasonRadio = new RadioButtonGroup<>();
-        reasonRadio.setItems(loanCard.getReason().values());
+        reasonRadio.setItems(Loan_Card.Reason.values());
         Button chooseButton = new Button("Välj");
         Button cancelButton = new Button("Avbryt");
         Notification notification = new Notification(reasonRadio, chooseButton, cancelButton);
-        Notification errorNotification = new Notification();
-        Notification statusNotification = new Notification();
         notification.open();
 
+        //Checks the loan card's status and potentially changes it
         chooseButton.addClickListener(event -> {
             if (loanCard != null && loanCard.getStatus().equals(Loan_Card.Status.ENABLED) && reasonRadio.getValue() != null) {
                 loanCard.setReason(reasonRadio.getValue());
                 loanCard.setStatus(Loan_Card.Status.DISABLED);
                 loanCardController.save(loanCard);
                 updateList();
-                statusNotification.show("Kort " + loanCard.getCard_id() + " är " + loanCard.getStatus());
-                errorNotification.setDuration(500);
+                Notification.show("Kort " + loanCard.getCard_id() + " är " + loanCard.getStatus(),
+                                    1500,
+                                    Position.MIDDLE);
                 notification.close();
             } else {
-                errorNotification.show("Något gick fel! Försök igen.");
-                errorNotification.setDuration(500);
+                Notification.show("Något gick fel! Försök igen.",
+                                    1500,
+                                    Position.MIDDLE);
                 System.out.println("Error (disableCard)");
                 System.out.println("LoanCard Status: " + loanCard);
                 System.out.println("ReasonRadioValue: " + reasonRadio.getValue());
                 System.out.println("Reason DBValue: " + loanCard.getReason());
             }
-                });
+        });
 
         cancelButton.addClickListener(event -> notification.close());
         notification.setPosition(Notification.Position.MIDDLE);
@@ -142,6 +149,4 @@ public class StaffLoanCardView extends VerticalLayout {
     private void updateList() {
         grid.setItems(loanCardController.findAll(filterText.getValue()));
     }
-
 }
-

@@ -2,6 +2,7 @@ package com.PiratesOfTheSiliconValley.LibSys.views.staff;
 
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.Role;
 import com.PiratesOfTheSiliconValley.LibSys.backend.model.User;
+
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
@@ -18,6 +19,7 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
@@ -26,19 +28,19 @@ public class StaffUsersForm extends FormLayout {
 
     private User user;
 
-    TextField personal_id_number = new TextField("Personal ID Number");
-    TextField firstname = new TextField("Firstname");
-    TextField lastname = new TextField("Lastname");
-    TextField phone = new TextField("Phone");
-    ComboBox<Role> role = new ComboBox<>("Role");
-    TextField username = new TextField("Username");
-    PasswordField passwordHash = new PasswordField("Password");
+    TextField personal_id_number = new TextField("Personnummer");
+    TextField firstname = new TextField("Förnamn");
+    TextField lastname = new TextField("Efternamn");
+    TextField phone = new TextField("Telefon");
+    ComboBox<Role> role = new ComboBox<Role>("Roll");
+    TextField username = new TextField("Användarnamn");
+    PasswordField passwordHash = new PasswordField("Lösenord");
 
     Binder<User> binder = new BeanValidationBinder<>(User.class);
 
-    Button save = new Button("Save");
-    Button delete = new Button("Delete");
-    Button close = new Button("Cancel");
+    Button save = new Button("Spara");
+    Button delete = new Button("Radera");
+    Button close = new Button("Avbryt");
 
 
     public StaffUsersForm(List<User> users) {
@@ -49,20 +51,6 @@ public class StaffUsersForm extends FormLayout {
 
         add(personal_id_number, firstname, lastname, phone, username, passwordHash, role,
                 createButtonsLayout());
-    }
-
-    public static class Bean {
-        private Role field;
-
-        public Role getField() {
-
-            return field;
-        }
-
-        public void setField(Role field) {
-
-            this.field = field;
-        }
     }
 
     private HorizontalLayout createButtonsLayout() {
@@ -83,6 +71,7 @@ public class StaffUsersForm extends FormLayout {
         return new HorizontalLayout(save, delete, close);
     }
 
+    //Checks if the user is valid, and if yes, saves it
     private void validateAndSave() {
         try {
             binder.writeBean(user);
