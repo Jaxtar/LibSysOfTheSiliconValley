@@ -17,28 +17,35 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope("prototype")
 @Route(value = "/staff/book", layout = Navbar.class)
 @PageTitle("Böcker")
 @CssImport("./views/staffview/staffcommon.css")
 
 public class StaffBookView  extends VerticalLayout {
 
-    private BookController bookController;
-    private InventoryController inventoryController;
-    private StaffBookForm staffBookForm;
+    BookController bookController;
+    InventoryController inventoryController;
+    StaffBookForm staffBookForm;
 
-    private Grid<Book> grid = new Grid<>(Book.class);
-    private TextField filterText = new TextField();
+    Grid<Book> grid = new Grid<>(Book.class);
+
+    TextField filterText = new TextField();
 
     public StaffBookView(BookController bookController, InventoryController inventoryController) {
         this.bookController = bookController;
         this.inventoryController = inventoryController;
+      
         addClassName("list-view");
         setSizeFull();
         configureGrid();
 
-        staffBookForm = new StaffBookForm(this.inventoryController);
+        staffBookForm = new StaffBookForm(this.inventoryController, bookController.findAll());
+
         staffBookForm.addListener(StaffBookForm.SaveEvent.class, this::saveBook);
         staffBookForm.addListener(StaffBookForm.DeleteEvent.class, this::deleteBook);
         staffBookForm.addListener(StaffBookForm.CloseEvent.class, e -> closeEditor());
@@ -57,6 +64,7 @@ public class StaffBookView  extends VerticalLayout {
         addClassName("book-grid");
         grid.setSizeFull();
         grid.setColumns("title", "author", "language", "format", "pages", "price");
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.getColumnByKey("title").setHeader("Titel");
         grid.getColumnByKey("author").setHeader("Författare");

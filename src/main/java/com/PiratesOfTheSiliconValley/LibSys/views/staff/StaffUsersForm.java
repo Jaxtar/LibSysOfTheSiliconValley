@@ -22,6 +22,8 @@ import com.vaadin.flow.shared.Registration;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.List;
+
 public class StaffUsersForm extends FormLayout {
 
     private User user;
@@ -41,7 +43,7 @@ public class StaffUsersForm extends FormLayout {
     Button close = new Button("Avbryt");
 
 
-    public StaffUsersForm() {
+    public StaffUsersForm(List<User> users) {
         addClassName("user-form");
         role.setItems(Role.USER);
 

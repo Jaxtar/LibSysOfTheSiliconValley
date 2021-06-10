@@ -17,17 +17,21 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope("prototype")
 @Route(value = "/staff/users", layout = Navbar.class)
 @PageTitle("Användare")
 @CssImport("./views/staffview/staffcommon.css")
 public class StaffUsersView extends VerticalLayout {
 
-    private UserController userController;
-    private StaffUsersForm userForm;
+    UserController userController;
+    StaffUsersForm userForm;
 
-    private Grid<User> grid = new Grid<>(User.class);
-    private TextField filterText = new TextField();
+    Grid<User> grid = new Grid<>(User.class);
+    TextField filterText = new TextField();
 
     public StaffUsersView(UserController userController) {
         this.userController = userController;
@@ -36,7 +40,8 @@ public class StaffUsersView extends VerticalLayout {
         setSizeFull();
         configureGrid();
 
-        userForm = new StaffUsersForm();
+        userForm = new StaffUsersForm(userController.findAll());
+
         userForm.addListener(StaffUsersForm.SaveEvent.class, this::saveUser);
         userForm.addListener(StaffUsersForm.DeleteEvent.class, this::deleteUser);
         userForm.addListener(StaffUsersForm.CloseEvent.class, e -> closeEditor());
